@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理系统登录界面</title>
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link th:href="@{/bootstrap-3.3.7/css/bootstrap-theme.css}" rel="stylesheet">
+
+    <style type="text/css">
+        .container{
+            text-align: center;
+            font-family: "Microsoft YaHei UI";
+            height: 400px;
+            margin-top: 100px;
+        }
+        .body{
+            /*使背景填充整个页面*/
+            background: url("/TBMS/images/login_bg.jpg") no-repeat 0 0 transparent;
+            background-size: 100% 925px;
+        }
+        .input-group{
+            height: 40px;
+            width: 350px;
+            line-height: 40px;
+            border: 1px grey solid;
+            border-radius: 20px;
+            /*控制输入框组居中显示*/
+            margin: 0 auto;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .input{
+            width: 200px;
+            /*使输入框无边框透明显示*/
+            background-color:transparent;
+            border:0;
+            font-size: 17px;
+            margin-left: 10px;
+        }
+        .btn{
+            height: 40px;
+            width: 350px;
+            vertical-align: center;
+            border: 1px grey solid;
+            border-radius: 20px;
+            background-color: #5bc0de;
+            color: white;
+            font-size: 20px;
+        }
+        /*制作半透明灰色蒙板*/
+        .mask{
+            width: 400px;
+            height: 550px;
+            background:rgba(255,251,240,0.5);
+        }
+        .error{
+            /*使输入框无边框透明显示*/
+            background-color:transparent;
+            border:0;
+            font-size: 22px;
+            font-family: 幼圆;
+            margin-left: 10px;
+            color: red;
+        }
+        a{
+            text-decoration-line: none;
+        }
+    </style>
+</head>
+<body class="body">
+
+<div class="container mask">
+    <img th:src="@{/images/login_face.png}">
+    <h1 th:text="#{login.title}">项目管理系统</h1>
+    <form action="/TBMS/login" method="post">
+        <div class="form-group">
+            <!--thymeleaf判断msg不为空再出现提示-->
+            <span th:if="${not #strings.isEmpty(msg)}"><img th:src="@{/images/login_tip.png}" /></span>
+            <label class="error" th:text="${msg}"></label>
+        </div>
+
+        <div class="form-group input-group">
+            <span><img th:src="@{/images/nickname.png}" /></span>
+            <input class="input" type="text" name="userName" th:placeholder="#{login.username}" autofocus=""/>
+        </div>
+
+        <div class="form-group input-group">
+            <span><img th:src="@{/images/locking.png}" /></span>
+            <input class="input" type="password" name="password" th:placeholder="#{login.password}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox"/>
+            <label th:text="#{login.remember}">记住我</label>
+        </div>
+
+        <button class="btn" th:text="#{login.btn}">登录</button>
+    </form>
+
+    <div style="margin-top: 20px;">
+        <a th:href="@{/toLogin(l='zh_CN')}">中文</a>
+        <a th:href="@{/toLogin(l='en_US')}" style="margin-left: 10px">English</a>
+    </div>
+
+</div>
+</body>
+
+</html>
