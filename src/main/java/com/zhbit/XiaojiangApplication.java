@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.zhbit.xiaojiang.mapper")
 public class XiaojiangApplication {
 
 	public static void main(String[] args) {

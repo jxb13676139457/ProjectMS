@@ -1,5 +1,5 @@
-#设置项目访问的上下文，相当于/TBMS 这就是根路径
 server:
+  #设置项目访问的上下文，相当于/TBMS 这就是根路径
   servlet:
     context-path: /TBMS
   port: 8081
@@ -17,15 +17,17 @@ spring:
   #配置开启直接访问templates模板页面权限，不推荐
   #resources:
     #static-locations: classpath:/templates/
-#debug: true
 
   #mybatis相关配置
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ProjectDB
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/projectdb?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
     username: root
     password: 83609458
     type: com.alibaba.druid.pool.DruidDataSource
 #mybatis包别名扫描
 mybatis:
-  type-aliases-package: com.zhbit.entity
+  type-aliases-package: com.zhbit.xiaojiang.entity
+  mapper-locations: classpath:com/zhbit/xiaojiang/mapper/*.xml          # mapper映射文件
+
+debug: true

@@ -40,6 +40,7 @@ public class UserRealm extends AuthorizingRealm {
 		//1、判断用户名是否匹配
 		UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 		//获得数据库用户对象
+		//System.out.println("携带的用户信息："+token.getUsername()+","+token.getPassword());
 		User user = userService.findByUserName(token.getUsername());
 
 		if(user==null){
@@ -48,6 +49,6 @@ public class UserRealm extends AuthorizingRealm {
 		}
 		//2、判断密码是否匹配
 		//是AuthenticationInfo的子类，第一个参数是返回到login的一些数据，第二个参数是数据库密码，第三个参数是shiro的名称
-		return new SimpleAuthenticationInfo("",token.getPassword(),"");
+		return new SimpleAuthenticationInfo("",user.getPassword(),"");
 	}
 }
