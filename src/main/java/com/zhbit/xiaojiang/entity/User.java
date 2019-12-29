@@ -8,18 +8,19 @@ package com.zhbit.xiaojiang.entity;
 
 public class User {
 
-	private int userId;
+	private String userId;
 	private String userName;
 	private String password;
 	private String sex;
 	private String address;
 	private String phone;
+	private Role role;
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -61,5 +62,13 @@ public class User {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

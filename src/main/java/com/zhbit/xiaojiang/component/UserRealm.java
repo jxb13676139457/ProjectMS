@@ -35,20 +35,24 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("执行认证方法");
+		//从token获取用户ID,从主体传过来的认证信息中获取
+		//加这一步的目的是在post请求时会先进入认证然后再到请求。
+		if(authenticationToken.getPrincipal()==null){
+			return null;
+		}
 
-		//Shiro编写判断用户名和密码逻辑
-		//1、判断用户名是否匹配
-		UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-		//获得数据库用户对象
-		//System.out.println("携带的用户信息："+token.getUsername()+","+token.getPassword());
-		User user = userService.findByUserName(token.getUsername());
-
+		String userId = authenticationToken.getPrincipal().toString();
+		//System.out.println(userId);
+		//根据用户ID获得数据库用户对象
+		User user = userService.findByUserId(userId);
 		if(user==null){
 			//此处返回null的话shiro底层会抛出UnknownAccountException异常
 			return null;
+		} else{
+			//判断密码是否匹配
+			//是AuthenticationInfo的子类，第一个参数是返回到login的一些数据，第二个参数是数据库密码，第三个参数是shiro的名称
+			return new SimpleAuthenticationInfo(user,user.getPassword(),"");
 		}
-		//2、判断密码是否匹配
-		//是AuthenticationInfo的子类，第一个参数是返回到login的一些数据，第二个参数是数据库密码，第三个参数是shiro的名称
-		return new SimpleAuthenticationInfo("",user.getPassword(),"");
+
 	}
 }

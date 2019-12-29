@@ -31,11 +31,12 @@ public class ShiroConfig{
 		//放行请求路径
 		filterMap.put("/toLogin","anon");
 		filterMap.put("/login","anon");
+		//filterMap.put("/demand:edit","perms[]")
 		//使用通配符的方式进行全部请求路径拦截的
 		filterMap.put("/*","authc");
-		//设置拦截的请求
+		//设置认证拦截的请求
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
-		//设置被拦截后跳转的页面请求
+		//设置认证被拦截后跳转的页面请求
 		shiroFilterFactoryBean.setLoginUrl("/toLogin");
 
 		return shiroFilterFactoryBean;

@@ -3,8 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhbit.xiaojiang.mapper.UserMapper">
-
-    <select id="findByUserName" parameterType="String" resultType="User">
-      select * from users where userName = #{value}
+    <!--定义一个resultMap，关联查询用户角色信息-->
+    <resultMap id="UserRoleResultMap" type="User">
+        <!--id 主表唯一标识 result 普通标识-->
+        <id column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="password" property="password" />
+        <result column="sex" property="sex" />
+        <result column="address" property="address" />
+        <result column="phone" property="phone" />
+        <!--配置关联角色信息  多对一-->
+        <association property="role" javaType="Role">
+            <id column="roleId" property="roleId" />
+            <result column="roleType" property="roleType" />
+            <result column="roleName" property="roleName" />
+            <result column="rolePower" property="rolePower" />
+        </association>
+    </resultMap>
+    <select id="findByUserId" parameterType="String" resultMap="UserRoleResultMap">
+      select u.*,roleType,roleName,rolePower
+      from users u join roles r
+      on u.roleId = r.roleId
+      where userId = #{value}
     </select>
+
 </mapper>

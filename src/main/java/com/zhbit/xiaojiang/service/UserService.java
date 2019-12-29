@@ -10,6 +10,6 @@ import com.zhbit.xiaojiang.entity.User;
 
 public interface UserService {
 
-	User findByUserName(String userName);
+	User findByUserId(String userId);
 
 }
