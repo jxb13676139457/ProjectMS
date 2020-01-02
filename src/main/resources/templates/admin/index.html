@@ -6,19 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>项目管理系统后台</title>
     <!-- Bootstrap Styles-->
-    <link rel="stylesheet" type="text/css" th:href="@{bootstrap-3.3.7/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
     <!-- FontAwesome Styles-->
-    <link rel="stylesheet" type="text/css" th:href="@{font-awesome-4.7.0/css/font-awesome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
     <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <link th:href="@{/assets/js/morris/morris-0.4.3.min.css}" rel="stylesheet" />
     <!-- Custom Styles-->
-    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+
+    <style type="text/css" >
+        .head{
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+        }
+    </style>
 
 </head>
 
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-default top-navbar" role="navigation">
+        <nav class="navbar navbar-default top-navbar" role="navigation" th:fragment="topbar">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -26,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/TBMS/admin"><i class="fa fa-comments"></i> <strong>项目管理系统 </strong></a>
+                <a class="navbar-brand" th:href="@{/admin/index}"><i class="fa fa-comments"></i> <strong>项目管理系统</strong></a>
             </div>
 
 
@@ -34,7 +42,9 @@
                 <!-- /.dropdown-messages -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <i>消息</i>
+                        <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
                         <li>
@@ -82,7 +92,7 @@
                     </ul>
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
+               <!-- <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                         <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -158,10 +168,10 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-tasks -->
-                </li>
+                    &lt;!&ndash; /.dropdown-tasks &ndash;&gt;
+                </li>-->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+               <!-- <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -218,25 +228,24 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
+                    &lt;!&ndash; /.dropdown-alerts &ndash;&gt;
+                </li>-->
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <!--<i class="fa fa-user fa-fw"></i>-->
+                        <img th:src="@{/images/admin_head.jpg}" class="head">
+                        <!--<i>管理员</i>-->
+                        <label th:text="${userName}"></label>
+                        <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i>用户信息</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>设置</a>
-                        </li>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i>用户信息</a></li>
+                        <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i>设置</a></li>-->
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>退出登录</a>
-                        </li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>退出登录</a></li>
                     </ul>
-                    <!-- /.dropdown-user -->
                 </li>
-                <!-- /.dropdown -->
             </ul>
         </nav>
         <!--/. NAV TOP  -->
@@ -262,10 +271,10 @@
                     </li>-->
 
                     <li>
-                        <a href="form.html"><i class="fa fa-edit"></i>管理项目模块</a>
+                        <a href="form.html" th:href="@{/TBMS/admin/test}"><i class="fa fa-table"></i>管理项目模块</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap"></i> 管理用户模块<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-users"></i> 管理用户模块<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="#">维护用户信息</a>
@@ -300,30 +309,24 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
                             Dashboard <small>Summary of your App</small>
                         </h1>
 						<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Library</a></li>
-  <li class="active">Data</li>
-</ol>
+                          <li><a href="#">Home</a></li>
+                          <li><a href="#">Library</a></li>
+                          <li class="active">Data</li>
+                        </ol>
                     </div>
                 </div>
-				
-				
                 <!-- /. ROW  -->
-
                 <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green green">
                             <div class="panel-left pull-left green">
                                 <i class="fa fa-bar-chart-o fa-5x"></i>
-                                
                             </div>
                             <div class="panel-right pull-right">
 								<h3>8,457</h3>
@@ -335,25 +338,21 @@
                         <div class="panel panel-primary text-center no-boder bg-color-green green">
                               <div class="panel-left pull-left green">
                                 <i class="fa fa-shopping-cart fa-5x"></i>
-								</div>
-                                
-                            <div class="panel-right pull-right">
-							<h3>52,160 </h3>
-                               <strong> Sales</strong>
-
-                            </div>
+                              </div>
+                              <div class="panel-right pull-right">
+                                <h3>52,160 </h3>
+                                 <strong> Sales</strong>
+                              </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-red red">
                             <div class="panel-left pull-left red">
                                 <i class="fa fa fa-comments fa-5x"></i>
-                               
                             </div>
                             <div class="panel-right pull-right">
 							 <h3>15,823 </h3>
-                               <strong> Comments </strong>
-
+                              <strong> Comments </strong>
                             </div>
                         </div>
                     </div>
@@ -361,18 +360,15 @@
                         <div class="panel panel-primary text-center no-boder bg-color-brown brown">
                             <div class="panel-left pull-left brown">
                                 <i class="fa fa-users fa-5x"></i>
-                                
                             </div>
                             <div class="panel-right pull-right">
-							<h3>36,752 </h3>
-                             <strong>No. of Visits</strong>
-
+                                <h3>36,752 </h3>
+                                <strong>No. of Visits</strong>
                             </div>
                         </div>
                     </div>
                 </div>
-				
-			
+
 				<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-default">
@@ -385,8 +381,7 @@
 					</div>  
 					</div>		
 				</div> 
-				
-			
+
 		<div class="row">
 			<div class="col-xs-6 col-md-3">
 				<div class="panel panel-default">
@@ -588,18 +583,18 @@
     </div>
     <!-- JS Scripts-->
     <!-- jQuery Js -->
-    <script th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!-- Bootstrap Js -->
-    <script th:src="@{bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
     <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
     <!-- Morris Chart Js -->
-    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
-	<script src="assets/js/easypiechart.js"></script>
-	<script src="assets/js/easypiechart-data.js"></script>
+    <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
+    <script th:src="@{/assets/js/morris/morris.js}"></script>
+	<script th:src="@{/assets/js/easypiechart.js}"></script>
+	<script th:src="@{/assets/js/easypiechart-data.js}"></script>
     <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script>
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
 
 </body>
 

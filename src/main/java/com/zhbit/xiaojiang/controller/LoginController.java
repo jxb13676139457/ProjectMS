@@ -6,6 +6,7 @@
  */
 package com.zhbit.xiaojiang.controller;
 
+import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -38,9 +39,9 @@ public class LoginController {
 	*@Date 2019/12/24 22:30
 	*Description  前台用户首页请求
 	*/
-	@RequestMapping("/user")
+	@RequestMapping("/user/index")
 	public String user(){
-		return "/user/index";
+		return "user/index";
 	}
 
 	/**
@@ -48,11 +49,15 @@ public class LoginController {
 	*@Date 2019/12/24 22:31
 	*Description  后台管理员首页请求
 	*/
-	@RequestMapping("/admin")
+	@RequestMapping("/admin/index")
 	public String admin(){
-		return "/admin/index";
+		return "admin/index";
 	}
 
+	@RequestMapping("/admin/test")
+	public String test(){
+		return "admin/test";
+	}
 	/**
 	*@Author 小江  [com.zhbit]
 	*@Date 2019/12/24 22:31
@@ -69,11 +74,15 @@ public class LoginController {
 		try{
 			//进行验证，报错返回首页，不报错到达主页
 			subject.login(token);
+			User user = userService.findByUserId(userId);
+			int roleType = user.getRole().getRoleType();
+			String userName = user.getUserName();
+			model.addAttribute("userName",userName);
 			//判断到达前台主页还是后台主页
-			if(userService.findByUserId(userId).getRole().getRoleType()==1){
-				return "redirect:/admin";
+			if(roleType==1){
+				return "/admin/index";
 			}else{
-				return "redirect:/user";
+				return "/user/index";
 			}
 		}catch (UnknownAccountException uae){
 			model.addAttribute("msg","用户名不存在");

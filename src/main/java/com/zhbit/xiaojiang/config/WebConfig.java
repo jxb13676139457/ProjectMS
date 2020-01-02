@@ -24,10 +24,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 *@Date 2019/12/18 21:42
 	 *Description  配置放行静态资源,访问static下的静态资源可以直接省略掉/static路径
 	 */
-	@Override
+	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry){
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-	}
+	}*/
 
 	/**
 	*@Author 小江  [com.zhbit]

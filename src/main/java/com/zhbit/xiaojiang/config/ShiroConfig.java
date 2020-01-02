@@ -31,9 +31,16 @@ public class ShiroConfig{
 		//放行请求路径
 		filterMap.put("/toLogin","anon");
 		filterMap.put("/login","anon");
+		filterMap.put("/images/*","anon");
+		filterMap.put("/js/*","anon");
+		filterMap.put("/css/*","anon");
+		filterMap.put("/assets/**/*","anon");
+		filterMap.put("/bootstrap-3.3.7/**/*","anon");
+		filterMap.put("/font-awesome-4.7.0/**/*","anon");
 		//filterMap.put("/demand:edit","perms[]")
 		//使用通配符的方式进行全部请求路径拦截的
-		filterMap.put("/*","authc");
+		filterMap.put("/**","authc");
+
 		//设置认证拦截的请求
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 		//设置认证被拦截后跳转的页面请求
