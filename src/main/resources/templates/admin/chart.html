@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图表</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Morris Chart Styles-->
+    <link th:href="@{/assets/js/morris/morris-0.4.3.min.css}" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+   
+</head>
+<body>
+    <div id="wrapper">
+        <!--引入抽取出来的顶部导航栏-->
+        <div th:replace="~{/admin/index::topbar}"></div>
+        <!--/. NAV TOP  -->
+        <!--引入抽取出来的侧边菜单栏-->
+        <div th:replace="~{/admin/index::sidebar}"></div>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Charts <small>Show up your stats</small>
+                        </h1>
+                    </div>
+                </div> 
+                 <!-- /. ROW  -->
+             
+                <div class="row"> 
+                    
+                      
+                               <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Bar Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                    </div>            
+                </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Area Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-area-chart"></div>
+                        </div>
+                    </div>            
+                </div> 
+                
+           </div>
+                 <!-- /. ROW  -->
+                <div class="row">                     
+                      
+                               <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Line Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-line-chart"></div>
+                        </div>
+                    </div>            
+                </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Donut Chart
+                        </div>
+                        <div class="panel-body">                            
+							<div id="morris-donut-chart"></div>
+                        </div>
+                    </div>            
+                </div> 
+                
+           </div>
+                 <!-- /. ROW  -->
+				 <footer><p>Copyright &copy; 2016.Company name All rights reserved.</p></footer>
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Morris Chart Js -->
+    <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
+    <script th:src="@{/assets/js/morris/morris.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+   
+</body>
+</html>

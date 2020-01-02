@@ -12,22 +12,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @ComponentScan
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
-	/**
-	 *@Author 小江  [com.zhbit]
-	 *@Date 2019/12/18 21:42
-	 *Description  配置放行静态资源,访问static下的静态资源可以直接省略掉/static路径
-	 */
-	/*@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry){
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-	}*/
 
 	/**
 	*@Author 小江  [com.zhbit]

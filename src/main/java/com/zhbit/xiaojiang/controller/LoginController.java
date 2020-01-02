@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,10 +55,37 @@ public class LoginController {
 		return "admin/index";
 	}
 
-	@RequestMapping("/admin/test")
-	public String test(){
-		return "admin/test";
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/2 22:37
+	*Description  以下均是测试页面请求
+	*/
+	@RequestMapping("/admin/chart")
+	public String chart(){
+		return "admin/chart";
 	}
+	@RequestMapping("/admin/form")
+	public String form(){
+		return "admin/form";
+	}
+	@RequestMapping("/admin/empty")
+	public String empty(){
+		return "admin/empty";
+	}
+	@RequestMapping("/admin/table")
+	public String table(){
+		return "admin/table";
+	}
+	@RequestMapping("/admin/panel")
+	public String panel(){
+		return "admin/tab-panel";
+	}
+	@RequestMapping("/admin/elements")
+	public String elements(){
+		return "admin/ui-elements";
+	}
+
+
 	/**
 	*@Author 小江  [com.zhbit]
 	*@Date 2019/12/24 22:31
@@ -77,7 +105,10 @@ public class LoginController {
 			User user = userService.findByUserId(userId);
 			int roleType = user.getRole().getRoleType();
 			String userName = user.getUserName();
-			model.addAttribute("userName",userName);
+			Session session = subject.getSession();
+			//用户名和角色存入session
+			session.setAttribute("userName",userName);
+			session.setAttribute("roleType",roleType);
 			//判断到达前台主页还是后台主页
 			if(roleType==1){
 				return "/admin/index";

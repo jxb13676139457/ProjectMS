@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 
 <head>
     <meta charset="utf-8" />
@@ -13,14 +13,8 @@
     <link th:href="@{/assets/js/morris/morris-0.4.3.min.css}" rel="stylesheet" />
     <!-- Custom Styles-->
     <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
-
-    <style type="text/css" >
-        .head{
-            width: 32px;
-            height: 32px;
-            border-radius: 16px;
-        }
-    </style>
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
 
@@ -36,7 +30,6 @@
                 </button>
                 <a class="navbar-brand" th:href="@{/admin/index}"><i class="fa fa-comments"></i> <strong>项目管理系统</strong></a>
             </div>
-
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown-messages -->
@@ -233,10 +226,8 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <!--<i class="fa fa-user fa-fw"></i>-->
                         <img th:src="@{/images/admin_head.jpg}" class="head">
-                        <!--<i>管理员</i>-->
-                        <label th:text="${userName}"></label>
+                        <strong>[[${session.userName}]]</strong>
                         <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -249,7 +240,7 @@
             </ul>
         </nav>
         <!--/. NAV TOP  -->
-        <nav class="navbar-default navbar-side" role="navigation">
+        <nav class="navbar-default navbar-side" role="navigation" th:fragment="sidebar">
 		<div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
@@ -271,7 +262,7 @@
                     </li>-->
 
                     <li>
-                        <a href="form.html" th:href="@{/TBMS/admin/test}"><i class="fa fa-table"></i>管理项目模块</a>
+                        <a th:href="@{/admin/chart}"><i class="fa fa-table"></i>管理项目模块</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-users"></i> 管理用户模块<span class="fa arrow"></span></a>

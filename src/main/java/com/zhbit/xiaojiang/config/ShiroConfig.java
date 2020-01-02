@@ -6,6 +6,7 @@
  */
 package com.zhbit.xiaojiang.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.zhbit.xiaojiang.component.UserRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -18,6 +19,12 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig{
+
+	//这个bean是为了使用shiro权限标签
+	@Bean(name = "shiroDialect")
+	public ShiroDialect shiroDialect(){
+		return new ShiroDialect();
+	}
 
 	//创建ShiroFilterFactoryBean
 	@Bean
