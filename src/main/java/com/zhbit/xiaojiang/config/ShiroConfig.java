@@ -44,7 +44,7 @@ public class ShiroConfig{
 		filterMap.put("/assets/**/*","anon");
 		filterMap.put("/bootstrap-3.3.7/**/*","anon");
 		filterMap.put("/font-awesome-4.7.0/**/*","anon");
-		//filterMap.put("/demand:edit","perms[]")
+		filterMap.put("/auth/logout","logout");
 		//使用通配符的方式进行全部请求路径拦截的
 		filterMap.put("/**","authc");
 

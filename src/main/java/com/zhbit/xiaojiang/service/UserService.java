@@ -8,8 +8,14 @@ package com.zhbit.xiaojiang.service;
 
 import com.zhbit.xiaojiang.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
 	User findByUserId(String userId);
+
+	List<User> findAllUser();
+
+
 
 }

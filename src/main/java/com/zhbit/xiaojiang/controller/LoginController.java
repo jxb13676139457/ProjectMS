@@ -17,7 +17,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -72,10 +75,10 @@ public class LoginController {
 	public String empty(){
 		return "admin/empty";
 	}
-	@RequestMapping("/admin/table")
+	/*@RequestMapping("/admin/table")
 	public String table(){
 		return "admin/table";
-	}
+	}*/
 	@RequestMapping("/admin/panel")
 	public String panel(){
 		return "admin/tab-panel";
@@ -84,7 +87,6 @@ public class LoginController {
 	public String elements(){
 		return "admin/ui-elements";
 	}
-
 
 	/**
 	*@Author 小江  [com.zhbit]
@@ -122,6 +124,11 @@ public class LoginController {
 			model.addAttribute("msg","密码错误");
 			return"login";
 		}
+	}
+
+	@RequestMapping("/auth/logout")
+	public String logout(){
+		return "redirect:/toLogin";
 	}
 
 }

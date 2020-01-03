@@ -20,11 +20,18 @@
             <result column="rolePower" property="rolePower" />
         </association>
     </resultMap>
+
     <select id="findByUserId" parameterType="String" resultMap="UserRoleResultMap">
       select u.*,roleType,roleName,rolePower
       from users u join roles r
       on u.roleId = r.roleId
       where userId = #{value}
+    </select>
+
+    <select id="findAllUser" resultMap="UserRoleResultMap">
+        select u.*,roleType,roleName,rolePower
+        from users u join roles r
+        on u.roleId = r.roleId
     </select>
 
 </mapper>

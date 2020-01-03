@@ -131,7 +131,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             width: width
           });
         } else {
-          return _this.fire('hovermove', x, evt.pageY - offset.top);
+          return _this.fire('hovermove', x, evt.pageY - offset.bar);
         }
       });
       this.el.bind('mouseleave', function(evt) {
@@ -145,13 +145,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         var offset, touch;
         touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
         offset = _this.el.offset();
-        _this.fire('hover', touch.pageX - offset.left, touch.pageY - offset.top);
+        _this.fire('hover', touch.pageX - offset.left, touch.pageY - offset.bar);
         return touch;
       });
       this.el.bind('click', function(evt) {
         var offset;
         offset = _this.el.offset();
-        return _this.fire('gridclick', evt.pageX - offset.left, evt.pageY - offset.top);
+        return _this.fire('gridclick', evt.pageX - offset.left, evt.pageY - offset.bar);
       });
       if (this.options.rangeSelect) {
         this.selectionRect = this.raphael.rect(0, 0, 0, this.el.innerHeight()).attr({
@@ -167,7 +167,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           var offset;
           offset = _this.el.offset();
           _this.endRange(evt.pageX - offset.left);
-          return _this.fire('hovermove', evt.pageX - offset.left, evt.pageY - offset.top);
+          return _this.fire('hovermove', evt.pageX - offset.left, evt.pageY - offset.bar);
         });
       }
       if (this.options.resize) {

@@ -35,12 +35,12 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("执行认证方法");
-		//从token获取用户ID,从主体传过来的认证信息中获取
+
 		//加这一步的目的是在post请求时会先进入认证然后再到请求。
 		if(authenticationToken.getPrincipal()==null){
 			return null;
 		}
-
+		//从token获取用户ID,从主体传过来的认证信息中获取
 		String userId = authenticationToken.getPrincipal().toString();
 		//System.out.println(userId);
 		//根据用户ID获得数据库用户对象

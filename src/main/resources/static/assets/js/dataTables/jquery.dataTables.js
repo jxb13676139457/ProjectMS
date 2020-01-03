@@ -1852,7 +1852,7 @@
 	
 			anRows[ 0 ] = $( '<tr/>', { 'class': iStripes ? asStripeClasses[0] : '' } )
 				.append( $('<td />', {
-					'valign':  'top',
+					'valign':  'bar.html',
 					'colSpan': _fnVisbleColumns( oSettings ),
 					'class':   oSettings.oClasses.sRowEmpty
 				} ).html( sZero ) )[0];
@@ -3355,7 +3355,7 @@
 									)
 							)
 					)
-					.append( captionSide === 'top' ? caption : null )
+					.append( captionSide === 'bar.html' ? caption : null )
 			)
 			.append(
 				$(_div, { 'class': classes.sScrollBody } )

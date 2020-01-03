@@ -12,6 +12,8 @@ import com.zhbit.xiaojiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,5 +25,12 @@ public class UserServiceImpl implements UserService {
 	public User findByUserId(String userId) {
 		return userMapper.findByUserId(userId);
 	}
+
+	@Override
+	public List<User> findAllUser() {
+		return userMapper.findAllUser();
+	}
+
+
 
 }

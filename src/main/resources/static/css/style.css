@@ -1,5 +1,66 @@
+/*导航栏头像的圆框样式*/
 .head{
     width: 32px;
     height: 32px;
     border-radius: 16px;
+}
+
+/*以下是login登录页的css样式*/
+.container{
+    text-align: center;
+    font-family: "Microsoft YaHei UI";
+    height: 400px;
+    margin-top: 70px;
+}
+.body{
+    /*使背景填充整个页面*/
+    background: url("/TBMS/images/login_bg.jpg") no-repeat 0 0 transparent;
+    background-size: 100% 950px;
+}
+.input-group{
+    height: 40px;
+    width: 350px;
+    line-height: 40px;
+    border: 1px grey solid;
+    border-radius: 20px;
+    /*控制输入框组居中显示*/
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.input{
+    width: 200px;
+    /*使输入框无边框透明显示*/
+    background-color:transparent;
+    border:0;
+    font-size: 17px;
+    margin-left: 10px;
+}
+.btn{
+    height: 40px;
+    width: 350px;
+    vertical-align: center;
+    border: 1px grey solid;
+    border-radius: 20px;
+    background-color: #5bc0de;
+    color: white;
+    font-size: 20px;
+}
+/*制作半透明灰色蒙板*/
+.mask{
+    width: 400px;
+    height: 550px;
+    background:rgba(255,251,240,0.5);
+}
+.error{
+    /*使输入框无边框透明显示*/
+    background-color:transparent;
+    border:0;
+    font-size: 22px;
+    font-family: 幼圆;
+    margin-left: 10px;
+    color: red;
+}
+a{
+    text-decoration-line: none;
 }
