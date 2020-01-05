@@ -17,10 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 public class LoginController {
@@ -41,9 +38,9 @@ public class LoginController {
 	/**
 	*@Author 小江  [com.zhbit]
 	*@Date 2019/12/24 22:30
-	*Description  前台用户首页请求
+	*Description  跳转到前台用户首页
 	*/
-	@RequestMapping("/user/index")
+	@RequestMapping("/user-sys/index")
 	public String user(){
 		return "user/index";
 	}
@@ -51,41 +48,11 @@ public class LoginController {
 	/**
 	*@Author 小江  [com.zhbit]
 	*@Date 2019/12/24 22:31
-	*Description  后台管理员首页请求
+	*Description  跳转到后台管理员首页
 	*/
-	@RequestMapping("/admin/index")
+	@RequestMapping("/admin-sys/index")
 	public String admin(){
 		return "admin/index";
-	}
-
-	/**
-	*@Author 小江  [com.zhbit]
-	*@Date 2020/1/2 22:37
-	*Description  以下均是测试页面请求
-	*/
-	@RequestMapping("/admin/chart")
-	public String chart(){
-		return "admin/chart";
-	}
-	@RequestMapping("/admin/form")
-	public String form(){
-		return "admin/form";
-	}
-	@RequestMapping("/admin/empty")
-	public String empty(){
-		return "admin/empty";
-	}
-	/*@RequestMapping("/admin/table")
-	public String table(){
-		return "admin/table";
-	}*/
-	@RequestMapping("/admin/panel")
-	public String panel(){
-		return "admin/tab-panel";
-	}
-	@RequestMapping("/admin/elements")
-	public String elements(){
-		return "admin/ui-elements";
 	}
 
 	/**
@@ -105,14 +72,14 @@ public class LoginController {
 			//进行验证，报错返回首页，不报错到达主页
 			subject.login(token);
 			User user = userService.findByUserId(userId);
-			int roleType = user.getRole().getRoleType();
+			String roleType = user.getRole().getRoleType();
 			String userName = user.getUserName();
 			Session session = subject.getSession();
 			//用户名和角色存入session
 			session.setAttribute("userName",userName);
 			session.setAttribute("roleType",roleType);
 			//判断到达前台主页还是后台主页
-			if(roleType==1){
+			if(roleType.equals("admin")){
 				return "/admin/index";
 			}else{
 				return "/user/index";
@@ -126,6 +93,11 @@ public class LoginController {
 		}
 	}
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/5 22:44
+	*Description   登出请求，用Shiro完成登出拦截器
+	*/
 	@RequestMapping("/auth/logout")
 	public String logout(){
 		return "redirect:/toLogin";

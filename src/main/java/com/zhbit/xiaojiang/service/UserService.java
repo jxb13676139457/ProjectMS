@@ -12,10 +12,18 @@ import java.util.List;
 
 public interface UserService {
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/4 17:11
+	*Description   通过userId查询数据库用户对象
+	*/
 	User findByUserId(String userId);
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/4 17:11
+	*Description   查询数据库所有用户对象
+	*/
 	List<User> findAllUser();
-
-
 
 }

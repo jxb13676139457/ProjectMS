@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>添加角色界面</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script type="text/javascript">
+        function toSubmit(){
+            $.ajax(
+                {
+                    type:"post",
+                    url:"http://localhost:8081/TBMS/admin/updateRole",
+                    //注：如果没有文件，只是简单的表单数据则可以使用 $('#formid').serialize();
+                    data:$("#roleForm").serialize(),
+                    dataType:"json",
+                    async:false,
+                    success: function(data){
+                        if(data!=null && data!=""){
+                            alert(data);
+                        }
+                    }
+                }
+            );
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <!--引入抽取出来的顶部导航栏-->
+        <div th:replace="~{/commons/bar::topbar}"></div>
+        <!--/. NAV TOP  -->
+        <!--引入抽取出来的侧边菜单栏-->
+        <div th:replace="~{/commons/bar::sidebar}"></div>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+             <div id="page-inner">
+			     <div class="row">
+                     <div class="col-md-12">
+                         <h1 class="page-header">
+                             Empty Page <small>Create new page.</small>
+                         </h1>
+                     </div>
+                 </div>
+
+                 <!--main content start-->
+                 <section id="main-content">
+                     <section class="wrapper">
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <ol class="breadcrumb">
+                                     <li><i class="fa fa-home"></i><a th:href="@{/admin/index}">首页</a></li>
+                                     <li><i class="icon_document_alt"></i>修改角色</li>
+                                     <button type="button" class="btn-sm btn-default"
+                                             style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
+                                         <a th:href="@{/admin/roleList}" style="color:white">返回上页</a>
+                                     </button>
+                                 </ol>
+                             </div>
+                         </div>
+
+                         <!-- Form validations -->
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <section class="panel">
+                                     <header class="panel-heading">
+                                         <b>修改角色信息</b>
+                                     </header>
+                                     <div class="panel-body">
+                                         <div class="form">
+                                             <!--<label style="color:red">${ sessionScope.addUserError}</label>-->
+                                             <form th:action="@{/admin/updateRole}" class="form-validate form-horizontal" method="post">
+                                                 <!--<div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>学号</b><span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="interStudent.studentId" value="${sessionScope.editStudent.studentId }" style="width:300px" type="text"
+                                                                    onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="只能输入数字" disabled
+                                                                    required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色类型
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <select style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option value="">请选择</option>
+                                                                 <option th:selected="${role.roleType eq 'admin'}">admin</option>
+                                                                 <option th:selected="${role.roleType eq '管理'}">管理</option>
+                                                                 <option th:selected="${role.roleType eq '开发'}">开发</option>
+                                                                 <option th:selected="${role.roleType eq '测试'}">测试</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色名
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" th:value="${role.roleName}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色拥有权限
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <select style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option value="">请选择</option>
+                                                                 <option th:selected="${role.rolePower eq 'all:all'}">all:all</option>
+                                                                 <option th:selected="${role.rolePower eq 'dev:edit'}">dev:edit</option>
+                                                                 <option th:selected="${role.rolePower eq 'test:edit'}">test:edit</option>
+                                                                 <option th:selected="${role.rolePower eq 'demand:edit'}">demand:edit</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <!--<div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>密码</b> <span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control"  type="password" id="password" name="interStudent.password"  style="width:300px" value="${sessionScope.editStudent.password}"
+                                                                    minlength="6" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>年级</b><span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="grade" value="${sessionScope.editStudent.classes.grade }" style="width:300px" type="text" disabled required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>性别</b><span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="interStudent.sex" style="width:300px"  value="${sessionScope.editStudent.sex}" type="text" disabled required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>班级</b><span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" id="className" name="className"  type="text" style="width:300px"  value="${sessionScope.editStudent.classes.className}" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>专业</b><span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="major" style="width:300px"  value="${sessionScope.editStudent.classes.major}" type="text" disabled required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2"><b>状态</b></label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="interStudent.status" style="width:300px" value="${sessionScope.editStudent.status}"  type="text"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
+
+                                                 <div class="form-group">
+                                                     <div  style="margin-left:500px">
+                                                         <div class="col-lg-offset-2 col-lg-10">
+                                                             <button type="submit" class="btn-sm btn-default"
+                                                                     style="background-color:#66CDAA;color: white">更新</button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </form>
+                                         </div>
+                                     </div>
+                                 </section>
+                             </div>
+                         </div>
+                         <!-- page end-->
+                         </section>
+                 </section>
+                 <!--main content end-->
+
+                 <!-- /. ROW  -->
+				 <footer><p>Copyright &copy; 2016.Company name All rights reserved.</p></footer>
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+   
+</body>
+</html>

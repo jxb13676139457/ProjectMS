@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>表格</title>
+    <title>用户界面</title>
     <!-- Bootstrap Styles-->
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
     <!-- FontAwesome Styles-->
@@ -40,6 +40,11 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                  用户表
+                                <button class="btn-sm btn-success" style="margin-left: 850px">
+                                    <a th:href="@{/admin-sys/user}" style="color:white">
+                                        <i class="fa fa-plus-square">添加用户</i>
+                                    </a>
+                                </button>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -62,7 +67,7 @@
                                                 <td class="center" th:text="${user.role.roleName}"></td>
                                                 <td class="center" th:text="${user.role.rolePower}"></td>
                                                 <td class="center">
-                                                    <button class="btn-sm btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true">编辑</i></button>
+                                                    <button class="btn-sm btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true">编辑</i></button>
                                                     <button class="btn-sm btn-danger"><i class="fa fa-trash-o" aria-hidden="true">删除</i></button>
                                                 </td>
                                             </tr>
@@ -72,6 +77,38 @@
                             </div>
                         </div>
                         <!--End Advanced Tables -->
+
+                        <!--显示分页信息-->
+                        <div class="modal-footer no-margin-top">
+                            <div class="col-md-6">
+                                <strong>当前第 [[${userPageInfo.pageNum}]]页,共 [[${userPageInfo.pages}]] 页.一共 [[${userPageInfo.total}]] 条记录
+                                </strong>
+                            </div>
+                            <ul class="pagination pull-right no-margin">
+                                <li th:if="${userPageInfo.hasPreviousPage}">
+                                    <a th:href="'/TBMS/admin-sys/users?pageNum=1'">首页</a>
+                                </li>
+                                <li class="prev" th:if="${userPageInfo.hasPreviousPage}">
+                                    <a th:href="'/TBMS/admin-sys/users?pageNum='+${userPageInfo.prePage}">
+                                        <i class="ace-icon fa fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <!--遍历条数-->
+                                <li th:each="nav:${userPageInfo.navigatepageNums}">
+                                    <a th:href="'/TBMS/admin-sys/users?pageNum='+${nav}" th:text="${nav}" th:if="${nav != userPageInfo.pageNum}"></a>
+                                    <span style="font-weight: bold;background: #6faed9;" th:if="${nav == userPageInfo.pageNum}" th:text="${nav}" ></span>
+                                </li>
+                                <li class="next" th:if="${userPageInfo.hasNextPage}">
+                                    <a th:href="'/TBMS/admin-sys/users?pageNum='+${userPageInfo.nextPage}">
+                                        <i class="ace-icon fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="'/TBMS/admin-sys/users?pageNum='+${userPageInfo.pages}">尾页</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
                     <!-- /. ROW  -->
@@ -357,7 +394,6 @@
         <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
-    <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
@@ -366,14 +402,14 @@
     <!-- Metis Menu Js -->
     <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
      <!-- DATA TABLE SCRIPTS -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+    <script th:src="@{/assets/js/easypiechart.js}"></script>
+    <script th:src="@{/assets/js/easypiechart-data.js}"></script>
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
         });
     </script>
-    <!-- Custom Js -->
+    <!-- Custom Js-->
     <script th:src="@{/assets/js/custom-scripts.js}"></script>
 
 </body>

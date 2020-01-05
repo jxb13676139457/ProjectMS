@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>添加角色界面</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="wrapper">
+        <!--引入抽取出来的顶部导航栏-->
+        <div th:replace="~{/commons/bar::topbar}"></div>
+        <!--/. NAV TOP  -->
+        <!--引入抽取出来的侧边菜单栏-->
+        <div th:replace="~{/commons/bar::sidebar(activeUri='role.html')}"></div>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+             <div id="page-inner">
+			    <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Empty Page <small>Create new page.</small>
+                        </h1>
+                    </div>
+                </div>
+
+                 <!--main content start-->
+                 <section id="main-content">
+                     <section class="wrapper">
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <ol class="breadcrumb">
+                                     <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
+                                     <li><i class="icon_document_alt"></i><b>添加角色</b></li>
+                                     <button type="button" class="btn-sm btn-default"
+                                             style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
+                                         <a th:href="@{/admin-sys/roles}" style="color:white">返回上页</a>
+                                     </button>
+                                 </ol>
+                             </div>
+                         </div>
+
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <section class="panel">
+                                     <header class="panel-heading">
+                                         <b>添加角色信息</b>
+                                     </header>
+                                     <div class="panel-body">
+                                         <div class="form">
+                                             <form class="form-validate form-horizontal" th:action="@{/admin-sys/role}" method="post" >
+                                                 <!--<div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色ID
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色类型
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <select name="roleType" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option selected value="">请选择</option>
+                                                                 <option>admin</option>
+                                                                 <option>管理</option>
+                                                                 <option>开发</option>
+                                                                 <option>测试</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色名
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="roleName" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">角色拥有权限
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <select name="rolePower" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option selected value="">请选择</option>
+                                                                 <option>all:all</option>
+                                                                 <option>dev:edit</option>
+                                                                 <option>test:edit</option>
+                                                                 <option>demand:edit</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 <!--<div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2">性别<span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <select name="admin.sex"  id="sex" style="width:100px;height:30px" style="width:300px"   required>
+                                                                 <option selected>男</option>
+                                                                 <option>女</option>
+
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
+
+                                                 <div class="form-group">
+                                                     <div  style="margin-left:500px">
+                                                         <div class="col-lg-offset-2 col-lg-10">
+                                                             <button type="submit" class="btn-sm btn-default"
+                                                                     style="background-color:#66CDAA;color: white">添加</button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </form>
+                                         </div>
+                                     </div>
+                                 </section>
+                             </div>
+                         </div>
+                         <!-- page end-->
+                     </section>
+                 </section>
+                 <!--main content end-->
+
+                 <!-- /. ROW  -->
+				 <footer><p>Copyright &copy; 2016.Company name All rights reserved.</p></footer>
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+   
+</body>
+</html>

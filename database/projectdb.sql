@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-12-29 23:53:29
+Date: 2020-01-05 23:42:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -103,22 +103,25 @@ CREATE TABLE `projects` (
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
-  `roleId` int(11) NOT NULL COMMENT '角色ID',
-  `roleType` int(11) NOT NULL COMMENT '角色类型',
-  `roleName` varchar(50) NOT NULL COMMENT '角色名',
-  `rolePower` varchar(50) NOT NULL COMMENT '角色权限',
+  `roleId` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `roleType` varchar(50) DEFAULT '' COMMENT '角色类型',
+  `roleName` varchar(50) DEFAULT '' COMMENT '角色名',
+  `rolePower` varchar(50) DEFAULT '' COMMENT '角色权限',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES ('1', '1', '管理员', 'all:all');
-INSERT INTO `roles` VALUES ('2', '2', '项目经理', 'demand:edit');
-INSERT INTO `roles` VALUES ('3', '3', 'Java开发工程师', 'dev:edit');
-INSERT INTO `roles` VALUES ('4', '3', 'golang开发工程师', 'dev:edit');
-INSERT INTO `roles` VALUES ('5', '4', '软件测试工程师', 'test:edit');
-INSERT INTO `roles` VALUES ('6', '2', 'ETL开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('1', 'admin', '管理员', 'all:all');
+INSERT INTO `roles` VALUES ('2', '管理', '项目经理', 'demand:edit');
+INSERT INTO `roles` VALUES ('3', '开发', 'Java开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('4', '开发', 'golang开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('5', '测试', '软件测试工程师', 'test:edit');
+INSERT INTO `roles` VALUES ('6', '开发', 'ETL开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('7', '开发', '前端开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('39', '开发', 'PHP开发工程师', 'dev:edit');
+INSERT INTO `roles` VALUES ('40', '测试', '测试开发工程师', 'test:edit');
 
 -- ----------------------------
 -- Table structure for tasks
@@ -152,7 +155,7 @@ CREATE TABLE `users` (
   `sex` char(2) NOT NULL COMMENT '性别',
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系手机号',
-  `roleId` int(11) DEFAULT NULL COMMENT '角色ID',
+  `roleId` int(11) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -161,4 +164,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('111111111111', '小郑', '123456', '男', '广东省汕头市', '11111111111', '5');
 INSERT INTO `users` VALUES ('160202103567', '小江', '123456', '男', '广东省汕头市', '13726213859', '1');
+INSERT INTO `users` VALUES ('222222222222', '小李', '123456', '女', '广东省深圳市', '22222222222', '4');
+INSERT INTO `users` VALUES ('333333333333', '小黄', '123456', '男', '广东省珠海市', '33333333333', '7');
 SET FOREIGN_KEY_CHECKS=1;

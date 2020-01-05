@@ -1,4 +1,4 @@
-package com.zhbit.xiaojiang;
+package com.zhbit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

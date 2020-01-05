@@ -29,5 +29,10 @@ spring:
 mybatis:
   type-aliases-package: com.zhbit.xiaojiang.entity
   mapper-locations: classpath:com/zhbit/xiaojiang/mapper/*.xml          # mapper映射文件
-
+#mybatis分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countsql
 debug: true

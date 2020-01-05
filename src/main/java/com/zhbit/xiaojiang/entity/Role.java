@@ -8,7 +8,7 @@ package com.zhbit.xiaojiang.entity;
 
 public class Role {
 	private int roleId;
-	private int roleType;
+	private String roleType;
 	private String roleName;
 	private String rolePower;
 
@@ -20,11 +20,11 @@ public class Role {
 		this.roleId = roleId;
 	}
 
-	public int getRoleType() {
+	public String getRoleType() {
 		return roleType;
 	}
 
-	public void setRoleType(int roleType) {
+	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
 
