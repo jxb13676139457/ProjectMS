@@ -32,6 +32,13 @@ public interface RoleService {
 	*Description  插入数据库角色对象
 	*/
 	Role saveRole(Role role);
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/6 21:16
+	*Description  修改数据库角色对象
+	*/
+	Role editRole(Role role);
 
 
 

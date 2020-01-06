@@ -88,7 +88,7 @@ public class RoleController {
 	*@Date 2020/1/5 15:54
 	*Description   跳转到修改页面，查出当前角色，在编辑页面回显
 	*/
-	@RequestMapping("/admin-sys/toUpdateRole/{roleId}")
+	@GetMapping("/admin-sys/role/{roleId}")
 	public String toUpdateRole(@PathVariable("roleId") Integer roleId,Model model){
 		Role role = roleService.findByRoleId(roleId);
 		model.addAttribute("role",role);
@@ -100,9 +100,9 @@ public class RoleController {
 	*@Date 2020/1/5 15:52
 	*Description  更新指定的Role对象数据并持久化到数据库
 	*/
-	@RequestMapping("/admin-sys/updateRole")
-	public String updateRole(Model model){
-
+	@PutMapping("/admin-sys/role-detail")
+	public String updateRole(Role role){
+		roleService.editRole(role);
 		return "redirect:/admin-sys/roles";
 	}
 }

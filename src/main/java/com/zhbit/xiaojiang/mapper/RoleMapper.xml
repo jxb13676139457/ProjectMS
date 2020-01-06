@@ -21,4 +21,13 @@
                  #{rolePower,jdbcType=VARCHAR}
           )
     </insert>
+
+    <update id="editRole" parameterType="Role">
+        update roles set
+          roleType=#{roleType,jdbcType=VARCHAR},
+          roleName=#{roleName,jdbcType=VARCHAR},
+          rolePower=#{rolePower,jdbcType=VARCHAR}
+        where roleId=#{roleId}
+    </update>
+
 </mapper>

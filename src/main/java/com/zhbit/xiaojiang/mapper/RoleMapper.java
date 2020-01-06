@@ -25,5 +25,8 @@ public interface RoleMapper {
 	//插入Role对象
 	int saveRole(Role role);
 
+	//修改Role对象
+	int editRole(Role role);
+
 
 }

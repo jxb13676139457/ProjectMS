@@ -57,11 +57,11 @@
                          <div class="row">
                              <div class="col-lg-12">
                                  <ol class="breadcrumb">
-                                     <li><i class="fa fa-home"></i><a th:href="@{/admin/index}">首页</a></li>
+                                     <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
                                      <li><i class="icon_document_alt"></i>修改角色</li>
                                      <button type="button" class="btn-sm btn-default"
                                              style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
-                                         <a th:href="@{/admin/roleList}" style="color:white">返回上页</a>
+                                         <a th:href="@{/admin-sys/roles}" style="color:white">返回上页</a>
                                      </button>
                                  </ol>
                              </div>
@@ -77,7 +77,7 @@
                                      <div class="panel-body">
                                          <div class="form">
                                              <!--<label style="color:red">${ sessionScope.addUserError}</label>-->
-                                             <form th:action="@{/admin/updateRole}" class="form-validate form-horizontal" method="post">
+                                             <form th:action="@{/admin-sys/role-detail}" class="form-validate form-horizontal" method="post">
                                                  <!--<div class="form-group ">
                                                      <div  style="margin-left:250px;margin-top:-10px">
                                                          <label class="control-label col-lg-2"><b>学号</b><span class="required" style="color:red">*</span></label>
@@ -88,6 +88,10 @@
                                                          </div>
                                                      </div>
                                                  </div>-->
+                                                 <!--修改页面必须加这个隐藏输入框，设定请求方式-->
+                                                 <input type="hidden" name="_method" value="put"/>
+                                                 <!--获取roleId的值-->
+                                                 <input type="hidden" name="roleId" th:value="${role.roleId}">
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
@@ -95,7 +99,7 @@
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <select style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                             <select name="roleType" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
                                                                  <option value="">请选择</option>
                                                                  <option th:selected="${role.roleType eq 'admin'}">admin</option>
                                                                  <option th:selected="${role.roleType eq '管理'}">管理</option>
@@ -112,7 +116,7 @@
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" th:value="${role.roleName}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="roleName" th:value="${role.roleName}" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -123,7 +127,7 @@
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <select style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                             <select name="rolePower" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
                                                                  <option value="">请选择</option>
                                                                  <option th:selected="${role.rolePower eq 'all:all'}">all:all</option>
                                                                  <option th:selected="${role.rolePower eq 'dev:edit'}">dev:edit</option>
