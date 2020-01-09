@@ -77,7 +77,6 @@ public class RoleController {
 	*/
 	@PostMapping("/admin-sys/role")
 	public String addRole(Role role){
-
 		System.out.println("保存的角色信息："+role);
 		roleService.saveRole(role);
 		return "redirect:/admin-sys/roles";
@@ -105,4 +104,11 @@ public class RoleController {
 		roleService.editRole(role);
 		return "redirect:/admin-sys/roles";
 	}
+
+	@DeleteMapping("admin-sys/role/{roleId}")
+	public String deleteRole(@PathVariable("roleId") Integer roleId){
+		System.out.println("进入后台删除操作");
+		return "redirect:/admin-sys/roles";
+	}
+
 }
