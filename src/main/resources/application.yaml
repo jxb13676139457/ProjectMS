@@ -14,7 +14,11 @@ spring:
     encoding: utf-8
   mvc:
     date-format: yyyy-MM-dd
-  #配置开启直接访问templates模板页面权限，不推荐
+    #配置开启支持put和delete的restful请求
+    hiddenmethod:
+      filter:
+        enabled: true
+    #配置开启直接访问templates模板页面权限，不推荐
   #resources:
     #static-locations: classpath:/templates/
 

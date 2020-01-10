@@ -28,5 +28,7 @@ public interface RoleMapper {
 	//修改Role对象
 	int editRole(Role role);
 
+	int deleteRole(int roleId);
+
 
 }

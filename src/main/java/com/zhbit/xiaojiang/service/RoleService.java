@@ -40,6 +40,9 @@ public interface RoleService {
 	*/
 	Role editRole(Role role);
 
+	int deleteRole(int roleId);
+
+
 
 
 }

@@ -30,4 +30,9 @@
         where roleId=#{roleId}
     </update>
 
+    <delete id="deleteRole" parameterType="Integer">
+        delete from roles
+        where roleId = #{value}
+    </delete>
+
 </mapper>

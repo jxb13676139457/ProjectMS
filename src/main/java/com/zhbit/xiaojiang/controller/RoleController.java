@@ -106,9 +106,16 @@ public class RoleController {
 	}
 
 	@DeleteMapping("admin-sys/role/{roleId}")
-	public String deleteRole(@PathVariable("roleId") Integer roleId){
-		System.out.println("进入后台删除操作");
-		return "redirect:/admin-sys/roles";
+	@ResponseBody
+	public int deleteRole(@PathVariable("roleId") Integer roleId){
+		System.out.println("进入后台删除操作:"+roleId);
+		int result = roleService.deleteRole(roleId);
+		if(result==1){
+			System.out.println("删除成功");
+		}else{
+			System.out.println("删除失败");
+		}
+		return result;
 	}
 
 }
