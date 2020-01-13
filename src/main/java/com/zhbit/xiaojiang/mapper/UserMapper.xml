@@ -34,4 +34,16 @@
         on u.roleId = r.roleId
     </select>
 
+    <insert id="saveUser" parameterType="User" keyProperty="roleId" useGeneratedKeys="true">
+        insert into users (userId,userName,password,sex,address,phone)
+            values(
+                #{userId,jdbcType=VARCHAR},
+                #{userName,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
+                #{sex,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR}
+            )
+    </insert>
+
 </mapper>

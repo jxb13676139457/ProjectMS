@@ -7,6 +7,8 @@ import com.zhbit.xiaojiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -59,5 +61,27 @@ public class UserController {
 	    }
         return "admin/userList";
     }
+
+    /**
+    *@Author 小江  [com.zhbit]
+    *@Date 2020/1/14 0:03
+    *Description   跳转到添加页面
+    */
+    @GetMapping("/admin-sys/user")
+    public String toAddUser(){
+    	return "admin-sys/addUser";
+    }
+
+    /**
+    *@Author 小江  [com.zhbit]
+    *@Date 2020/1/14 0:03
+    *Description   添加User对象
+    */
+	@PostMapping("/admin-sys/user")
+	public String addRole(User user){
+		System.out.println("保存的用户信息："+user);
+		userService.saveUser(user);
+		return "redirect:/admin-sys/users";
+	}
 
 }

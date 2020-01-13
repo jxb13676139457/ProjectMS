@@ -105,6 +105,11 @@ public class RoleController {
 		return "redirect:/admin-sys/roles";
 	}
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/13 23:51
+	*Description  删除指定的Role对象
+	*/
 	@DeleteMapping("admin-sys/role/{roleId}")
 	@ResponseBody
 	public int deleteRole(@PathVariable("roleId") Integer roleId){
@@ -117,5 +122,7 @@ public class RoleController {
 		}
 		return result;
 	}
+
+
 
 }

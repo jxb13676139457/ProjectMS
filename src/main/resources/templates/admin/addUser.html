@@ -20,7 +20,7 @@
         <div th:replace="~{/commons/bar::topbar}"></div>
         <!--/. NAV TOP  -->
         <!--引入抽取出来的侧边菜单栏-->
-        <div th:replace="~{/commons/bar::sidebar(activeUri='role.html')}"></div>
+        <div th:replace="~{/commons/bar::sidebar(activeUri='user.html')}"></div>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
              <div id="page-inner">
@@ -40,10 +40,10 @@
                              <div class="col-lg-12">
                                  <ol class="breadcrumb">
                                      <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
-                                     <li><i class="icon_document_alt"></i><b>添加用户</b></li>
+                                     <li><i class="icon_document_alt"></i><b>添加角色</b></li>
                                      <button type="button" class="btn-sm btn-default"
                                              style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
-                                         <a th:href="@{/admin-sys/users}" style="color:white">返回上页</a>
+                                         <a th:href="@{/admin-sys/roles}" style="color:white">返回上页</a>
                                      </button>
                                  </ol>
                              </div>
@@ -53,54 +53,33 @@
                              <div class="col-lg-12">
                                  <section class="panel">
                                      <header class="panel-heading">
-                                         <b>添加用户信息</b>
+                                         <b>添加角色信息</b>
                                      </header>
                                      <div class="panel-body">
                                          <div class="form">
-                                             <form class="form-validate form-horizontal" th:action="@{/admin-sys/user}" method="post" >
-
-                                                 <div class="form-group ">
+                                             <form class="form-validate form-horizontal" th:action="@{/admin-sys/role}" method="post" >
+                                                 <!--<div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">用户ID
+                                                         <label class="control-label col-lg-2">角色ID
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="userId" type="text" style="width:250px" required/>
+                                                             <input class="form-control" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
-                                                 </div>
-
+                                                 </div>-->
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">用户名
+                                                         <label class="control-label col-lg-2">角色类型
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="userName" type="text" style="width:250px" required/>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="form-group ">
-                                                     <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">密码
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
-                                                         <div class="col-lg-10">
-                                                             <input class="form-control" name="password" type="text" style="width:250px" required/>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="form-group ">
-                                                     <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">性别
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
-                                                         <div class="col-lg-10">
-                                                             <select name="sex"  id="sex" style="width:100px;height:30px" style="width:300px"   required>
-                                                                 <option selected>男</option>
-                                                                 <option>女</option>
+                                                             <select name="roleType" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option selected value="">请选择</option>
+                                                                 <option>admin</option>
+                                                                 <option>管理</option>
+                                                                 <option>开发</option>
+                                                                 <option>测试</option>
                                                              </select>
                                                          </div>
                                                      </div>
@@ -108,25 +87,43 @@
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">地址
+                                                         <label class="control-label col-lg-2">角色名
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="address" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="roleName" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">手机号
+                                                         <label class="control-label col-lg-2">角色拥有权限
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="phone" type="text" style="width:250px" required/>
+                                                             <select name="rolePower" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option selected value="">请选择</option>
+                                                                 <option>all:all</option>
+                                                                 <option>dev:edit</option>
+                                                                 <option>test:edit</option>
+                                                                 <option>demand:edit</option>
+                                                             </select>
                                                          </div>
                                                      </div>
                                                  </div>
+                                                 <!--<div class="form-group ">
+                                                     <div  style="margin-left:250px;margin-top:-10px">
+                                                         <label class="control-label col-lg-2">性别<span class="required" style="color:red">*</span></label>
+                                                         <div class="col-lg-10">
+                                                             <select name="admin.sex"  id="sex" style="width:100px;height:30px" style="width:300px"   required>
+                                                                 <option selected>男</option>
+                                                                 <option>女</option>
+
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
 
                                                  <div class="form-group">
                                                      <div  style="margin-left:500px">

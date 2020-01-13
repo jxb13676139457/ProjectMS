@@ -22,4 +22,7 @@ public interface UserMapper {
 	//查找全部User对象
 	List<User> findAllUser();
 
+	//插入User对象
+	int saveUser(User user);
+
 }

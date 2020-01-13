@@ -15,18 +15,18 @@
 
     <insert id="saveRole" parameterType="Role" keyProperty="roleId" useGeneratedKeys="true">
         insert into roles (roleType,roleName,rolePower)
-          values(
+            values(
                  #{roleType,jdbcType=VARCHAR},
                  #{roleName,jdbcType=VARCHAR},
                  #{rolePower,jdbcType=VARCHAR}
-          )
+            )
     </insert>
 
     <update id="editRole" parameterType="Role">
         update roles set
-          roleType=#{roleType,jdbcType=VARCHAR},
-          roleName=#{roleName,jdbcType=VARCHAR},
-          rolePower=#{rolePower,jdbcType=VARCHAR}
+            roleType=#{roleType,jdbcType=VARCHAR},
+            roleName=#{roleName,jdbcType=VARCHAR},
+            rolePower=#{rolePower,jdbcType=VARCHAR}
         where roleId=#{roleId}
     </update>
 

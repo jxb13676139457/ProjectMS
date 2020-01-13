@@ -32,4 +32,11 @@ public class UserServiceImpl implements UserService {
 		return userMapper.findAllUser();
 	}
 
+	//插入时，只要表单内的input标签的name属性和entity实体类的属性名对应上就可以一一绑定自动封装成对象
+	@Override
+	public User saveUser(User user) {
+		userMapper.saveUser(user);
+		return user;
+	}
+
 }

@@ -26,4 +26,11 @@ public interface UserService {
 	*/
 	List<User> findAllUser();
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/14 0:02
+	*Description   插入数据库用户对象
+	*/
+	User saveUser(User user);
+
 }

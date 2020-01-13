@@ -40,7 +40,14 @@ public interface RoleService {
 	*/
 	Role editRole(Role role);
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/13 23:52
+	*Description 删除数据库角色对象
+	*/
 	int deleteRole(int roleId);
+
+
 
 
 
