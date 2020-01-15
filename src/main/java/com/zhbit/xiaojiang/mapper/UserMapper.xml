@@ -30,11 +30,11 @@
 
     <select id="findAllUser" resultMap="UserRoleResultMap">
         select u.*,roleType,roleName,rolePower
-        from users u join roles r
+        from users u left join roles r
         on u.roleId = r.roleId
     </select>
 
-    <insert id="saveUser" parameterType="User" keyProperty="roleId" useGeneratedKeys="true">
+    <insert id="saveUser" parameterType="User" keyProperty="userId" useGeneratedKeys="true">
         insert into users (userId,userName,password,sex,address,phone)
             values(
                 #{userId,jdbcType=VARCHAR},

@@ -69,7 +69,7 @@ public class UserController {
     */
     @GetMapping("/admin-sys/user")
     public String toAddUser(){
-    	return "admin-sys/addUser";
+    	return "admin/addUser";
     }
 
     /**
