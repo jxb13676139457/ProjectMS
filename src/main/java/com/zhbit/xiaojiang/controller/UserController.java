@@ -4,13 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.UserService;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class UserController {
     @RequestMapping("/admin-sys/users")
     public String userList(Model model,
                            @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-                           @RequestParam(defaultValue="2",value="pageSize")Integer pageSize){
+                           @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
 	    /**
 	    *@Author 小江  [com.zhbit]
 	    *@Date 2020/1/4 21:27
@@ -82,6 +81,32 @@ public class UserController {
 		System.out.println("保存的用户信息："+user);
 		userService.saveUser(user);
 		return "redirect:/admin-sys/users";
+	}
+
+	@GetMapping("/admin-sys/user-detail/{userId}")
+	public String toUpdateUser(@PathVariable("userId") String userId,Model model){
+		User user = userService.findByUserId(userId);
+		model.addAttribute("user",user);
+		return "admin/showUserDetail";
+	}
+
+	@PutMapping("/admin-sys/user")
+	public String updateUser(User user){
+		userService.editUser(user);
+		return "redirect:/admin-sys/users";
+	}
+
+	@DeleteMapping("/admin-sys/user/{userId}")
+	@ResponseBody
+	public int deleteUser(@PathVariable("userId") String userId){
+		System.out.println("进入后台删除操作:"+userId);
+		int result = userService.deleteUser(userId);
+		if(result==1){
+			System.out.println("删除成功");
+		}else{
+			System.out.println("删除失败");
+		}
+		return result;
 	}
 
 }

@@ -25,4 +25,10 @@ public interface UserMapper {
 	//插入User对象
 	int saveUser(User user);
 
+	//修改User对象
+	int editUser(User user);
+
+	//删除User对象
+	int deleteUser(String userId);
+
 }

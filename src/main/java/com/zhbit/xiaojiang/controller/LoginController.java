@@ -63,18 +63,19 @@ public class LoginController {
 	@RequestMapping("/login")
 	public String login(String userId,String password,Model model){
 
-		//1、获取Subject对象
-		Subject subject = SecurityUtils.getSubject();
+		//1、获取Subject对象，即当前用户
+		Subject currentUser = SecurityUtils.getSubject();
 		//2、封装用户信息令牌
 		UsernamePasswordToken token = new UsernamePasswordToken(userId,password);
 		//3、执行login方法
+		System.out.println("登录输入密码："+token.getPassword());
 		try{
 			//进行验证，报错返回首页，不报错到达主页
-			subject.login(token);
+			currentUser.login(token);
 			User user = userService.findByUserId(userId);
 			String roleType = user.getRole().getRoleType();
 			String userName = user.getUserName();
-			Session session = subject.getSession();
+			Session session = currentUser.getSession();
 			//用户名和角色存入session
 			session.setAttribute("userName",userName);
 			session.setAttribute("roleType",roleType);

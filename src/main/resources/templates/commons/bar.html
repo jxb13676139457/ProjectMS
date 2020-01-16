@@ -247,13 +247,13 @@
                 <li>
                     <a href="#"
                        th:class="${activeUri=='project.html'?'active-menu':''}">
-                        <i class="fa fa-table"></i>管理项目模块
+                        <i class="fa fa-table"></i>管理项目
                     </a>
                 </li>
                 <li>
                     <a href="#"
                        th:class="${activeUri=='user.html'?'active-menu':''}">
-                        <i class="fa fa-users"></i> 管理用户模块<span class="fa arrow"></span>
+                        <i class="fa fa-users"></i> 管理用户<span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -281,30 +281,20 @@
                 <li>
                     <a href="#"
                        th:class="${activeUri=='role.html'?'active-menu':''}">
-                        <i class="fa fa-user-secret"></i> 管理角色模块<span class="fa arrow"></span>
+                        <i class="fa fa-user-secret"></i> 管理角色<span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a th:href="@{/admin-sys/roles}">维护角色信息</a>
                         </li>
-                        <li>
-                            <a href="#">分配用户角色</a>
-                        </li>
-                        <!--<li>
-                            <a href="#">闲杂二级菜单<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">闲杂三级菜单</a>
-                                </li>
-                                <li>
-                                    <a href="#">闲杂三级菜单</a>
-                                </li>
-                                <li>
-                                    <a href="#">闲杂三级菜单</a>
-                                </li>
-                            </ul>
-                        </li>-->
                     </ul>
+                </li>
+
+                <li>
+                    <a href="#"
+                       th:class="${activeUri=='userRole.html'?'active-menu':''}">
+                        <i class="fa fa-user-plus"></i>分配用户角色
+                    </a>
                 </li>
             </ul>
         </div>

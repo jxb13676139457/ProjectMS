@@ -23,15 +23,13 @@
 
     <select id="findByUserId" parameterType="String" resultMap="UserRoleResultMap">
       select u.*,roleType,roleName,rolePower
-      from users u join roles r
+      from users u left join roles r
       on u.roleId = r.roleId
       where userId = #{value}
     </select>
 
     <select id="findAllUser" resultMap="UserRoleResultMap">
-        select u.*,roleType,roleName,rolePower
-        from users u left join roles r
-        on u.roleId = r.roleId
+        select userId,userName,password,sex,address,phone from users
     </select>
 
     <insert id="saveUser" parameterType="User" keyProperty="userId" useGeneratedKeys="true">
@@ -45,5 +43,20 @@
                 #{phone,jdbcType=VARCHAR}
             )
     </insert>
+
+    <update id="editUser" parameterType="User">
+        update users set
+            userName=#{userName,jdbcType=VARCHAR},
+            password=#{password,jdbcType=VARCHAR},
+            sex=#{sex,jdbcType=VARCHAR},
+            address=#{address,jdbcType=VARCHAR},
+            phone=#{phone,jdbcType=VARCHAR}
+        where userId = #{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="String">
+        delete from users
+        where userId = #{value}
+    </delete>
 
 </mapper>

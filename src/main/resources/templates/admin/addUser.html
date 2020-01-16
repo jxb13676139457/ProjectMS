@@ -87,7 +87,7 @@
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="password" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="password" type="password" style="width:250px" minlength="6" placeholder="密码最少6位" required/>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -124,7 +124,7 @@
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="phone" type="text" style="width:250px" required/>
+                                                             <input class="form-control" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="只能输入数字" name="phone" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>

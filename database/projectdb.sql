@@ -2,18 +2,36 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50725
+Source Server Version : 50728
 Source Host           : localhost:3306
 Source Database       : projectdb
 
 Target Server Type    : MYSQL
-Target Server Version : 50725
+Target Server Version : 50728
 File Encoding         : 65001
 
-Date: 2020-01-05 23:42:40
+Date: 2020-01-16 21:27:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for auditing
+-- ----------------------------
+DROP TABLE IF EXISTS `auditing`;
+CREATE TABLE `auditing` (
+  `auditingId` int(11) NOT NULL COMMENT '审核项目ID',
+  `projectName` varchar(50) DEFAULT NULL COMMENT '审核项目名称',
+  `projectContent` varchar(255) DEFAULT NULL COMMENT '审核项目简介',
+  `time_start` date DEFAULT NULL COMMENT '审核项目开始时间',
+  `time_end` date DEFAULT NULL COMMENT '审核项目结束时间',
+  `auditingStatus` int(11) NOT NULL COMMENT '审核项目状态',
+  PRIMARY KEY (`auditingId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of auditing
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for documents
@@ -108,7 +126,7 @@ CREATE TABLE `roles` (
   `roleName` varchar(50) DEFAULT '' COMMENT '角色名',
   `rolePower` varchar(50) DEFAULT '' COMMENT '角色权限',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roles
@@ -120,8 +138,10 @@ INSERT INTO `roles` VALUES ('4', '开发', 'golang开发工程师', 'dev:edit');
 INSERT INTO `roles` VALUES ('5', '测试', '软件测试工程师', 'test:edit');
 INSERT INTO `roles` VALUES ('6', '开发', 'ETL开发工程师', 'dev:edit');
 INSERT INTO `roles` VALUES ('7', '开发', '前端开发工程师', 'dev:edit');
-INSERT INTO `roles` VALUES ('39', '开发', 'PHP开发工程师', 'dev:edit');
-INSERT INTO `roles` VALUES ('40', '测试', '测试开发工程师', 'test:edit');
+INSERT INTO `roles` VALUES ('44', '测试', '测试开发工程师', 'test:edit');
+INSERT INTO `roles` VALUES ('45', '开发', 'crs', 'dev:edit');
+INSERT INTO `roles` VALUES ('46', '管理', 'fdf', 'demand:edit');
+INSERT INTO `roles` VALUES ('48', '管理', 'Java开发工程师', 'demand:edit');
 
 -- ----------------------------
 -- Table structure for tasks
@@ -151,11 +171,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userId` varchar(20) NOT NULL COMMENT '用户账号ID',
   `userName` varchar(50) NOT NULL COMMENT '用户名',
-  `password` varchar(30) DEFAULT NULL COMMENT '密码',
+  `password` varchar(50) DEFAULT NULL COMMENT '密码',
   `sex` char(2) NOT NULL COMMENT '性别',
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系手机号',
-  `roleId` int(11) NOT NULL COMMENT '角色ID',
+  `roleId` int(11) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -164,6 +184,10 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('111111111111', '小郑', '123456', '男', '广东省汕头市', '11111111111', '5');
 INSERT INTO `users` VALUES ('160202103567', '小江', '123456', '男', '广东省汕头市', '13726213859', '1');
+INSERT INTO `users` VALUES ('16020210d3567', '江鑫彪', '4f7882615a050e6053c713b7dd6bfe7d', '男', '广东省汕头市', '13677777777', '1');
 INSERT INTO `users` VALUES ('222222222222', '小李', '123456', '女', '广东省深圳市', '22222222222', '4');
 INSERT INTO `users` VALUES ('333333333333', '小黄', '123456', '男', '广东省珠海市', '33333333333', '7');
+INSERT INTO `users` VALUES ('555555555555', '小学生', '123456', '男', '广东省汕头市', '13677777777', null);
+INSERT INTO `users` VALUES ('dfdf', 'gfg', '2548', '女', 'ghg', '1848585g1b', null);
+INSERT INTO `users` VALUES ('dfdfgg', 'fdgr', '888888', '男', 'ghgh', '18485851', null);
 SET FOREIGN_KEY_CHECKS=1;

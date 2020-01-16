@@ -31,6 +31,9 @@ public interface UserService {
 	*@Date 2020/1/14 0:02
 	*Description   插入数据库用户对象
 	*/
-	User saveUser(User user);
+	boolean saveUser(User user);
 
+	User editUser(User user);
+
+	int deleteUser(String userId);
 }

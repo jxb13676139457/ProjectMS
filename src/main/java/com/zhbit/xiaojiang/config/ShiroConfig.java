@@ -8,6 +8,7 @@ package com.zhbit.xiaojiang.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.zhbit.xiaojiang.component.UserRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,17 +59,32 @@ public class ShiroConfig{
 
 	//创建DefaultWebSecurityManager
 	@Bean(name = "securityManager")
-	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm){
+	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		//关联一个Realm
-		securityManager.setRealm(userRealm);
+		securityManager.setRealm(getRealm(matcher));
 		return securityManager;
 	}
 
 	//创建Realm
 	@Bean(name = "userRealm")
-	public UserRealm getRealm(){
-		return new UserRealm();
+	public UserRealm getRealm(HashedCredentialsMatcher matcher){
+		UserRealm userRealm = new UserRealm();
+		userRealm.setCredentialsMatcher(matcher);
+		return userRealm;
 	}
+
+	//配置密码匹配凭证管理器
+	@Bean("hashedCredentialsMatcher")
+	public HashedCredentialsMatcher hashedCredentialsMatcher() {
+		HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+		// 采用MD5方式加密
+		hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+		// 设置加密次数
+		hashedCredentialsMatcher.setHashIterations(2);
+		return hashedCredentialsMatcher;
+	}
+
+
 
 }
