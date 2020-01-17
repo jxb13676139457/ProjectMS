@@ -36,7 +36,6 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("执行认证方法");
-
 		//加这一步的目的是在post请求时会先进入认证然后再到请求。
 		if(authenticationToken.getPrincipal()==null){
 			return null;
@@ -45,13 +44,11 @@ public class UserRealm extends AuthorizingRealm {
 		String userId = authenticationToken.getPrincipal().toString();
 		//根据用户ID获得数据库用户对象
 		User user = userService.findByUserId(userId);
-		//System.out.println("数据库的密码："+user.getPassword());
-
 		if(user==null){
 			//此处返回null的话shiro底层会抛出UnknownAccountException异常
 			return null;
 		} else{
-			//获取盐值，即用户名
+			//获取盐值，即用户ID
 			ByteSource salt = ByteSource.Util.bytes(userId);
 			String realmName = this.getName();
 			//判断密码是否匹配

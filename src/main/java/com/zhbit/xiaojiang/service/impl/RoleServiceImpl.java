@@ -33,9 +33,9 @@ public class RoleServiceImpl implements RoleService {
 
 	//插入时，只要表单内的input标签的name属性和entity实体类的属性名对应上就可以一一绑定自动封装成对象
 	@Override
-	public Role saveRole(Role role) {
+	public boolean saveRole(Role role) {
 		roleMapper.saveRole(role);
-		return role;
+		return true;
 	}
 
 	@Override

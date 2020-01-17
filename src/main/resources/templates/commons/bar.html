@@ -278,6 +278,14 @@
                         </li>-->
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#"
+                       th:class="${activeUri=='userRole.html'?'active-menu':''}">
+                        <i class="fa fa-user-plus"></i>分配用户角色
+                    </a>
+                </li>
+
                 <li>
                     <a href="#"
                        th:class="${activeUri=='role.html'?'active-menu':''}">
@@ -290,12 +298,6 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#"
-                       th:class="${activeUri=='userRole.html'?'active-menu':''}">
-                        <i class="fa fa-user-plus"></i>分配用户角色
-                    </a>
-                </li>
             </ul>
         </div>
     </nav>

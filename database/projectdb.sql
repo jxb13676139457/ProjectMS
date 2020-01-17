@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50728
 File Encoding         : 65001
 
-Date: 2020-01-16 21:27:16
+Date: 2020-01-17 18:40:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -126,7 +126,7 @@ CREATE TABLE `roles` (
   `roleName` varchar(50) DEFAULT '' COMMENT '角色名',
   `rolePower` varchar(50) DEFAULT '' COMMENT '角色权限',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roles
@@ -139,9 +139,6 @@ INSERT INTO `roles` VALUES ('5', '测试', '软件测试工程师', 'test:edit')
 INSERT INTO `roles` VALUES ('6', '开发', 'ETL开发工程师', 'dev:edit');
 INSERT INTO `roles` VALUES ('7', '开发', '前端开发工程师', 'dev:edit');
 INSERT INTO `roles` VALUES ('44', '测试', '测试开发工程师', 'test:edit');
-INSERT INTO `roles` VALUES ('45', '开发', 'crs', 'dev:edit');
-INSERT INTO `roles` VALUES ('46', '管理', 'fdf', 'demand:edit');
-INSERT INTO `roles` VALUES ('48', '管理', 'Java开发工程师', 'demand:edit');
 
 -- ----------------------------
 -- Table structure for tasks
@@ -182,12 +179,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('111111111111', '小郑', '123456', '男', '广东省汕头市', '11111111111', '5');
-INSERT INTO `users` VALUES ('160202103567', '小江', '123456', '男', '广东省汕头市', '13726213859', '1');
-INSERT INTO `users` VALUES ('16020210d3567', '江鑫彪', '4f7882615a050e6053c713b7dd6bfe7d', '男', '广东省汕头市', '13677777777', '1');
-INSERT INTO `users` VALUES ('222222222222', '小李', '123456', '女', '广东省深圳市', '22222222222', '4');
-INSERT INTO `users` VALUES ('333333333333', '小黄', '123456', '男', '广东省珠海市', '33333333333', '7');
-INSERT INTO `users` VALUES ('555555555555', '小学生', '123456', '男', '广东省汕头市', '13677777777', null);
-INSERT INTO `users` VALUES ('dfdf', 'gfg', '2548', '女', 'ghg', '1848585g1b', null);
-INSERT INTO `users` VALUES ('dfdfgg', 'fdgr', '888888', '男', 'ghgh', '18485851', null);
+INSERT INTO `users` VALUES ('111111111111', '小黄', 'ea4b2d6c9311c3d358bd09f09164c4cf', '女', '广东省汕头市', '13611111111', null);
+INSERT INTO `users` VALUES ('160202103567', '江鑫彪', 'd40b384472e37a461a20d76a99e4e42c', '男', '广东省汕头市', '13726213859', '1');
 SET FOREIGN_KEY_CHECKS=1;

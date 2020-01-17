@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -77,9 +79,17 @@ public class UserController {
     *Description   添加User对象
     */
 	@PostMapping("/admin-sys/user")
-	public String addRole(User user){
-		System.out.println("保存的用户信息："+user);
-		userService.saveUser(user);
+	public String addRole(User user, HttpServletRequest request){
+		//创建session对象来存放交互结果
+		HttpSession session = request.getSession();
+		boolean result = userService.saveUser(user);
+		if(result==true){
+			System.out.println("添加成功");
+			session.setAttribute("msg","添加用户成功");
+		}else{
+			System.out.println("添加失败");
+			session.setAttribute("msg","添加用户失败,可能是用户ID已存在");
+		}
 		return "redirect:/admin-sys/users";
 	}
 

@@ -59,7 +59,7 @@ public class ShiroConfig{
 
 	//创建DefaultWebSecurityManager
 	@Bean(name = "securityManager")
-	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
+	public DefaultWebSecurityManager  getDefaultWebSecurityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		//关联一个Realm
 		securityManager.setRealm(getRealm(matcher));
@@ -82,6 +82,8 @@ public class ShiroConfig{
 		hashedCredentialsMatcher.setHashAlgorithmName("MD5");
 		// 设置加密次数
 		hashedCredentialsMatcher.setHashIterations(2);
+		//加密为哈希
+		hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
 		return hashedCredentialsMatcher;
 	}
 

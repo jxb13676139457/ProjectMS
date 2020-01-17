@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -76,9 +78,17 @@ public class RoleController {
 	 *             springMVC就可以将请求参数和入参对象的属性一一绑定自动封装成对象
 	*/
 	@PostMapping("/admin-sys/role")
-	public String addRole(Role role){
-		System.out.println("保存的角色信息："+role);
-		roleService.saveRole(role);
+	public String addRole(Role role, HttpServletRequest request){
+		//创建session对象来存放交互结果
+		HttpSession session = request.getSession();
+		boolean result = roleService.saveRole(role);
+		if(result==true){
+			System.out.println("添加成功");
+			session.setAttribute("msg","添加角色成功");
+		}else{
+			System.out.println("添加失败");
+			session.setAttribute("msg","添加角色失败,可能是角色职位已存在");
+		}
 		return "redirect:/admin-sys/roles";
 	}
 

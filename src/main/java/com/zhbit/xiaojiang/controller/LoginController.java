@@ -67,10 +67,10 @@ public class LoginController {
 		Subject currentUser = SecurityUtils.getSubject();
 		//2、封装用户信息令牌
 		UsernamePasswordToken token = new UsernamePasswordToken(userId,password);
+		System.out.println("登录输入的密码："+token.getPassword());
 		//3、执行login方法
-		System.out.println("登录输入密码："+token.getPassword());
 		try{
-			//进行验证，报错返回首页，不报错到达主页
+			//进行验证，报错返回登录首页，不报错到达主页
 			currentUser.login(token);
 			User user = userService.findByUserId(userId);
 			String roleType = user.getRole().getRoleType();
@@ -79,6 +79,7 @@ public class LoginController {
 			//用户名和角色存入session
 			session.setAttribute("userName",userName);
 			session.setAttribute("roleType",roleType);
+
 			//判断到达前台主页还是后台主页
 			if(roleType.equals("admin")){
 				return "/admin/index";

@@ -37,13 +37,13 @@ public class UserServiceImpl implements UserService {
 	//插入时，只要表单内的input标签的name属性和entity实体类的属性名对应上就可以一一绑定自动封装成对象
 	@Override
 	public boolean saveUser(User user) {
-		//将用户名作为盐值
-		ByteSource salt = ByteSource.Util.bytes(user.getUserName());
+		//将用户ID作为盐值
+		ByteSource salt = ByteSource.Util.bytes(user.getUserId());
 		//加密后的密码
 		String encryptPassword = new SimpleHash("MD5",user.getPassword(),salt,2).toHex();
-		System.out.println(encryptPassword);
+		//System.out.println(encryptPassword);
 		user.setPassword(encryptPassword);
-		//先查询数据库看是否有相同用户
+		//先查询数据库看是否有相同用户，有的话不允许重复插入
 		User isExistUser = userMapper.findByUserId(user.getUserId());
 		if(isExistUser==null){
 			userMapper.saveUser(user);
@@ -51,15 +51,21 @@ public class UserServiceImpl implements UserService {
 		} else{
 			return false;
 		}
-
 	}
 
 	@Override
 	public User editUser(User user) {
+		//将用户ID作为盐值
+		ByteSource salt = ByteSource.Util.bytes(user.getUserId());
+		//加密密码
+		String encryptPassword = new SimpleHash("MD5",user.getPassword(),salt,2).toHex();
+		//修改的密码进入数据库前对应也要完成加密操作
+		user.setPassword(encryptPassword);
 		userMapper.editUser(user);
 		return user;
 	}
 
+	@Override
 	public int deleteUser(String userId){
 		userMapper.deleteUser(userId);
 		return 1;

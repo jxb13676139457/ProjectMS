@@ -15,6 +15,14 @@
     <!--自定义 CSS-->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
+    <!--<script type="text/javascript" th:inline="javascript">
+        /*当操作失败时弹出提示框*/
+        if([[${session.msg}]]!=null){
+            alert([[${session.msg}]]);
+        }
+    </script>-->
+
+
 </head>
 <body>
     <div id="wrapper">
