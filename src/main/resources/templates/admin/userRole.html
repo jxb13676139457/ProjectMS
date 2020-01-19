@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>用户界面</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+     <!-- TABLE STYLES-->
+    <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="wrapper">
+        <!--引入抽取出来的顶部导航栏-->
+        <div th:replace="~{/commons/bar::topbar}"></div>
+        <!--/. NAV TOP  -->
+        <!--引入抽取出来的侧边菜单栏,传参动态控制高亮样式-->
+        <div th:replace="~{/commons/bar::sidebar(activeUri='userRole.html')}"></div>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            <!--Tables Page <small>Responsive tables</small> 标题-->
+                            &nbsp;
+                        </h1>
+                    </div>
+                </div> 
+                    <!-- /. ROW  -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                 用户角色表
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>用户ID</th>
+                                                <th>用户名</th>
+                                                <th>角色岗位</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody th:each="user:${userList}">
+                                            <tr class="odd gradeX">
+                                                <td th:text="${user.userId}"></td>
+                                                <td th:text="${user.userName}"></td>
+                                                <td>
+                                                    <select id="DropDownListID" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                        <option selected value="">请选择</option>
+                                                        <option th:each="role:${roleList}" th:text="${role.roleName}"></option>
+                                                    </select>
+                                                </td>
+                                                <td class="center">
+                                                    <button class="btn-sm btn-info" onclick="toConfirm(this)">
+                                                        <i class="fa fa-check-circle-o">确认分配角色</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+
+                        <!--显示分页信息-->
+                        <div class="modal-footer no-margin-top">
+                            <div class="col-md-6">
+                                <strong>当前第 [[${userPageInfo.pageNum}]]页,共 [[${userPageInfo.pages}]] 页.一共 [[${userPageInfo.total}]] 条记录
+                                </strong>
+                            </div>
+                            <ul class="pagination pull-right no-margin">
+                                <li th:if="${userPageInfo.hasPreviousPage}">
+                                    <a th:href="'/TBMS/admin-sys/user/role?pageNum=1'">首页</a>
+                                </li>
+                                <li class="prev" th:if="${userPageInfo.hasPreviousPage}">
+                                    <a th:href="'/TBMS/admin-sys/user/role?pageNum='+${userPageInfo.prePage}">
+                                        <i class="ace-icon fa fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <!--遍历条数-->
+                                <li th:each="nav:${userPageInfo.navigatepageNums}">
+                                    <a th:href="'/TBMS/admin-sys/user/role?pageNum='+${nav}" th:text="${nav}" th:if="${nav != userPageInfo.pageNum}"></a>
+                                    <span style="font-weight: bold;background: #6faed9;" th:if="${nav == userPageInfo.pageNum}" th:text="${nav}" ></span>
+                                </li>
+                                <li class="next" th:if="${userPageInfo.hasNextPage}">
+                                    <a th:href="'/TBMS/admin-sys/user/role?pageNum='+${userPageInfo.nextPage}">
+                                        <i class="ace-icon fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="'/TBMS/admin-sys/user/role?pageNum='+${userPageInfo.pages}">尾页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+     <!-- DATA TABLE SCRIPTS -->
+    <script th:src="@{/assets/js/easypiechart.js}"></script>
+    <script th:src="@{/assets/js/easypiechart-data.js}"></script>
+
+    <!-- Custom Js-->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+
+    <script type="text/javascript">
+        //确认分配角色
+        function toConfirm(obj) {
+            var tds = $(obj).parent().parent().children();// 获取到所有列
+            var userId = $(tds[0]).text();// 获取用户ID
+            var DropDownListID = document.getElementById("DropDownListID");//获取角色下拉框对象
+            var roleName = DropDownListID.options[DropDownListID.selectedIndex].value;//获取选中的角色岗位
+            console.log("获取到的用户id："+userId);
+            console.log("获取到的角色岗位："+roleName);
+            $.ajax({
+                url: "/TBMS/admin-sys/user/role/"+userId+","+roleName,
+                type: "post",
+                data: {
+                    _method:"put",
+                    userId:userId,
+                    roleName:roleName
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    console.log("分配用户角色执行成功" + data);
+                    alert("分配用户角色执行成功"+data);
+                    //window.location.reload();
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

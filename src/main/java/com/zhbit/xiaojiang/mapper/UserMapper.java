@@ -6,6 +6,7 @@
  */
 package com.zhbit.xiaojiang.mapper;
 
+import com.zhbit.xiaojiang.entity.Role;
 import com.zhbit.xiaojiang.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -30,5 +31,11 @@ public interface UserMapper {
 
 	//删除User对象
 	int deleteUser(String userId);
+
+	//根据角色岗位查询Role对象
+	Role findByRoleName(String roleName);
+
+	//分配用户角色
+	int distributeRole(User user);
 
 }

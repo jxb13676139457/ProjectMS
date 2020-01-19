@@ -22,14 +22,16 @@
     </resultMap>
 
     <select id="findByUserId" parameterType="String" resultMap="UserRoleResultMap">
-      select u.*,roleType,roleName,rolePower
-      from users u left join roles r
-      on u.roleId = r.roleId
-      where userId = #{value}
+        select u.*,roleType,roleName,rolePower
+        from users u left join roles r
+        on u.roleId = r.roleId
+        where userId = #{value}
     </select>
 
     <select id="findAllUser" resultMap="UserRoleResultMap">
-        select userId,userName,password,sex,address,phone from users
+        select u.*,r.roleType,roleName,r.rolePower
+        from users u left join roles r
+        on u.roleId = r.roleId
     </select>
 
     <insert id="saveUser" parameterType="User" keyProperty="userId" useGeneratedKeys="true">
@@ -59,4 +61,14 @@
         where userId = #{value}
     </delete>
 
+    <select id="findByRoleName" parameterType="String" resultType="Role">
+        select roleId from roles
+        where roleName = #{value}
+    </select>
+
+    <update id="distributeRole" parameterType="User">
+        update users set
+            roleId = #{roleId}
+        where userId = #{userId}
+    </update>
 </mapper>

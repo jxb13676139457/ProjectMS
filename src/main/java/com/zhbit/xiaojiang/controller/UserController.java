@@ -2,7 +2,9 @@ package com.zhbit.xiaojiang.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhbit.xiaojiang.entity.Role;
 import com.zhbit.xiaojiang.entity.User;
+import com.zhbit.xiaojiang.service.RoleService;
 import com.zhbit.xiaojiang.service.UserService;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -20,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     /**
     *@Author 小江  [com.zhbit]
@@ -117,6 +121,58 @@ public class UserController {
 			System.out.println("删除失败");
 		}
 		return result;
+	}
+
+	@GetMapping("/admin-sys/user/role")
+	public String userRoleList(Model model,
+								 @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
+								 @RequestParam(defaultValue="8",value="pageSize")Integer pageSize){
+		//分页查询所有用户对象
+		if(pageNum==null || pageNum<=0){
+			//设置默认当前页
+			pageNum = 1;
+		}
+		if(pageSize == null){
+			//设置默认每页显示的数据数
+			pageSize = 1;
+		}
+		System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);
+
+		//1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
+		PageHelper.startPage(pageNum,pageSize);
+		//2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
+		try {
+			List<User> userList = userService.findAllUser();
+			System.out.println("分页数据："+userList);
+			//3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>
+			PageInfo<User> userPageInfo = new PageInfo<User>(userList,pageSize);
+			//查询所有角色对象
+			List<Role> roleList =  roleService.findAllRole();
+			//System.out.println("测试角色名："+roleList.get(1).getRoleName());
+			model.addAttribute("roleList",roleList);
+			//4.使用model传参数回前端
+			model.addAttribute("userPageInfo",userPageInfo);
+			model.addAttribute("userList",userList);
+
+		}finally {
+			//清理 ThreadLocal 存储的分页参数,保证线程安全
+			PageHelper.clearPage();
+		}
+		return "admin/userRole";
+	}
+
+	@PutMapping("/admin-sys/user/role/{userId},{roleName}")
+	@ResponseBody
+	public String distributeRole(@PathVariable("userId") String userId,
+								 @PathVariable("roleName")String roleName){
+		System.out.println("测试是否成功传参："+userId+roleName);
+		User result = userService.distributeRole(userId,roleName);
+		if(result!=null){
+			System.out.println("分配成功");
+		}else{
+			System.out.println("分配失败");
+		}
+		return roleName;
 	}
 
 }

@@ -6,6 +6,7 @@
  */
 package com.zhbit.xiaojiang.service.impl;
 
+import com.zhbit.xiaojiang.entity.Role;
 import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.mapper.UserMapper;
 import com.zhbit.xiaojiang.service.UserService;
@@ -69,6 +70,16 @@ public class UserServiceImpl implements UserService {
 	public int deleteUser(String userId){
 		userMapper.deleteUser(userId);
 		return 1;
+	}
+
+	@Override
+	public User distributeRole(String userId,String roleName) {
+		User user = findByUserId(userId);
+		Role role = userMapper.findByRoleName(roleName);
+		int roleId = role.getRoleId();
+		user.setRoleId(roleId);
+		userMapper.distributeRole(user);
+		return user;
 	}
 
 

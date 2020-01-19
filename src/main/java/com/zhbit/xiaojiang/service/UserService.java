@@ -36,4 +36,6 @@ public interface UserService {
 	User editUser(User user);
 
 	int deleteUser(String userId);
+
+	User distributeRole(String userId,String roleName);
 }

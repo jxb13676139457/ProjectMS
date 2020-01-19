@@ -16,6 +16,8 @@ public class User {
 	private String phone;
 	private Role role;
 
+	private int roleId;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -70,5 +72,13 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 }
