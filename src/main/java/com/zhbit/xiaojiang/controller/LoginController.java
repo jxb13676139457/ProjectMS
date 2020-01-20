@@ -17,6 +17,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -76,7 +78,9 @@ public class LoginController {
 			String roleType = user.getRole().getRoleType();
 			String userName = user.getUserName();
 			Session session = currentUser.getSession();
-			//用户名和角色存入session
+			//用户名和角色类型存入session
+			//model.addAttribute("userId",userId);
+			session.setAttribute("userId",userId);
 			session.setAttribute("userName",userName);
 			session.setAttribute("roleType",roleType);
 
@@ -103,6 +107,15 @@ public class LoginController {
 	@RequestMapping("/auth/logout")
 	public String logout(){
 		return "redirect:/toLogin";
+	}
+
+	@GetMapping("/admin-sys/loginer/{userId}")
+	public String showLoginer(@PathVariable("userId") String userId,Model model){
+		System.out.println("获取到的userID："+userId);
+		User user = userService.findByUserId(userId);
+		model.addAttribute("user",user);
+		return "admin/showLoginerDetail";
+
 	}
 
 }

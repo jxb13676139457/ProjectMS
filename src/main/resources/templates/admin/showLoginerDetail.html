@@ -20,7 +20,7 @@
         <div th:replace="~{/commons/bar::topbar}"></div>
         <!--/. NAV TOP  -->
         <!--引入抽取出来的侧边菜单栏-->
-        <div th:replace="~{/commons/bar::sidebar(activeUri='user.html')}"></div>
+        <div th:replace="~{/commons/bar::sidebar}"></div>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
              <div id="page-inner">
@@ -40,11 +40,7 @@
                              <div class="col-lg-12">
                                  <ol class="breadcrumb">
                                      <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
-                                     <li><i class="icon_document_alt"></i>修改用户</li>
-                                     <button type="button" class="btn-sm btn-default"
-                                             style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
-                                         <a th:href="@{/admin-sys/users}" style="color:white">返回上页</a>
-                                     </button>
+                                     <li><i class="icon_document_alt"></i>当前用户信息</li>
                                  </ol>
                              </div>
                          </div>
@@ -54,84 +50,85 @@
                              <div class="col-lg-12">
                                  <section class="panel">
                                      <header class="panel-heading">
-                                         <b>修改用户信息</b>
+                                         <b>当前用户详细信息</b>
                                      </header>
                                      <div class="panel-body">
                                          <div class="form">
-                                             <form th:action="@{/admin-sys/user}" class="form-validate form-horizontal" method="post">
-
-                                                 <!--修改页面必须加这个隐藏输入框，设定请求方式-->
-                                                 <input type="hidden" name="_method" value="put"/>
-                                                 <!--获取userId的值-->
-                                                 <input type="hidden" name="userId" th:value="${user.userId}">
-
+                                             <form action="#" class="form-validate form-horizontal" method="post">
+                                                 <!--获取当前用户个人信息-->
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">用户名
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
+                                                         <label class="control-label col-lg-2">用户ID</label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="userName" th:value="${user.userName}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" th:value="${user.userId}" type="text" style="width:400px" required disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
-
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">密码
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
+                                                         <label class="control-label col-lg-2">用户名</label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="password" th:value="${user.password}" type="password" style="width:250px" required/>
+                                                             <input class="form-control" th:value="${user.userName}" type="text" style="width:400px" required disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
-
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">性别
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
+                                                         <label class="control-label col-lg-2">密码</label>
                                                          <div class="col-lg-10">
-                                                             <select name="sex" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
-                                                                 <option value="">请选择</option>
-                                                                 <option th:selected="${user.sex eq '男'}">男</option>
-                                                                 <option th:selected="${user.sex eq '女'}">女</option>
-                                                             </select>
+                                                             <input class="form-control" th:value="${user.password}" type="text" style="width:400px" required disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
-
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">地址
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
+                                                         <label class="control-label col-lg-2">性别</label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="address" th:value="${user.address}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" th:value="${user.sex}" type="text" style="width:400px" required disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
-
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">手机号
-                                                             <span class="required" style="color:red">*</span>
-                                                         </label>
+                                                         <label class="control-label col-lg-2">地址</label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="phone" th:value="${user.phone}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" th:value="${user.address}" type="text" style="width:400px" required disabled/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">手机号</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" th:value="${user.phone}" type="text" style="width:400px" required disabled/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">用户角色类型</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" th:value="${user.role.roleType}" type="text" style="width:400px" required disabled/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">用户角色名</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" th:value="${user.role.roleName}" type="text" style="width:400px" required disabled/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">用户拥有权限</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" th:value="${user.role.rolePower}" type="text" style="width:400px" required disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
 
-                                                 <div class="form-group">
-                                                     <div  style="margin-left:500px">
-                                                         <div class="col-lg-offset-2 col-lg-10">
-                                                             <button type="submit" class="btn-sm btn-default"
-                                                                     style="background-color:#66CDAA;color: white">更新</button>
-                                                         </div>
-                                                     </div>
-                                                 </div>
                                              </form>
                                          </div>
                                      </div>

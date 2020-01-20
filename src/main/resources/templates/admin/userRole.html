@@ -135,6 +135,8 @@
             var tds = $(obj).parent().parent().children();// 获取到所有列
             var userId = $(tds[0]).text();// 获取用户ID
             var DropDownListID = document.getElementById("DropDownListID");//获取角色下拉框对象
+            //var listID = "#DropDownListID_"+userId+" option:selected";
+            //var roleName = $(listID).val();
             var roleName = DropDownListID.options[DropDownListID.selectedIndex].value;//获取选中的角色岗位
             console.log("获取到的用户id："+userId);
             console.log("获取到的角色岗位："+roleName);

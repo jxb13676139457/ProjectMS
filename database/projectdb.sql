@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50728
 File Encoding         : 65001
 
-Date: 2020-01-17 18:40:55
+Date: 2020-01-20 17:59:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -115,6 +115,7 @@ CREATE TABLE `projects` (
 -- ----------------------------
 -- Records of projects
 -- ----------------------------
+INSERT INTO `projects` VALUES ('1', '开发项目管理系统', '现今中小型科技公司对项目的管理还是欠缺一个专门的系统来管理项目，目前虽有一些优秀的项目管理协作工具，比如Teambition这种软件，不过这种工具免费版只开放一些功能而已，而且限制团队成员人数，只有用收费版才能有更多的功能及使用权。为了使公司更加方便地对项目进行有效管理，同时也减少公司的成本开销，此课题的目标是开发一个定制属于公司的项目管理系统。', '2020-01-20', '2020-04-20', '1', '1');
 
 -- ----------------------------
 -- Table structure for roles
@@ -179,6 +180,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('111111111111', '小黄', 'ea4b2d6c9311c3d358bd09f09164c4cf', '女', '广东省汕头市', '13611111111', null);
+INSERT INTO `users` VALUES ('111111111111', '黄廷蔚', '1a23395a3c0b02a467ab5b1bffe60cbc', '男', '广东省珠海市', '13611111111', '1');
 INSERT INTO `users` VALUES ('160202103567', '江鑫彪', 'd40b384472e37a461a20d76a99e4e42c', '男', '广东省汕头市', '13726213859', '1');
+INSERT INTO `users` VALUES ('222222222222', '黄静云', '0a8157f5539efef41bf7ffc2c7684fcd', '女', '广东省深圳市', '13677777776', '6');
 SET FOREIGN_KEY_CHECKS=1;
