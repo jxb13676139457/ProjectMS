@@ -33,7 +33,7 @@ public class RoleController {
 	@GetMapping("/admin-sys/roles")
 	public String roleList(Model model,
 	                       @RequestParam(required=false,defaultValue="1",value="pageNum")Integer pageNum,
-	                       @RequestParam(required=false,defaultValue="5",value="pageSize")Integer pageSize){
+	                       @RequestParam(required=false,defaultValue="8",value="pageSize")Integer pageSize){
 		/**
 		 *@Author 小江  [com.zhbit]
 		 *@Date 2020/1/4 21:27

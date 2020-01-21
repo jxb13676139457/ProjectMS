@@ -60,7 +60,7 @@
                                                 <td th:text="${user.userId}"></td>
                                                 <td th:text="${user.userName}"></td>
                                                 <td>
-                                                    <select id="DropDownListID" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                    <select th:id="DropDownListID_+${user.userId}" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
                                                         <option selected value="">请选择</option>
                                                         <option th:each="role:${roleList}" th:text="${role.roleName}"></option>
                                                     </select>
@@ -134,12 +134,15 @@
         function toConfirm(obj) {
             var tds = $(obj).parent().parent().children();// 获取到所有列
             var userId = $(tds[0]).text();// 获取用户ID
-            var DropDownListID = document.getElementById("DropDownListID");//获取角色下拉框对象
-            //var listID = "#DropDownListID_"+userId+" option:selected";
-            //var roleName = $(listID).val();
+            var DropDownListID = document.getElementById("DropDownListID_"+userId);//获取角色下拉框对象
             var roleName = DropDownListID.options[DropDownListID.selectedIndex].value;//获取选中的角色岗位
+            if(roleName==""){
+                alert("请先选择要分配给用户的岗位");
+                return;
+            }
             console.log("获取到的用户id："+userId);
             console.log("获取到的角色岗位："+roleName);
+
             $.ajax({
                 url: "/TBMS/admin-sys/user/role/"+userId+","+roleName,
                 type: "post",
@@ -150,10 +153,10 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-
-                    console.log("分配用户角色执行成功" + data);
-                    alert("分配用户角色执行成功"+data);
-                    //window.location.reload();
+                    if(data!=null){
+                        alert("分配用户角色执行成功\n当前职位："+roleName);
+                        window.location.reload();
+                    }
                 }
             });
         }

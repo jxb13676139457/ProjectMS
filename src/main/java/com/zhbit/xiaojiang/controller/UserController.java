@@ -6,8 +6,6 @@ import com.zhbit.xiaojiang.entity.Role;
 import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.RoleService;
 import com.zhbit.xiaojiang.service.UserService;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +31,7 @@ public class UserController {
     @RequestMapping("/admin-sys/users")
     public String userList(Model model,
                            @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-                           @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+                           @RequestParam(defaultValue="8",value="pageSize")Integer pageSize){
 	    /**
 	    *@Author 小江  [com.zhbit]
 	    *@Date 2020/1/4 21:27
@@ -163,7 +161,7 @@ public class UserController {
 
 	@PutMapping("/admin-sys/user/role/{userId},{roleName}")
 	@ResponseBody
-	public String distributeRole(@PathVariable("userId") String userId,
+	public User distributeRole(@PathVariable("userId") String userId,
 								 @PathVariable("roleName")String roleName){
 		System.out.println("测试是否成功传参："+userId+roleName);
 		User result = userService.distributeRole(userId,roleName);
@@ -172,7 +170,7 @@ public class UserController {
 		}else{
 			System.out.println("分配失败");
 		}
-		return roleName;
+		return result;
 	}
 
 }
