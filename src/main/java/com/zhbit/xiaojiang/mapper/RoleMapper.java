@@ -31,5 +31,8 @@ public interface RoleMapper {
 	//删除Role对象
 	int deleteRole(int roleId);
 
+	//通过角色名查找Role对象
+	Role findByRoleName(String roleName);
+
 
 }

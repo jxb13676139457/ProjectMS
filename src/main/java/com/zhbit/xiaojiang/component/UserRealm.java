@@ -8,11 +8,15 @@ package com.zhbit.xiaojiang.component;
 
 import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.UserService;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -22,10 +26,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 */
 public class UserRealm extends AuthorizingRealm {
 
+	//Log4j日志打印
+	private org.slf4j.Logger logger = LoggerFactory.getLogger(UserRealm.class);
+
 	//执行授权逻辑
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		System.out.println("执行授权方法");
+		logger.info("执行授权方法");
 		return null;
 	}
 
@@ -35,7 +42,7 @@ public class UserRealm extends AuthorizingRealm {
 	//执行认证逻辑
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-		System.out.println("执行认证方法");
+		logger.info("执行认证方法");
 		//加这一步的目的是在post请求时会先进入认证然后再到请求。
 		if(authenticationToken.getPrincipal()==null){
 			return null;

@@ -9,8 +9,13 @@
         where roleId = #{value}
     </select>
 
-    <select id="findAllRole" resultType="Role">
+    <select id="findAllRole" parameterType="String" resultType="Role">
         select roleId,roleType,roleName,rolePower from roles
+    </select>
+
+    <select id="findByRoleName" resultType="Role">
+        select * from roles
+        where roleName = #{value}
     </select>
 
     <insert id="saveRole" parameterType="Role" keyProperty="roleId" useGeneratedKeys="true">

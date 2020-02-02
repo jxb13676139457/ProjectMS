@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
 		ByteSource salt = ByteSource.Util.bytes(user.getUserId());
 		//加密后的密码
 		String encryptPassword = new SimpleHash("MD5",user.getPassword(),salt,2).toHex();
-		//System.out.println(encryptPassword);
 		user.setPassword(encryptPassword);
 		//先查询数据库看是否有相同用户，有的话不允许重复插入
 		User isExistUser = userMapper.findByUserId(user.getUserId());

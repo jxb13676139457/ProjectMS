@@ -21,6 +21,12 @@ spring:
     #配置开启直接访问templates模板页面权限，不推荐
   #resources:
     #static-locations: classpath:/templates/
+  #Springboot不需要导文件上传下载的jar包，默认配置是上传文件不能超过1MB，以下是修改默认配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+      enabled: true
 
   #mybatis相关配置  mysql8的驱动配置
   datasource:

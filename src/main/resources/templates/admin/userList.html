@@ -45,18 +45,59 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->
+                        <!-- 导入Excel文件模态框-->
+                        <div class="modal fade" id="ImportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            导入用户信息EXCEL表
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form enctype="multipart/form-data" id="userExcel" method="post">
+                                            <input id="file-zh" name="uploadFile" type="file" multiple>
+                                            <br/>
+                                            <b><a class="btn-sm btn-primary">导入前请先下载角色信息Excel表模板，按规范导入，仅支持excel文件</a></b>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn-sm btn-primary" data-dismiss="modal" onclick="importExcel()">
+                                            提交
+                                        </button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                  用户表
-                                <button class="btn-sm btn-success" style="margin-left: 850px">
+                                <button class="btn-sm btn-success" style="margin-left: 500px">
                                     <a th:href="@{/admin-sys/user}" style="color:white">
                                         <i class="fa fa-plus-square">添加用户</i>
                                     </a>
                                 </button>
+                                <button class="btn-sm btn-success" style="margin-left: 20px">
+                                    <a th:href="@{/admin-sys/users-export}" style="color:white">
+                                        <i class="fa fa-cloud-download">批量导出用户</i>
+                                    </a>
+                                </button>
+                                <button class="btn-sm btn-success" onclick="toShowImportModal()" style="margin-left: 20px">
+                                    <i class="fa fa-cloud-upload" aria-hidden="true">批量导入用户</i>
+                                </button>
+                                <button class="btn-sm btn-success" style="margin-left: 20px">
+                                    <a th:href="@{/admin-sys/users-template}" style="color:white">
+                                        <i class="fa fa-download">下载用户信息EXCEL模板</i>
+                                    </a>
+                                </button>
                             </div>
-                            <div class="panel-body">
 
+                            <div class="panel-body">
                                 <!--删除模态框-->
                                 <div class="modal fade" tabindex="-1" role="dialog" id="delModal">
                                     <input type="hidden" name="_method" value="delete" />
@@ -120,7 +161,7 @@
                                                             <i class="fa fa-pencil-square-o">编辑</i>
                                                         </a>
                                                     </button>
-                                                    <button class="btn-sm btn-danger" onclick="toShow(this)">
+                                                    <button class="btn-sm btn-danger" onclick="toShowDelModal(this)">
                                                         <i class="fa fa-trash-o">删除</i>
                                                     </button>
                                                 </td>
@@ -461,7 +502,7 @@
 
     <script type="text/javascript">
         //删除第一步
-        function toShow(obj) {
+        function toShowDelModal(obj) {
             var tds = $(obj).parent().parent().children();// 获取到所有列
             var delete_id = $(tds[0]).text();// 获取用户ID
             console.log("获取到的用户id："+delete_id);
@@ -479,15 +520,48 @@
                     _method:"delete",
                     userId:userId
                 },
+                async:false,                //加上这个属性就好了
                 dataType: 'json',
                 success: function (data) {
+                    $('#delModal').modal('hide'); //关闭模态框
                     if(data==1){
-                        //console.log("删除成功，传过来的值："+data);
-                        window.location.reload();
+                        alert("删除用户信息成功");
+                    }else{
+                        alert("删除用户信息失败");
                     }
+                    window.location.reload();
                 }
             });
-            $('#delModal').modal('hide'); //关闭模态框
+        }
+
+        //导入第一步
+        function toShowImportModal() {
+            $('#ImportModal').modal('show');//打开模态框
+        }
+        //导入第二步
+        function importExcel() {
+            var formData = new FormData($("#userExcel")[0]);  // 要求使用的html对象
+            $.ajax(
+                {
+                    type:"post",
+                    url:"/TBMS/admin-sys/users-import",
+                    data:formData,
+                    async:false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        $('#ImportModal').modal('hide'); //关闭模态框
+                        console.log("进入成功回调事件");
+                        if(data!=null && data!=""){
+                            alert(data);
+                        }
+                        window.location.reload();
+                    },
+                    error: function (data) {
+                        console.log("进入失败回调事件"+data);
+                    }
+                }
+            );
         }
     </script>
 

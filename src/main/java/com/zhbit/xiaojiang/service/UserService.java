@@ -33,9 +33,24 @@ public interface UserService {
 	*/
 	boolean saveUser(User user);
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/26 23:12
+	*Description  修改数据库用户对象
+	*/
 	User editUser(User user);
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/26 23:12
+	*Description  删除数据库用户对象
+	*/
 	int deleteUser(String userId);
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/1/26 23:12
+	*Description  给用户分配对应的角色
+	*/
 	User distributeRole(String userId,String roleName);
 }

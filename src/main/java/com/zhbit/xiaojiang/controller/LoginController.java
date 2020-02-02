@@ -14,6 +14,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
+
+	//Log4j日志打印
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private UserService userService;
@@ -69,7 +74,7 @@ public class LoginController {
 		Subject currentUser = SecurityUtils.getSubject();
 		//2、封装用户信息令牌
 		UsernamePasswordToken token = new UsernamePasswordToken(userId,password);
-		System.out.println("登录输入的密码："+token.getPassword());
+		logger.info("登录输入的密码："+token.getPassword());
 		//3、执行login方法
 		try{
 			//进行验证，报错返回登录首页，不报错到达主页
@@ -79,7 +84,6 @@ public class LoginController {
 			String userName = user.getUserName();
 			Session session = currentUser.getSession();
 			//用户名和角色类型存入session
-			//model.addAttribute("userId",userId);
 			session.setAttribute("userId",userId);
 			session.setAttribute("userName",userName);
 			session.setAttribute("roleType",roleType);
@@ -111,11 +115,10 @@ public class LoginController {
 
 	@GetMapping("/admin-sys/loginer/{userId}")
 	public String showLoginer(@PathVariable("userId") String userId,Model model){
-		System.out.println("获取到的userID："+userId);
+		logger.info("获取到的userID："+userId);
 		User user = userService.findByUserId(userId);
 		model.addAttribute("user",user);
 		return "admin/showLoginerDetail";
-
 	}
 
 }
