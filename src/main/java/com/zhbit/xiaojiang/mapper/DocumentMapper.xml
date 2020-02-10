@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhbit.xiaojiang.mapper.DocumentMapper">
+    <!--定义一个resultMap，关联查询项目和文档资料信息-->
+    <resultMap id="DocumentResultMap" type="Document">
+        <!--id 主表唯一标识 result 普通标识-->
+        <id column="documentId" property="documentId" />
+        <result column="documentName" property="documentName" />
+        <result column="uploadTime" property="uploadTime" />
+        <result column="author" property="author" />
+        <result column="savePath" property="savePath" />
+        <result column="projectId" property="projectId" />
+        <!--配置关联项目信息  多对一-->
+        <association property="project" javaType="Project">
+            <id column="projectId" property="projectId" />
+            <result column="projectName" property="projectName" />
+        </association>
+    </resultMap>
+    
+    <select id="findAllDocument" resultMap="DocumentResultMap">
+        select d.*,p.projectId,p.projectName
+        from projects p right join documents d
+        on p.projectId = d.projectId
+    </select>
+
+    <insert id="saveDocument" parameterType="Document" keyProperty="userId" useGeneratedKeys="true">
+        insert documents(documentName,uploadTime,author,savePath,projectId)
+          values(
+            #{documentName,jdbcType=VARCHAR},
+            #{uploadTime,jdbcType=DATE},
+            #{author,jdbcType=VARCHAR},
+            #{savePath,jdbcType=VARCHAR},
+            #{projectId,jdbcType=VARCHAR}
+          )
+    </insert>
+
+    <delete id="deleteDocument" parameterType="INT">
+        delete from documents
+        where documentId = #{value}
+    </delete>
+
+
+</mapper>

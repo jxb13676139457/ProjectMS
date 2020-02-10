@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -38,7 +37,7 @@ public class UserController {
     *@Date 2020/1/4 21:41
     *Description  查询所有User对象
     */
-    @RequestMapping("/admin-sys/users")
+    @GetMapping("/admin-sys/users")
     public String userList(Model model,
                            @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
                            @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
@@ -55,14 +54,14 @@ public class UserController {
 		    //设置默认每页显示的数据数
 		    pageSize = 1;
 	    }
-	    System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);
+	    logger.info("当前页是："+pageNum+"显示条数是："+pageSize);
 
 	    //1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
 	    PageHelper.startPage(pageNum,pageSize);
 	    //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
 	    try {
 		    List<User> userList = userService.findAllUser();
-		    System.out.println("分页数据："+userList);
+		    logger.info("分页数据："+userList);
 		    //3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>
 		    PageInfo<User> userPageInfo = new PageInfo<User>(userList,pageSize);
 		    //4.使用model传参数回前端
@@ -91,9 +90,7 @@ public class UserController {
     *Description   添加User对象
     */
 	@PostMapping("/admin-sys/user")
-	public String addRole(User user, HttpServletRequest request){
-		//创建session对象来存放交互结果
-		HttpSession session = request.getSession();
+	public String addRole(User user){
 		boolean result = userService.saveUser(user);
 		if(result==true){
 			logger.info("添加成功");
@@ -108,7 +105,7 @@ public class UserController {
 	*@Date 2020/1/26 23:31
 	*Description  跳转到修改页面
 	*/
-	@GetMapping("/admin-sys/user-detail/{userId}")
+	@GetMapping("/admin-sys/user/{userId}")
 	public String toUpdateUser(@PathVariable("userId") String userId,Model model){
 		User user = userService.findByUserId(userId);
 		model.addAttribute("user",user);
@@ -162,19 +159,17 @@ public class UserController {
 			//设置默认每页显示的数据数
 			pageSize = 1;
 		}
-		System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);
-
+		logger.info("当前页是："+pageNum+"显示条数是："+pageSize);
 		//1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
 		PageHelper.startPage(pageNum,pageSize);
 		//2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
 		try {
 			List<User> userList = userService.findAllUser();
-			System.out.println("分页数据："+userList);
+			logger.info("分页数据："+userList);
 			//3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>
 			PageInfo<User> userPageInfo = new PageInfo<User>(userList,pageSize);
 			//查询所有角色对象
 			List<Role> roleList =  roleService.findAllRole();
-			//System.out.println("测试角色名："+roleList.get(1).getRoleName());
 			model.addAttribute("roleList",roleList);
 			//4.使用model传参数回前端
 			model.addAttribute("userPageInfo",userPageInfo);

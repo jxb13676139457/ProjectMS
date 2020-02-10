@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>修改用户界面</title>
+    <title>修改项目界面</title>
     <!-- Bootstrap Styles-->
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
     <!-- FontAwesome Styles-->
@@ -20,7 +20,7 @@
         <div th:replace="~{/commons/bar::topbar}"></div>
         <!--/. NAV TOP  -->
         <!--引入抽取出来的侧边菜单栏-->
-        <div th:replace="~{/commons/bar::sidebar(activeUri='user.html')}"></div>
+        <div th:replace="~{/commons/bar::sidebar(activeUri='project.html')}"></div>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
              <div id="page-inner">
@@ -40,10 +40,10 @@
                              <div class="col-lg-12">
                                  <ol class="breadcrumb">
                                      <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
-                                     <li><i class="icon_document_alt"></i>修改用户</li>
+                                     <li><i class="icon_document_alt"></i>修改项目</li>
                                      <button type="button" class="btn-sm btn-default"
                                              style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
-                                         <a th:href="@{/admin-sys/users}" style="color:white">返回上页</a>
+                                         <a th:href="@{/admin-sys/projects}" style="color:white">返回上页</a>
                                      </button>
                                  </ol>
                              </div>
@@ -54,83 +54,145 @@
                              <div class="col-lg-12">
                                  <section class="panel">
                                      <header class="panel-heading">
-                                         <b>修改用户信息</b>
+                                         <b>修改项目信息</b>
                                      </header>
                                      <div class="panel-body">
                                          <div class="form">
-                                             <form th:action="@{/admin-sys/user}" class="form-validate form-horizontal" method="post">
+                                             <form th:action="@{/admin-sys/project}" class="form-validate form-horizontal" method="post">
 
                                                  <!--修改页面必须加这个隐藏输入框，设定请求方式-->
                                                  <input type="hidden" name="_method" value="put"/>
-                                                 <!--获取userId的值-->
-                                                 <input type="hidden" name="userId" th:value="${user.userId}">
+                                                 <!--获取projectId的值,以便删除模态框获取-->
+                                                 <input type="hidden" name="projectId" th:value="${project.projectId}">
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">用户ID
+                                                         <label class="control-label col-lg-2">项目ID
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="userId" th:value="${user.userId}" type="text" style="width:250px" disabled/>
+                                                             <input class="form-control" name="projectId" th:value="${project.projectId}" type="text" style="width:250px" disabled/>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">用户名
+                                                         <label class="control-label col-lg-2">项目名
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="userName" th:value="${user.userName}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="projectName" th:value="${project.projectName}" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">密码
+                                                         <label class="control-label col-lg-2">项目简介
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="password" th:value="${user.password}" type="password" style="width:250px" required/>
+                                                             <textarea class="form-control" name="projectContent" th:text="${project.projectContent}" style="width:250px;height:200px;" required ></textarea>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">性别
+                                                         <label class="control-label col-lg-2">项目投入资金
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <select name="sex" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
-                                                                 <option value="">请选择</option>
-                                                                 <option th:selected="${user.sex eq '男'}">男</option>
-                                                                 <option th:selected="${user.sex eq '女'}">女</option>
-                                                             </select>
+                                                             <input class="form-control" name="inputMoney" th:value="${project.inputMoney}" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">地址
+                                                         <label class="control-label col-lg-2">项目创收资金
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="address" th:value="${user.address}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="outputMoney" th:value="${project.outputMoney}" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">
-                                                         <label class="control-label col-lg-2">手机号
+                                                         <label class="control-label col-lg-2">项目成本
                                                              <span class="required" style="color:red">*</span>
                                                          </label>
                                                          <div class="col-lg-10">
-                                                             <input class="form-control" name="phone" th:value="${user.phone}" type="text" style="width:250px" required/>
+                                                             <input class="form-control" name="cost" th:value="${project.cost}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目资金消费明细
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <textarea class="form-control" name="costDetail" th:text="${project.costDetail}" style="width:250px;height: 200px" required></textarea>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目开始时间
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="time_start" th:value="${project.time_start}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目结束时间
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="time_end" th:value="${project.time_end}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目进度
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="process" th:value="${project.process}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目负责人
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="leader" th:value="${project.leader}" type="text" style="width:250px" required/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">联系手机号
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="phone" th:value="${project.phone}" type="text" style="width:250px" required/>
                                                          </div>
                                                      </div>
                                                  </div>

@@ -10,7 +10,7 @@
     </select>
 
     <select id="findAllRole" parameterType="String" resultType="Role">
-        select roleId,roleType,roleName,rolePower from roles
+        select * from roles
     </select>
 
     <select id="findByRoleName" resultType="Role">

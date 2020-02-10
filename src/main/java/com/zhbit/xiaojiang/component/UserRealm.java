@@ -33,6 +33,9 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 		logger.info("执行授权方法");
+
+
+
 		return null;
 	}
 

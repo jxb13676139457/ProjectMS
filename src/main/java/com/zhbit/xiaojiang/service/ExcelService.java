@@ -74,4 +74,11 @@ public interface ExcelService {
 	*Description  判断是否为空行数据
 	*/
 	boolean isBlankRow(Row row);
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/2/7 0:08
+	*Description  批量导出所有项目
+	*/
+	String exportProject(HttpServletResponse response);
 }

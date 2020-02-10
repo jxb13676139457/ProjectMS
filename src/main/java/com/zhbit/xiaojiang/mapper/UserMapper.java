@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Mapper
-@Component(value ="userMapper")
+@Component(value = "userMapper")
 public interface UserMapper {
 
 	//通过userId查找User对象

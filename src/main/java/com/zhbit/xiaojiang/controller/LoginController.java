@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController {
@@ -113,12 +114,38 @@ public class LoginController {
 		return "redirect:/toLogin";
 	}
 
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/2/8 15:35
+	*Description  查看管理员具体信息
+	*/
 	@GetMapping("/admin-sys/loginer/{userId}")
 	public String showLoginer(@PathVariable("userId") String userId,Model model){
 		logger.info("获取到的userID："+userId);
 		User user = userService.findByUserId(userId);
 		model.addAttribute("user",user);
 		return "admin/showLoginerDetail";
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/2/8 15:47
+	*Description  用户未授权时跳转请求
+	*/
+	@RequestMapping("/noauth")
+	@ResponseBody
+	public String unauthorized(){
+		return "未经授权不得访问此功能";
+	}
+
+	@RequestMapping("/user/add")
+	public String add(){
+		return "user/ui-elements";
+	}
+
+	@RequestMapping("/user/update")
+	public String uodate(){
+		return "user/ui-elements";
 	}
 
 }

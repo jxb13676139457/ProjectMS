@@ -46,6 +46,11 @@ public class ShiroConfig{
 		filterMap.put("/bootstrap-3.3.7/**/*","anon");
 		filterMap.put("/font-awesome-4.7.0/**/*","anon");
 		filterMap.put("/auth/logout","logout");
+
+		//授权
+		filterMap.put("/user/add","perms[user:add]");
+		filterMap.put("/user/update","perms[user:update]");
+
 		//使用通配符的方式进行全部请求路径拦截的
 		filterMap.put("/**","authc");
 
@@ -53,6 +58,8 @@ public class ShiroConfig{
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 		//设置认证被拦截后跳转的页面请求
 		shiroFilterFactoryBean.setLoginUrl("/toLogin");
+		//设置未授权时跳转的页面请求
+		shiroFilterFactoryBean.setUnauthorizedUrl("/noauth");
 
 		return shiroFilterFactoryBean;
 	}

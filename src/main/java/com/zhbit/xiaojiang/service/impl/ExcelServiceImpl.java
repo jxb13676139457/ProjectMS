@@ -6,8 +6,10 @@
  */
 package com.zhbit.xiaojiang.service.impl;
 
+import com.zhbit.xiaojiang.entity.Project;
 import com.zhbit.xiaojiang.entity.Role;
 import com.zhbit.xiaojiang.entity.User;
+import com.zhbit.xiaojiang.mapper.ProjectMapper;
 import com.zhbit.xiaojiang.mapper.RoleMapper;
 import com.zhbit.xiaojiang.mapper.UserMapper;
 import com.zhbit.xiaojiang.service.ExcelService;
@@ -40,6 +42,10 @@ public class ExcelServiceImpl implements ExcelService {
 	private UserMapper userMapper;
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private ProjectMapper projectMapper;
+
+
 	private HSSFWorkbook workbook;
 	private HSSFCell cell = null;  //Excel的列
 	private HSSFRow row = null;  //Excel的行
@@ -131,6 +137,117 @@ public class ExcelServiceImpl implements ExcelService {
 			e.printStackTrace();
 		}
 		outputSetting("用户信息表.xls",response);
+		return null;
+	}
+
+	@Override
+	public String exportProject(HttpServletResponse response) {
+		//获取项目对象列表
+		List<Project> projectList = projectMapper.findAllProject();
+		String[] tableHeader = {"项目ID","项目名","项目简介","项目投入资金","项目创收资金","项目成本","项目成本消费明细"
+				,"项目开始时间","项目截止时间","项目进度","项目负责人","联系手机号"};
+		short cellNumber = (short) tableHeader.length;//表的列数
+		workbook = new HSSFWorkbook(); //创建一个Excel
+		style = workbook.createCellStyle(); //设置表头的类型
+		style.setAlignment(HorizontalAlignment.CENTER);
+		style1 = workbook.createCellStyle(); //设置数据类型
+		style1.setAlignment(HorizontalAlignment.CENTER);
+		HSSFFont font = workbook.createFont(); //设置字体
+		HSSFSheet sheet = workbook.createSheet("sheet1"); //创建一个sheet
+		HSSFHeader header = sheet.getHeader();//设置sheet的头
+		try {
+			//根据是否取出数据，设置header信息
+			if (projectList.size() < 1) {
+				header.setCenter("查无资料");
+			} else {
+				header.setCenter("项目信息表");
+				row = sheet.createRow(0);
+				row.setHeight((short) 400);
+				//表头
+				for (int k = 0; k < cellNumber; k++) {
+					cell = row.createCell((short) k);//创建第0行第k列
+					cell.setCellValue(tableHeader[k]);//设置第0行第k列的值
+					sheet.setColumnWidth((short) k, (short) 8000);//设置列的宽度
+					font.setColor(HSSFFont.COLOR_NORMAL); // 设置单元格字体的颜色.
+					font.setFontHeight((short) 350); //设置单元字体高度
+					style1.setFont(font);//设置字体风格
+					cell.setCellStyle(style1);
+				}
+				// 给Excel填充数据
+				for (int i = 0; i < projectList.size(); i++) {
+					//获取User对象
+					Project project = (Project) projectList.get(i);
+					row = sheet.createRow((short) (i + 1));//创建第i+1行
+					row.setHeight((short) 400);//设置行高
+
+					if (project.getProjectId() != null) {
+						cell = row.createCell((short) 0);//创建第i+1行第0列
+						cell.setCellValue(project.getProjectId());//设置第i+1行第0列的值
+						cell.setCellStyle(style);//设置风格
+					}
+					if (project.getProjectName() != null) {
+						cell = row.createCell((short) 1); //创建第i+1行第1列
+						cell.setCellValue(project.getProjectName());//设置第i+1行第1列的值
+						cell.setCellStyle(style); //设置风格
+					}
+					if (project.getProjectContent() != null) {
+						cell = row.createCell((short) 2);
+						cell.setCellValue(project.getProjectContent());
+						cell.setCellStyle(style);
+					}
+					if (project.getInputMoney() != null) {
+						cell = row.createCell((short) 3);
+						cell.setCellValue(project.getInputMoney());
+						cell.setCellStyle(style);
+					}
+					if (project.getOutputMoney() != null) {
+						cell = row.createCell((short) 4);
+						cell.setCellValue(project.getOutputMoney());
+						cell.setCellStyle(style);
+					}
+					if (project.getCost() != null) {
+						cell = row.createCell((short) 5);
+						cell.setCellValue(project.getCost());
+						cell.setCellStyle(style);
+					}
+					if (project.getCostDetail() != null) {
+						cell = row.createCell((short) 6);
+						cell.setCellValue(project.getCostDetail());
+						cell.setCellStyle(style);
+					}
+
+					if (project.getTime_start() != null) {
+						cell = row.createCell((short) 7);
+						cell.setCellValue(project.getTime_start());
+						cell.setCellStyle(style);
+					}
+					if (project.getTime_end() != null) {
+						cell = row.createCell((short) 8);
+						cell.setCellValue(project.getTime_end());
+						cell.setCellStyle(style);
+					}
+					if (project.getProcess() != null) {
+						cell = row.createCell((short) 9);
+						cell.setCellValue(project.getProcess());
+						cell.setCellStyle(style);
+					}
+					if (project.getLeader() != null) {
+						cell = row.createCell((short) 10);
+						cell.setCellValue(project.getLeader());
+						cell.setCellStyle(style);
+					}
+					if (project.getPhone() != null) {
+						cell = row.createCell((short) 11);
+						cell.setCellValue(project.getPhone());
+						cell.setCellStyle(style);
+					}
+				}
+			}
+			workbook.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		outputSetting("项目详细信息表.xls",response);
 		return null;
 	}
 

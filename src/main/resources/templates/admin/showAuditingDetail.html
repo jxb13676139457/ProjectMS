@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>审核项目界面</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="wrapper">
+        <!--引入抽取出来的顶部导航栏-->
+        <div th:replace="~{/commons/bar::topbar}"></div>
+        <!--/. NAV TOP  -->
+        <!--引入抽取出来的侧边菜单栏-->
+        <div th:replace="~{/commons/bar::sidebar(activeUri='project.html')}"></div>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+             <div id="page-inner">
+			     <div class="row">
+                     <div class="col-md-12">
+                         <h1 class="page-header">
+                             <!--Empty Page <small>Create new page.</small> 标题-->
+                             &nbsp;
+                         </h1>
+                     </div>
+                 </div>
+
+                 <!--main content start-->
+                 <section id="main-content">
+                     <section class="wrapper">
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <ol class="breadcrumb">
+                                     <li><i class="fa fa-home"></i><a th:href="@{/admin-sys/index}">首页</a></li>
+                                     <li><i class="icon_document_alt"></i>审核项目</li>
+                                     <button type="button" class="btn-sm btn-default"
+                                             style="width:100px;height:30px;line-height:15px;background-color:#66CDAA;font-size:15px;margin-left:750px">
+                                         <a th:href="@{/admin-sys/projects}" style="color:white">返回上页</a>
+                                     </button>
+                                 </ol>
+                             </div>
+                         </div>
+
+                         <!-- Form validations -->
+                         <div class="row">
+                             <div class="col-lg-12">
+                                 <section class="panel">
+                                     <header class="panel-heading">
+                                         <b>审核项目信息</b>
+                                     </header>
+                                     <div class="panel-body">
+                                         <div class="form">
+                                             <form th:action="@{/admin-sys/auditing}" class="form-validate form-horizontal" method="post">
+
+                                                 <!--修改页面必须加这个隐藏输入框，设定请求方式-->
+                                                 <input type="hidden" name="_method" value="put"/>
+                                                 <!--获取projectId的值,以便删除模态框获取-->
+                                                 <input type="hidden" name="auditingId" th:value="${auditing.auditingId}">
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">未审核项目ID</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="auditingId" th:value="${auditing.auditingId}" type="text" style="width:250px" disabled/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目名</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="projectName_tmp" th:value="${auditing.projectName_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目简介</label>
+                                                         <div class="col-lg-10">
+                                                             <textarea class="form-control" name="projectContent_tmp" th:text="${auditing.projectContent_tmp}" style="width:250px;height:200px;"></textarea>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目投入资金</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="inputMoney_tmp" th:value="${auditing.inputMoney_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目创收资金</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="outputMoney_tmp" th:value="${auditing.outputMoney_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目成本</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="cost_tmp" th:value="${auditing.cost_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目资金消费明细</label>
+                                                         <div class="col-lg-10">
+                                                             <textarea class="form-control" name="costDetail_tmp" th:text="${auditing.costDetail_tmp}" style="width:250px;height: 200px"></textarea>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目开始时间</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="time_start_tmp" th:value="${auditing.time_start_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目结束时间</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="time_end_tmp" th:value="${auditing.time_end_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">项目负责人</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="leader_tmp" th:value="${auditing.leader_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group ">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">联系手机号</label>
+                                                         <div class="col-lg-10">
+                                                             <input class="form-control" name="phone_tmp" th:value="${auditing.phone_tmp}" type="text" style="width:250px"/>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group">
+                                                     <div  style="margin-left:250px">
+                                                         <label class="control-label col-lg-2">审核状态
+                                                             <span class="required" style="color:red">*</span>
+                                                         </label>
+                                                         <div class="col-lg-10">
+                                                             <select name="auditingStatus" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                                 <option selected value="">请选择</option>
+                                                                 <option th:value="1">通过审核</option>
+                                                                 <option th:value="0">拒绝通过审核</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="form-group">
+                                                     <div  style="margin-left:500px">
+                                                         <div class="col-lg-offset-2 col-lg-10">
+                                                             <button type="submit" class="btn-sm btn-default"
+                                                                     style="background-color:#66CDAA;color: white">确定</button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </form>
+                                         </div>
+                                     </div>
+                                 </section>
+                             </div>
+                         </div>
+                         <!-- page end-->
+                         </section>
+                 </section>
+                 <!--main content end-->
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+   
+</body>
+</html>

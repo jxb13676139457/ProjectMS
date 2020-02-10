@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -90,9 +89,7 @@ public class RoleController {
 	 *             springMVC就可以将请求参数和入参对象的属性一一绑定自动封装成对象
 	*/
 	@PostMapping("/admin-sys/role")
-	public String addRole(Role role, HttpServletRequest request){
-		//创建session对象来存放交互结果
-		HttpSession session = request.getSession();
+	public String addRole(Role role){
 		boolean result = roleService.saveRole(role);
 		if(result==true){
 			logger.info("添加成功");
@@ -107,7 +104,7 @@ public class RoleController {
 	*@Date 2020/1/5 15:54
 	*Description   跳转到修改页面，查出当前角色，在编辑页面回显
 	*/
-	@GetMapping("/admin-sys/role-detail/{roleId}")
+	@GetMapping("/admin-sys/role/{roleId}")
 	public String toUpdateRole(@PathVariable("roleId") Integer roleId,Model model){
 		Role role = roleService.findByRoleId(roleId);
 		model.addAttribute("role",role);

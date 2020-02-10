@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhbit.xiaojiang.mapper.ProjectMapper">
+    <!--定义一个resultMap，关联查询项目和文档资料及资金信息-->
+    <resultMap id="ProjectResultMap" type="Project">
+        <!--id 主表唯一标识 result 普通标识-->
+        <id column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="projectContent" property="projectContent" />
+        <result column="time_start" property="time_start" />
+        <result column="time_end" property="time_end" />
+        <result column="leader" property="leader" />
+        <result column="phone" property="phone" />
+        <result column="inputMoney" property="inputMoney" />
+        <result column="outputMoney" property="outputMoney" />
+        <result column="cost" property="cost" />
+        <result column="costDetail" property="costDetail" />
+        <result column="process" property="process"/>
+        <!--配置关联文档资料信息  一对多-->
+        <collection property="document" ofType="Document">
+            <id column="documentId" property="documentId"/>
+            <result column="documentName" property="documentName" />
+            <result column="uploadTime" property="uploadTime" />
+            <result column="author" property="author" />
+            <result column="savePath" property="savePath" />
+        </collection>
+    </resultMap>
+    
+    <select id="findAllProject" resultType="Project">
+        select * from projects
+    </select>
+
+    <select id="findByProjectId" resultType="Project">
+        select * from projects
+        where projectId = #{value}
+    </select>
+    
+    <update id="editProject" parameterType="Project">
+        update projects
+        set
+          projectName = #{projectName,jdbcType=VARCHAR},
+          projectContent = #{projectContent,jdbcType=VARCHAR},
+          time_start = #{time_start,jdbcType=DATE},
+          time_end = #{time_end,jdbcType=DATE},
+          inputMoney = #{inputMoney,jdbcType=FLOAT},
+          outputMoney = #{outputMoney,jdbcType=FLOAT},
+          cost = #{cost,jdbcType=FLOAT},
+          costDetail = #{costDetail,jdbcType=VARCHAR},
+          leader = #{leader,jdbcType=VARCHAR},
+          phone = #{phone,jdbcType=VARCHAR},
+          process = #{process,jdbcType=FLOAT}
+        where projectId = #{projectId}
+    </update>
+    
+    <delete id="deleteProject" parameterType="String">
+        delete from projects
+        where projectId = #{value}
+    </delete>
+    <!--以下的删除主要是变相使用级联删除-->
+    <delete id="deleteDocument" parameterType="String">
+        delete from documents
+        where projectId = #{value}
+    </delete>
+    
+    <select id="findAllAuditing" resultType="Auditing">
+        select * from auditing
+        where auditingStatus = 0
+    </select>
+    
+    <select id="findByAuditingId" parameterType="String" resultType="Auditing">
+        select * from auditing
+        where auditingId = #{value}
+    </select>
+
+    <update id="editAuditing" parameterType="Auditing" keyProperty="auditingId" useGeneratedKeys="true">
+        update auditing
+        set auditingStatus = #{auditingStatus,jdbcType=INTEGER}
+        where auditingId = #{auditingId}
+    </update>
+    
+    <delete id="deleteAuditing" parameterType="String">
+        delete from auditing
+        where auditingId = #{value}
+    </delete>
+    
+    <insert id="saveProject" parameterType="Auditing" keyProperty="projectId" useGeneratedKeys="true">
+        insert into projects(projectId,projectName,projectContent,
+        time_start,time_end,leader,phone,inputMoney,outputMoney,cost,costDetail,process)
+        values(
+            #{auditingId,jdbcType=VARCHAR},
+            #{projectName_tmp,jdbcType=VARCHAR},
+            #{projectContent_tmp,jdbcType=VARCHAR},
+            #{time_start_tmp,jdbcType=DATE},
+            #{time_end_tmp,jdbcType=DATE},
+            #{leader_tmp,jdbcType=VARCHAR},
+            #{phone_tmp,jdbcType=VARCHAR},
+            #{inputMoney_tmp,jdbcType=FLOAT},
+            #{outputMoney_tmp,jdbcType=FLOAT},
+            #{cost_tmp,jdbcType=FLOAT},
+            #{costDetail_tmp,jdbcType=VARCHAR}
+            0.00
+        )
+    </insert>
+    
+    <delete id="deleteAllAuditing">
+        delete from auditing
+    </delete>
+</mapper>

@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>顶部导航栏</title>
+    <title>后台系统侧边菜单栏和顶部导航栏</title>
+
 </head>
 <body>
     <!--/. NAV TOP  -->
@@ -19,12 +20,13 @@
 
         <ul class="nav navbar-top-links navbar-right">
             <!-- /.dropdown-messages -->
-            <li class="dropdown">
+            <!--<li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-envelope fa-fw"></i>
                     <i>消息</i>
                     <i class="fa fa-caret-down"></i>
                 </a>
+                &lt;!&ndash; &ndash;&gt;
                 <ul class="dropdown-menu dropdown-messages">
                     <li>
                         <a href="#">
@@ -69,7 +71,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
             <!-- /.dropdown -->
             <!-- <li class="dropdown">
                  <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -230,11 +232,25 @@
         <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
-
                 <li>
                     <a href="#"
                        th:class="${activeUri=='project.html'?'active-menu':''}">
-                        <i class="fa fa-table"></i>管理项目
+                        <i class="fa fa-table"></i>项目中心<span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/admin-sys/projects}">管理已审核项目</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin-sys/auditings}">审核项目</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin-sys/documents}"
+                       th:class="${activeUri=='document.html'?'active-menu':''}">
+                        <i class="fa fa-book"></i>文档中心
                     </a>
                 </li>
                 <li>
@@ -285,5 +301,7 @@
             </ul>
         </div>
     </nav>
+
+
 </body>
 </html>

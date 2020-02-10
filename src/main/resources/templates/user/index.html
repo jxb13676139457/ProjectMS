@@ -2,12 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>项目管理系统前台</title>
+
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+
 </head>
-<body>
-    <h1>前台用户首页</h1>
-    <label>需求任务:</label><button>查看权限</button></br><button>编辑权限</button>
-    <label>开发任务:</label><button>查看权限</button></br><button>编辑权限</button>
-    <label>测试任务:</label><button>查看权限</button></br><button>编辑权限</button>
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <a th:href="@{/user/add}">add</a>
+    <br/>
+    <a th:href="@{/user/update}">update</a>
+
+</div>
 </body>
+
 </html>

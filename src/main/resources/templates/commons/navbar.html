@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>前台系统顶部导航栏</title>
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div id="menu1" class="menu" th:fragment="frond_topbar">
+        <ul>
+            <li><a href="#">首　　页</a></li>
+            <li><a href="#">项目列表</a></li>
+            <li><a href="#">任务列表</a></li>
+            <li><a href="#">文档中心</a></li>
+            <li><a href="#">阳光服务</a></li>
+            <li><a href="#">加盟代理</a></li>
+            <li><a href="#">个人中心</a></li>
+        </ul>
+        <div class="cls"></div>
+    </div>
+</body>
+</html>

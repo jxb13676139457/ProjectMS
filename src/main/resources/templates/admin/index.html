@@ -315,6 +315,30 @@
     <!-- Custom Js -->
     <script th:src="@{/assets/js/custom-scripts.js}"></script>
 
+    <!--<script type="text/javascript">
+        window.onload =  function() {
+            console.log("进入消息列表事件")
+            $.ajax(
+                {
+                    type:"post",
+                    url:"/TBMS/admin-sys/auditings",
+                    async:false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        console.log("进入成功回调事件");
+                        if(data!=null && data!=""){
+                            console.log(data);
+                        }
+                    },
+                    error: function (data) {
+                        console.log("进入失败回调事件"+data);
+                    }
+                }
+            );
+        }
+    </script>-->
+
 </body>
 
 </html>
