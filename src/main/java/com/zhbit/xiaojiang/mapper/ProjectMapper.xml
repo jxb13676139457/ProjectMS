@@ -107,4 +107,23 @@
     <delete id="deleteAllAuditing">
         delete from auditing
     </delete>
+
+    <select id="findByUserId" parameterType="String" resultType="Project">
+        select * from projects
+        where projectId in (
+          select projectId from members
+          where userId = #{value}
+        )
+    </select>
+
+    <select id="findByKeyword" parameterType="String" resultType="Project">
+        select * from projects
+        where projectId like concat('%',#{keyword},'%')
+        or projectName like concat('%',#{keyword},'%')
+        or projectContent like concat('%',#{keyword},'%')
+        or time_start like concat('%',#{keyword},'%')
+        or time_end like concat('%',#{keyword},'%')
+        or leader like concat('%',#{keyword},'%')
+        or phone like concat('%',#{keyword},'%')
+    </select>
 </mapper>

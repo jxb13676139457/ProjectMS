@@ -174,4 +174,57 @@ public class ProjectController {
 		return result;
 	}
 
+	/**
+	 *@Author 小江  [com.zhbit]
+	 *@Date 2020/2/16 16:49
+	 *Description  前台系统显示当前登录用户的参与项目
+	 */
+	@GetMapping("/user-sys/projects/{userId}")
+	public String showProjects(@PathVariable("userId") String userId, Model model){
+		List<Project> projects = projectService.findByUserId(userId);
+		model.addAttribute("projects", projects);
+		return "user/projectList";
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/3/22 14:28
+	*Description  搜索项目
+	*/
+	@GetMapping("/admin-sys/project-search/{keyword}")
+	public String searchDocument(@PathVariable("keyword") String keyword,
+	                             Model model,
+	                             @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
+	                             @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+		List<Project> projectList = null;
+		//以下是分页显示
+		if(pageNum==null || pageNum<=0){
+			//设置默认当前页
+			pageNum = 1;
+		}
+		if(pageSize == null){
+			//设置默认每页显示的数据数
+			pageSize = 1;
+		}
+		logger.info("当前页是："+pageNum+"显示条数是："+pageSize);
+
+		//1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
+		PageHelper.startPage(pageNum,pageSize);
+		//2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
+		try {
+			projectList = projectService.searchKeyword(keyword);
+			logger.info("分页数据："+projectList);
+			//3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>
+			PageInfo<Project> projectPageInfo = new PageInfo<Project>(projectList,pageSize);
+			//4.使用model传参数回前端
+			model.addAttribute("projectPageInfo",projectPageInfo);
+			model.addAttribute("projectList",projectList);
+			logger.info("打印搜索结果数："+projectList.size());
+		}finally {
+			//清理 ThreadLocal 存储的分页参数,保证线程安全
+			PageHelper.clearPage();
+		}
+		return "admin/projectList";
+	}
+
 }

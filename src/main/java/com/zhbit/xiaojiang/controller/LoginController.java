@@ -12,7 +12,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -45,16 +46,6 @@ public class LoginController {
 
 	/**
 	*@Author 小江  [com.zhbit]
-	*@Date 2019/12/24 22:30
-	*Description  跳转到前台用户首页
-	*/
-	@RequestMapping("/user-sys/index")
-	public String user(){
-		return "user/index";
-	}
-
-	/**
-	*@Author 小江  [com.zhbit]
 	*@Date 2019/12/24 22:31
 	*Description  跳转到后台管理员首页
 	*/
@@ -69,7 +60,7 @@ public class LoginController {
 	*Description  登录请求，用Shiro完成用户认证操作
 	*/
 	@RequestMapping("/login")
-	public String login(String userId,String password,Model model){
+	public String login(String userId,String password,Model model,HttpSession session){
 
 		//1、获取Subject对象，即当前用户
 		Subject currentUser = SecurityUtils.getSubject();
@@ -83,7 +74,6 @@ public class LoginController {
 			User user = userService.findByUserId(userId);
 			String roleType = user.getRole().getRoleType();
 			String userName = user.getUserName();
-			Session session = currentUser.getSession();
 			//用户名和角色类型存入session
 			session.setAttribute("userId",userId);
 			session.setAttribute("userName",userName);
@@ -91,16 +81,16 @@ public class LoginController {
 
 			//判断到达前台主页还是后台主页
 			if(roleType.equals("admin")){
-				return "/admin/index";
+				return "admin/index";
 			}else{
-				return "/user/index";
+				return "user/index";
 			}
 		}catch (UnknownAccountException uae){
 			model.addAttribute("msg","用户名不存在");
 			return "login";
 		}catch (IncorrectCredentialsException ice){
 			model.addAttribute("msg","密码错误");
-			return"login";
+			return "login";
 		}
 	}
 
@@ -119,12 +109,25 @@ public class LoginController {
 	*@Date 2020/2/8 15:35
 	*Description  查看管理员具体信息
 	*/
-	@GetMapping("/admin-sys/loginer/{userId}")
-	public String showLoginer(@PathVariable("userId") String userId,Model model){
+	@GetMapping("/admin-sys/admin/{userId}")
+	public String showAdmin(@PathVariable("userId") String userId,Model model){
 		logger.info("获取到的userID："+userId);
 		User user = userService.findByUserId(userId);
 		model.addAttribute("user",user);
 		return "admin/showLoginerDetail";
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/2/17 20:17
+	*Description  查看前台用户具体信息
+	*/
+	@GetMapping("/user-sys/user/{userId}")
+	public String showUser(@PathVariable("userId") String userId,Model model){
+		logger.info("获取到的userID："+userId);
+		User user = userService.findByUserId(userId);
+		model.addAttribute("user",user);
+		return "user/showLoginerDetail";
 	}
 	
 	/**

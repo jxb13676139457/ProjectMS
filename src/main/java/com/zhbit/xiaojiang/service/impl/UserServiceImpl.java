@@ -81,5 +81,10 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	public List<User> searchKeyword(String keyword) {
+		return userMapper.findByKeyword(keyword);
+	}
+
 
 }

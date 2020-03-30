@@ -37,6 +37,11 @@ public interface ProjectService {
 	//清空所有Auditing对象
 	int deleteAllAuditing();
 
+	//查找当前登录用户的参与项目
+	List<Project> findByUserId(String userId);
+
+	//按关键字搜索项目
+	List<Project> searchKeyword(String keyword);
 
 
 

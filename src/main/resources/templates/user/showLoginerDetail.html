@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>显示当前管理员信息界面</title>
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <section id="main-content">
+        <section class="wrapper">
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h3>当前用户详细信息</h3>
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form action="#" class="form-validate form-horizontal" method="post">
+                                    <!--获取当前用户个人信息-->
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">用户ID</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.userId}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">用户名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.userName}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">密码</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.password}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">性别</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.sex}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">地址</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.address}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">手机号</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.phone}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">用户角色类型</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.role.roleType}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">用户角色名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.role.roleName}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">用户拥有权限</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" th:value="${user.role.rolePower}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+
+
+    <!-- JS Scripts-->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+</div>
+</body>
+</html>

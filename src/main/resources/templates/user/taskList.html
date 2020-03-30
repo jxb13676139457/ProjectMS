@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理系统前台任务列表</title>
+
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+
+</head>
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <div class="tasks">
+        需求任务
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='需求任务'}">
+            <div class="tip" th:if="${task.taskLevel=='高'}"></div>
+            <div class="task_content">
+                <div th:text="${task.taskName}"></div>
+                <span style="color: red;font-size: 12px">截止日期：</span><span style="color: red;font-size: 12px" th:text="${task.finishTime}"></span>
+                <span style="font-size: 12px">所属项目：</span><span style="font-size: 12px" th:text="${task.projectId}"></span>
+            </div>
+            <div class="btnGroup" style="line-height: 47px">
+                <button class="btn-sm btn-info">
+                    <a th:href="@{/user-sys/task/}+${task.taskId}" style="color: white">
+                        <i class="fa fa-pencil-square-o">查看详情</i>
+                    </a>
+                </button>
+                <button class="btn-sm btn-danger">
+                    <i class="fa fa-trash-o">删除</i>
+                </button>
+                <button shiro:hasPermission="demand:edit" class="btn-sm btn-success">
+                    <i class="fa fa-trash-o">指派</i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button class="addTask">
+                <a th:href="@{/user-sys/task}" style="color: #0f0f0f">
+                    <i style="width: 50px;height: 50px" class="fa fa-plus"></i>添加任务
+                </a>
+            </button>
+        </div>
+    </div>
+    <div class="tasks">
+        开发任务
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='开发任务'}">
+            <div class="tip" th:if="${task.taskLevel=='高'}"></div>
+            <div class="task_content">
+                <div th:text="${task.taskName}"></div>
+                <span style="color: red;font-size: 12px">截止日期：</span><span style="color: red;font-size: 12px" th:text="${task.finishTime}"></span>
+                <span style="font-size: 12px">所属项目：</span><span style="font-size: 12px" th:text="${task.projectId}"></span>
+            </div>
+            <div class="btnGroup">
+                <button class="btn-sm btn-info">
+                    <a th:href="@{/user-sys/task/}+${task.taskId}" style="color: white">
+                        <i class="fa fa-pencil-square-o">查看详情</i>
+                    </a>
+                </button>
+                <button class="btn-sm btn-danger">
+                    <i class="fa fa-trash-o">删除</i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button class="addTask">
+                <a th:href="@{/user-sys/task}" style="color: #0f0f0f">
+                    <i style="width: 50px;height: 50px" class="fa fa-plus"></i>添加任务
+                </a>
+            </button>
+        </div>
+    </div>
+    <div class="tasks">
+        测试任务
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='测试任务'}">
+            <div class="tip" th:if="${task.taskLevel=='高'}"></div>
+            <div class="task_content">
+                <div th:text="${task.taskName}"></div>
+                <span style="color: red;font-size: 12px">截止日期：</span><span style="color: red;font-size: 12px" th:text="${task.finishTime}"></span>
+                <span style="font-size: 12px">所属项目：</span><span style="font-size: 12px" th:text="${task.projectId}"></span>
+            </div>
+            <div class="btnGroup">
+                <button class="btn-sm btn-info">
+                    <a th:href="@{/user-sys/task/}+${task.taskId}" style="color: white">
+                        <i class="fa fa-pencil-square-o">查看详情</i>
+                    </a>
+                </button>
+                <button class="btn-sm btn-danger">
+                    <i class="fa fa-trash-o">删除</i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button class="addTask">
+                <a th:href="@{/user-sys/task}" style="color: #0f0f0f">
+                    <i style="width: 50px;height: 50px" class="fa fa-plus"></i>添加任务
+                </a>
+            </button>
+        </div>
+    </div>
+    <div class="tasks">
+        BUG追踪
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='BUG追踪'}">
+            <div class="tip" th:if="${task.taskLevel=='高'}"></div>
+            <div class="task_content">
+                <div th:text="${task.taskName}"></div>
+                <span style="color: red;font-size: 12px">截止日期：</span><span style="color: red;font-size: 12px" th:text="${task.finishTime}"></span>
+                <span style="font-size: 12px">所属项目：</span><span style="font-size: 12px" th:text="${task.projectId}"></span>
+            </div>
+            <div class="btnGroup">
+                <button class="btn-sm btn-info">
+                    <a th:href="@{/user-sys/task/}+${task.taskId}" style="color: white">
+                        <i class="fa fa-pencil-square-o">查看详情</i>
+                    </a>
+                </button>
+                <button class="btn-sm btn-danger">
+                    <i class="fa fa-trash-o">删除</i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <button class="addTask">
+                <a th:href="@{/user-sys/task}" style="color: #0f0f0f">
+                    <i style="width: 50px;height: 50px" class="fa fa-plus"></i>添加任务
+                </a>
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -34,5 +34,4 @@ public interface RoleMapper {
 	//通过角色名查找Role对象
 	Role findByRoleName(String roleName);
 
-
 }

@@ -38,10 +38,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                 用户角色表
+                                用户角色表
+                                <span>
+                                    <input class="form-control" name="keyword" type="text"
+                                           style="width: 300px;display: inline;margin-left: 50px" placeholder="请输入要搜索的用户ID或用户名"
+                                           id="searchText" required/>
+                                    <button class="btn-sm btn-success" style="margin-left: 10px"
+                                            onclick="search()">
+                                        <i class="fa fa-search" aria-hidden="true">搜索</i>
+                                    </button>
+                                </span>
                             </div>
                             <div class="panel-body">
 
@@ -159,6 +167,18 @@
                     }
                 }
             });
+        }
+
+        //站内搜索
+        function search() {
+            var keyword = $("#searchText").val();
+            console.log("测试关键字："+keyword);
+            if(keyword==""){
+                window.location.href = "/TBMS/admin-sys/user/role";
+            }else {
+                //使用JavaScript自身的跳转功能
+                window.location.href = "/TBMS/admin-sys/user/role-search/" + keyword;
+            }
         }
 
     </script>

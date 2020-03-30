@@ -71,4 +71,17 @@
             roleId = #{roleId}
         where userId = #{userId}
     </update>
+
+    <select id="findByKeyword" parameterType="String" resultMap="UserRoleResultMap">
+        select u.*,roleType,roleName,rolePower
+        from users u left join roles r
+        on u.roleId = r.roleId
+        where u.userId like concat('%',#{keyword},'%')
+        or u.userName like concat('%',#{keyword},'%')
+        or u.sex like concat('%',#{keyword},'%')
+        or u.address like concat('%',#{keyword},'%')
+        or u.phone like concat('%',#{keyword},'%')
+        or r.roleName like concat('%',#{keyword},'%')
+        or r.rolePower like concat('%',#{keyword},'%')
+    </select>
 </mapper>

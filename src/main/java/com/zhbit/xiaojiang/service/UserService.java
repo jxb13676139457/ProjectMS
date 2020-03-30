@@ -53,4 +53,12 @@ public interface UserService {
 	*Description  给用户分配对应的角色
 	*/
 	User distributeRole(String userId,String roleName);
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/3/20 17:11
+	*Description  按关键字搜索用户
+	*/
+	List<User> searchKeyword(String keyword);
+
 }

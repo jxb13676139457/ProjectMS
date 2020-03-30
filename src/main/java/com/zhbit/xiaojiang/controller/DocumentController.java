@@ -140,13 +140,67 @@ public class DocumentController {
 	@ResponseBody
 	public boolean deleteDocument(@PathVariable("documentId") int documentId){
 		logger.info("进入后台删除操作:"+documentId);
-		boolean result = documentService.deleteDocument(documentId);
-		if(result){
-			logger.info("删除成功");
-		}else{
-			logger.info("删除失败");
+		boolean result = false;
+		Document document = documentService.findByDocumentId(documentId);
+		if(document!=null){
+			String savePath = document.getSavePath();
+			File file = new File(savePath);
+			if(!file.exists()){
+				logger.info("删除文件不存在");
+				return result;
+			}else{
+				file.delete();
+				logger.info("物理删除文件成功");
+				result = documentService.deleteDocument(documentId);
+				if(result){
+					logger.info("删除成功");
+				}else{
+					logger.info("删除失败");
+				}
+			}
 		}
 		return result;
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/3/22 14:19
+	*Description  搜索文档
+	*/
+	@GetMapping("/admin-sys/document-search/{keyword}")
+	public String searchDocument(@PathVariable("keyword") String keyword,
+	                         Model model,
+	                         @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
+	                         @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+		List<Document> documentList = null;
+		//以下是分页显示
+		if(pageNum==null || pageNum<=0){
+			//设置默认当前页
+			pageNum = 1;
+		}
+		if(pageSize == null){
+			//设置默认每页显示的数据数
+			pageSize = 1;
+		}
+		logger.info("当前页是："+pageNum+"显示条数是："+pageSize);
+
+		//1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
+		PageHelper.startPage(pageNum,pageSize);
+		//2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页，除非再次调用PageHelper.startPage
+		try {
+			documentList = documentService.searchKeyword(keyword);
+			logger.info("分页数据："+documentList);
+			//3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>
+			PageInfo<Document> documentPageInfo = new PageInfo<Document>(documentList,pageSize);
+			//4.使用model传参数回前端
+			model.addAttribute("documentPageInfo",documentPageInfo);
+			model.addAttribute("documentList",documentList);
+			logger.info("打印搜索结果数："+documentList.size());
+		}finally {
+			//清理 ThreadLocal 存储的分页参数,保证线程安全
+			PageHelper.clearPage();
+		}
+		return "admin/documentList";
 	}
 
 }

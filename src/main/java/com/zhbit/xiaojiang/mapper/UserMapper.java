@@ -38,4 +38,7 @@ public interface UserMapper {
 	//分配用户角色
 	int distributeRole(User user);
 
+	//按关键字搜索用户
+	List<User> findByKeyword(String keyword);
+
 }

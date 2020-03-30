@@ -33,6 +33,11 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
+	public Document findByDocumentId(int documentId) {
+		return documentMapper.findByDocumentId(documentId);
+	}
+
+	@Override
 	public boolean saveDocument(Document document) {
 		if(documentMapper.saveDocument(document)==1){
 			logger.info("添加文档成功");
@@ -50,7 +55,11 @@ public class DocumentServiceImpl implements DocumentService {
 		}else{
 			return false;
 		}
+	}
 
+	@Override
+	public List<Document> searchKeyword(String keyword) {
+		return documentMapper.findByKeyword(keyword);
 	}
 
 }

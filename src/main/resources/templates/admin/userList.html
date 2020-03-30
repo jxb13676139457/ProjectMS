@@ -70,7 +70,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                  用户表
-                                <button class="btn-sm btn-success" style="margin-left: 500px">
+                                <span>
+                                    <input class="form-control" name="keyword" type="text"
+                                           style="width: 200px;display: inline;margin-left: 50px" placeholder="请输入要搜索的关键字"
+                                           id="searchText" required/>
+                                    <button class="btn-sm btn-success" style="margin-left: 10px"
+                                            onclick="search()">
+                                        <i class="fa fa-search" aria-hidden="true">搜索</i>
+                                    </button>
+                                </span>
+                                <button class="btn-sm btn-success" style="margin-left: 50px">
                                     <a th:href="@{/admin-sys/user}" style="color:white">
                                         <i class="fa fa-plus-square">添加用户</i>
                                     </a>
@@ -121,7 +130,6 @@
                                             <tr>
                                                 <th>用户ID</th>
                                                 <th>用户名</th>
-                                                <th>密码</th>
                                                 <th>性别</th>
                                                 <th>地址</th>
                                                 <th>手机号</th>
@@ -134,7 +142,6 @@
                                             <tr class="odd gradeX">
                                                 <td th:text="${user.userId}"></td>
                                                 <td th:text="${user.userName}"></td>
-                                                <td th:text="${user.password}"></td>
                                                 <td th:text="${user.sex}"></td>
                                                 <td th:text="${user.address}"></td>
                                                 <td th:text="${user.phone}"></td>
@@ -246,6 +253,18 @@
                     window.location.reload();
                 }
             });
+        }
+
+        //站内搜索
+        function search() {
+            var keyword = $("#searchText").val();
+            console.log("测试关键字："+keyword);
+            if(keyword==""){
+                window.location.href = "/TBMS/admin-sys/users";
+            }else {
+                //使用JavaScript自身的跳转功能
+                window.location.href = "/TBMS/admin-sys/user-search/" + keyword;
+            }
         }
 
         //导入第一步

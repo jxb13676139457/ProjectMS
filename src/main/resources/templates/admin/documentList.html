@@ -40,7 +40,16 @@
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                 文档表
+                                文档表
+                                <span>
+                                    <input class="form-control" name="keyword" type="text"
+                                           style="width: 200px;display: inline;margin-left: 50px" placeholder="请输入要搜索的关键字"
+                                           id="searchText" required/>
+                                    <button class="btn-sm btn-success" style="margin-left: 10px"
+                                            onclick="search()">
+                                        <i class="fa fa-search" aria-hidden="true">搜索</i>
+                                    </button>
+                                </span>
                                 <button type="button" class="btn-sm btn-success" style="margin-left: 600px;">
                                     <a th:href="@{/admin-sys/document}" style="color:white">
                                         <i class="fa fa-plus-square">添加文档</i>
@@ -197,6 +206,19 @@
                 }
             });
         }
+
+        //站内搜索
+        function search() {
+            var keyword = $("#searchText").val();
+            console.log("测试关键字："+keyword);
+            if(keyword==""){
+                window.location.href = "/TBMS/admin-sys/documents";
+            }else {
+                //使用JavaScript自身的跳转功能
+                window.location.href = "/TBMS/admin-sys/document-search/"+keyword;
+            }
+        }
+
     </script>
 
     <!-- Custom Js-->

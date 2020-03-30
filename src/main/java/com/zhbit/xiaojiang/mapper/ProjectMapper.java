@@ -50,5 +50,11 @@ public interface ProjectMapper {
 	//清空所有Auditing对象
 	int deleteAllAuditing();
 
+	//查看当前用户参与项目列表
+	List<Project> findByUserId(String userId);
+
+	//按关键字搜索项目
+	List<Project> findByKeyword(String keyword);
+
 
 }

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理系统查看任务详情</title>
+
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+
+</head>
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <section id="main-content">
+        <section class="wrapper">
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h3>当前任务详细信息</h3>
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form action="#" class="form-validate form-horizontal" method="post">
+                                    <!--获取当前任务详细信息-->
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务ID</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="taskId" th:value="${task.taskId}" type="text" style="width:400px" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" placeholder="字数不超过8个" name="taskName" th:value="${task.taskName}" type="text" style="width:400px" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务内容</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" name="taskContent" th:text="${task.taskContent}" style="width:400px" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">创建时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" placeholder="格式：2020-01-01" name="createTime" th:value="${task.createTime}" type="text" style="width:400px" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">截止时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" placeholder="格式：2020-01-01" name="finishTime" th:value="${task.finishTime}" type="text" style="width:400px" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务状态</label>
+                                            <div class="col-lg-10">
+                                                <select name="taskStatus" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                    <option value="">请选择</option>
+                                                    <option th:selected="${task.taskStatus eq '正在执行'}">正在执行</option>
+                                                    <option th:selected="${task.taskStatus eq '待执行'}">待执行</option>
+                                                    <option th:selected="${task.taskStatus eq '已完成'}">已完成</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务类型</label>
+                                            <div class="col-lg-10">
+                                                <select name="taskType" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                    <option value="">请选择</option>
+                                                    <option th:selected="${task.taskType eq '需求任务'}">需求任务</option>
+                                                    <option th:selected="${task.taskType eq '开发任务'}">开发任务</option>
+                                                    <option th:selected="${task.taskType eq '测试任务'}">测试任务</option>
+                                                    <option th:selected="${task.taskType eq 'BUG追踪'}">BUG追踪</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">任务优先级</label>
+                                            <div class="col-lg-10">
+                                                <select name="taskLevel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                    <option value="">请选择</option>
+                                                    <option th:selected="${task.taskLevel eq '高'}">高</option>
+                                                    <option th:selected="${task.taskLevel eq '中'}">中</option>
+                                                    <option th:selected="${task.taskLevel eq '低'}">低</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">所属项目ID</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="projectId" th:value="${task.projectId}" type="text" style="width:400px" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div  style="margin-left:450px">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <button type="submit" class="btn-sm btn-default"
+                                                        style="background-color:#66CDAA;color: white">更新</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+
+
+</div>
+</body>
+
+</html>

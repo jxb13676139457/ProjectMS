@@ -5,19 +5,28 @@
     <title>前台系统顶部导航栏</title>
     <!--自定义 CSS-->
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+
 </head>
 <body>
     <div id="menu1" class="menu" th:fragment="frond_topbar">
         <ul>
             <li><a href="#">首　　页</a></li>
-            <li><a href="#">项目列表</a></li>
-            <li><a href="#">任务列表</a></li>
+            <li><a th:href="@{/user-sys/projects/{userId}(userId=${session.userId})}">项目面板</a></li>
+            <li><a th:href="@{/user-sys/tasks/{userId}(userId=${session.userId})}">任务面板</a></li>
             <li><a href="#">文档中心</a></li>
-            <li><a href="#">阳光服务</a></li>
-            <li><a href="#">加盟代理</a></li>
-            <li><a href="#">个人中心</a></li>
+            <li style="margin-left: 500px">
+                <a th:href="@{/user-sys/user/{userId}(userId=${session.userId})}">
+                    <span style="color: #5bc0de;" th:text="${session.userName}"></span>
+                </a>
+            </li>
+            <li style="margin-left: 10px"><a style="color: #ef4040;" th:href="@{/auth/logout}">退出登录</a></li>
+
+
         </ul>
         <div class="cls"></div>
     </div>
+
 </body>
 </html>

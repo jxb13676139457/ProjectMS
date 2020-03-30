@@ -41,7 +41,16 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                 项目表
+                                项目表
+                                <span>
+                                    <input class="form-control" name="keyword" type="text"
+                                           style="width: 200px;display: inline;margin-left: 50px" placeholder="请输入要搜索的关键字"
+                                           id="searchText" required/>
+                                    <button class="btn-sm btn-success" style="margin-left: 10px"
+                                            onclick="search()">
+                                        <i class="fa fa-search" aria-hidden="true">搜索</i>
+                                    </button>
+                                </span>
                                 <button class="btn-sm btn-success" style="margin-left: 500px">
                                     <a th:href="@{/admin-sys/projects-export}" style="color:white">
                                         <i class="fa fa-cloud-download">批量导出详细项目信息Excel表</i>
@@ -81,7 +90,6 @@
                                                 <th>项目ID</th>
                                                 <th>项目名</th>
                                                 <th>项目简介</th>
-                                                <!--<th>立项文档资料</th>-->
                                                 <th>开始时间</th>
                                                 <th>截止时间</th>
                                                 <th>项目负责人</th>
@@ -98,7 +106,6 @@
                                                 <td class="wrap" th:text="${project.time_end}"></td>
                                                 <td th:text="${project.leader}"></td>
                                                 <td th:text="${project.phone}"></td>
-
                                                 <td class="center">
                                                     <button class="btn-sm btn-info">
                                                         <a th:href="@{/admin-sys/project/}+${project.projectId}" style="color:white">
@@ -199,6 +206,18 @@
                     window.location.reload();
                 }
             });
+        }
+
+        //站内搜索
+        function search() {
+            var keyword = $("#searchText").val();
+            console.log("测试关键字："+keyword);
+            if(keyword==""){
+                window.location.href = "/TBMS/admin-sys/projects";
+            }else {
+                //使用JavaScript自身的跳转功能
+                window.location.href = "/TBMS/admin-sys/project-search/"+keyword;
+            }
         }
 
     </script>

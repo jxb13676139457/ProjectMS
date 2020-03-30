@@ -79,11 +79,9 @@ a{
 /* ===================前台样式表CSS */
 .front_index_body {
     background: url(../images/bg.jpg) no-repeat 0 0 transparent;
-    margin: 100px;
     padding: 0px;
     font-family: "微软雅黑", "宋体";
     font-size: 12px;
-    color: #CCCCCC;
 }
 
 .cls {
@@ -93,7 +91,8 @@ a:focus { outline: none; }
 
 .xgsm {
     padding: 0px;
-    width: 900px;
+    width: 1200px;
+    height: 800px;
     margin-top: 40px;
     margin-right: auto;
     margin-bottom: 20px;
@@ -111,10 +110,9 @@ a:focus { outline: none; }
     height: 40px;
     display: block;
     padding: 0px;
-    width: 900px;
+    width: 1200px;
     margin-top: 0px;
     margin-right: auto;
-    margin-bottom: 40px;
     margin-left: auto;
 }
 
@@ -131,6 +129,7 @@ a:focus { outline: none; }
     position: relative;
     line-height: 40px;
     text-align: center;
+    margin-left: 30px;
 }
 
 .menu ul li a {
@@ -140,7 +139,8 @@ a:focus { outline: none; }
     width: 90px;
     height: 40px;
     font-family: "微软雅黑", "宋体";
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 16px;
     text-decoration: none;
     cursor: pointer;
 }
@@ -186,3 +186,99 @@ a:focus { outline: none; }
     background-repeat: no-repeat;
     background-position: center center;
 }
+
+/*项目块展示的样式*/
+.block{
+    width: 300px;
+    height: 300px;
+    box-shadow: 0px 4px 8px;
+    text-align: center;
+    line-height: 300px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color:#FFFFFF;
+    color:#000000;
+    opacity:0.5;
+    float: left;
+}
+
+/*制作半透明圆角添加项目按钮框*/
+#addProject{
+    width: 400px;
+    height: 50px;
+    background-color:#FFFFFF;
+    color:#000000;
+    opacity:0.5;
+    line-height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+/*任务面板展示的样式*/
+.tasks{
+    width: 300px;
+    height: 800px;
+    box-shadow: 0px 4px 8px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    background-color:#FFFFFF;
+    color:#000000;
+    opacity:0.7;
+    overflow-y: auto;
+    float: left;
+}
+
+/*任务块展示样式*/
+.task{
+    width: 300px;
+    height: 100px;
+    box-shadow: 0px 4px 8px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color:#FFFFFF;
+    color:#000000;
+}
+
+/*优先级为紧急的提示线*/
+.tip{
+    width: 2px;
+    border: #b92c28 2px solid;
+}
+
+/*按钮组样式*/
+.btnGroup{
+    width: 150px;
+    height: 95px;
+    line-height: 95px;
+    float: left;
+}
+
+.task_content{
+    width: 145px;
+    height: 95px;
+    line-height: 30px;
+    font-size: 14px;
+    float: left;
+}
+
+/*制作半透明圆角添加任务按钮框*/
+.addTask{
+    width: 300px;
+    height: 50px;
+    background-color:#FFFFFF;
+    color:#000000;
+    opacity:0.7;
+    line-height: 50px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+a{
+    text-decoration: none;
+    color: #0f0f0f;
+}
+
+

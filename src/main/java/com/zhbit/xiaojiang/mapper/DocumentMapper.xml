@@ -25,6 +25,11 @@
         on p.projectId = d.projectId
     </select>
 
+    <select id="findByDocumentId" parameterType="Integer" resultType="Document">
+        select * from documents
+        where documentId = #{value}
+    </select>
+
     <insert id="saveDocument" parameterType="Document" keyProperty="userId" useGeneratedKeys="true">
         insert documents(documentName,uploadTime,author,savePath,projectId)
           values(
@@ -36,10 +41,23 @@
           )
     </insert>
 
-    <delete id="deleteDocument" parameterType="INT">
+    <delete id="deleteDocument" parameterType="Integer">
         delete from documents
         where documentId = #{value}
     </delete>
+
+    <select id="findByKeyword" parameterType="String" resultMap="DocumentResultMap">
+        select d.*,p.projectId,p.projectName
+        from projects p right join documents d
+        on p.projectId = d.projectId
+        where d.documentId like concat('%',#{keyword},'%')
+        or d.documentName like concat('%',#{keyword},'%')
+        or d.uploadTime like concat('%',#{keyword},'%')
+        or d.author like concat('%',#{keyword},'%')
+        or d.savePath like concat('%',#{keyword},'%')
+        or p.projectId like concat('%',#{keyword},'%')
+        or p.projectName like concat('%',#{keyword},'%')
+    </select>
 
 
 </mapper>

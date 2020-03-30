@@ -8,13 +8,16 @@ package com.zhbit.xiaojiang.component;
 
 import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +32,21 @@ public class UserRealm extends AuthorizingRealm {
 	//Log4j日志打印
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
+	@Autowired
+	private UserService userService;
+
 	//执行授权逻辑
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 		logger.info("执行授权方法");
-
-
-
-		return null;
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		Subject subject = SecurityUtils.getSubject();
+		//获取到当前登录用户对象
+		User currentUser = (User) subject.getPrincipal();
+		//获取当前登录用户对象所拥有的权限进行动态授权
+		info.addStringPermission(currentUser.getRole().getRolePower());
+		return info;
 	}
-
-	@Autowired
-	private UserService userService;
 
 	//执行认证逻辑
 	@Override

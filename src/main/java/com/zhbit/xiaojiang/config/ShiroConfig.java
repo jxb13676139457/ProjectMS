@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig{
 
-	//这个bean是为了使用shiro权限标签
+	//这个bean是为了使用shiro权限标签,整合shiro和thymeleaf
 	@Bean(name = "shiroDialect")
 	public ShiroDialect shiroDialect(){
 		return new ShiroDialect();
@@ -48,8 +48,8 @@ public class ShiroConfig{
 		filterMap.put("/auth/logout","logout");
 
 		//授权
-		filterMap.put("/user/add","perms[user:add]");
-		filterMap.put("/user/update","perms[user:update]");
+		filterMap.put("/user/add","perms[dev:edit]");
+		filterMap.put("/user/update","perms[demand:edit]");
 
 		//使用通配符的方式进行全部请求路径拦截的
 		filterMap.put("/**","authc");

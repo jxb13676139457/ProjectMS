@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhbit.xiaojiang.mapper.TaskMapper">
+    
+    <select id="findAllTask" parameterType="String" resultType="Task">
+        select * from tasks
+        where taskId in (
+          select taskId from execute
+          where userId = #{value}
+        )
+    </select>
+
+    <select id="findByTaskId" parameterType="String" resultType="Task">
+        select * from tasks
+        where taskId = #{value}
+    </select>
+
+    <insert id="saveTask" parameterType="Task" keyProperty="taskId" useGeneratedKeys="true">
+        insert into tasks(taskId,taskName,taskContent,createTime,finishTime,taskStatus,taskType,taskLevel,projectId)
+              values(
+                    #{taskId,jdbcType=VARCHAR},
+                    #{taskName,jdbcType=VARCHAR},
+                    #{taskContent,jdbcType=VARCHAR},
+                    #{createTime,jdbcType=DATE},
+                    #{finishTime,jdbcType=DATE},
+                    #{taskStatus,jdbcType=VARCHAR},
+                    #{taskType,jdbcType=VARCHAR},
+                    #{taskLevel,jdbcType=VARCHAR},
+                    #{projectId,jdbcType=VARCHAR}
+              )
+    </insert>
+
+</mapper>

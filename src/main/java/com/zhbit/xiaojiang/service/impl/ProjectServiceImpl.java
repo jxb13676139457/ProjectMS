@@ -105,4 +105,15 @@ public class ProjectServiceImpl implements ProjectService {
 		return result;
 	}
 
+	@Override
+	public List<Project> findByUserId(String userId) {
+		List<Project> projects = projectMapper.findByUserId(userId);
+		return projects;
+	}
+
+	@Override
+	public List<Project> searchKeyword(String keyword) {
+		return projectMapper.findByKeyword(keyword);
+	}
+
 }
