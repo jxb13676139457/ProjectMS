@@ -33,7 +33,7 @@
                             <div class="form">
                                 <form th:action="@{/user-sys/task}" class="form-validate form-horizontal" method="post">
                                     <!--获取当前任务详细信息-->
-                                    <div class="form-group ">
+                                    <div class="form-group">
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务ID</label>
                                             <div class="col-lg-10">
@@ -45,7 +45,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务名</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" placeholder="字数不超过8个" name="taskName" type="text" style="width:400px" required/>
+                                                <input class="form-control" placeholder="字数不超过10个" name="taskName" type="text" style="width:400px" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                                     <option>需求任务</option>
                                                     <option>开发任务</option>
                                                     <option>测试任务</option>
-                                                    <option>BUG追踪</option>
+                                                    <option>需求审核</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -117,7 +117,10 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">所属项目ID</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" name="projectId" type="text" style="width:400px" required/>
+                                                <select  name="projectId" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                    <option selected value="">请选择</option>
+                                                    <option th:each="project:${projectList}" th:text="${project.projectId}"></option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

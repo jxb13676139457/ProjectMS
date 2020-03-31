@@ -148,9 +148,6 @@
                 alert("请先选择要分配给用户的岗位");
                 return;
             }
-            console.log("获取到的用户id："+userId);
-            console.log("获取到的角色岗位："+roleName);
-
             $.ajax({
                 url: "/TBMS/admin-sys/user/role/"+userId+","+roleName,
                 type: "post",

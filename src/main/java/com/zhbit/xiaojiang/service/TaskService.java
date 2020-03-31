@@ -8,6 +8,7 @@ package com.zhbit.xiaojiang.service;
 
 import com.zhbit.xiaojiang.entity.Task;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface TaskService {
@@ -19,6 +20,6 @@ public interface TaskService {
 	Task findByTaskId(String taskId);
 
 	//添加task对象
-	boolean addTask(Task task);
+	boolean addTask(Task task, HttpSession session);
 
 }

@@ -31,5 +31,13 @@
                     #{projectId,jdbcType=VARCHAR}
               )
     </insert>
+    
+    <insert id="handExecute" parameterType="Execute" keyProperty="taskId" useGeneratedKeys="true">
+        insert into execute(userId,taskId)
+            values(
+                #{userId,jdbcType=VARCHAR},
+                #{taskId,jdbcType=VARCHAR}
+            )
+    </insert>
 
 </mapper>

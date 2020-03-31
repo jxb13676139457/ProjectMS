@@ -6,6 +6,7 @@
  */
 package com.zhbit.xiaojiang.mapper;
 
+import com.zhbit.xiaojiang.entity.Execute;
 import com.zhbit.xiaojiang.entity.Task;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -24,5 +25,8 @@ public interface TaskMapper {
 
 	//添加task对象
 	int saveTask(Task task);
+
+	//添加需求任务的同时把任务挂在创建者身上
+	int handExecute(Execute execute);
 
 }

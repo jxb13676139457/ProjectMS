@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 <head>
     <meta charset="UTF-8">
     <title>项目管理系统查看任务详情</title>
@@ -37,7 +38,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务ID</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" name="taskId" th:value="${task.taskId}" type="text" style="width:400px" required disabled/>
+                                                <input class="form-control" name="taskId" th:value="${task.taskId}" type="text" style="width:400px"disabled/>
                                             </div>
                                         </div>
                                     </div>
@@ -45,7 +46,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务名</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" placeholder="字数不超过8个" name="taskName" th:value="${task.taskName}" type="text" style="width:400px" required/>
+                                                <input class="form-control" name="taskName" th:value="${task.taskName}" type="text" style="width:400px" disabled/>
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +62,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">创建时间</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" placeholder="格式：2020-01-01" name="createTime" th:value="${task.createTime}" type="text" style="width:400px" required/>
+                                                <input class="form-control" placeholder="格式：2020-01-01" name="createTime" th:value="${task.createTime}" type="text" style="width:400px" disabled/>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +70,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">截止时间</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" placeholder="格式：2020-01-01" name="finishTime" th:value="${task.finishTime}" type="text" style="width:400px" required/>
+                                                <input class="form-control" placeholder="格式：2020-01-01" name="finishTime" th:value="${task.finishTime}" type="text" style="width:400px" disabled/>
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@
                                                     <option th:selected="${task.taskType eq '需求任务'}">需求任务</option>
                                                     <option th:selected="${task.taskType eq '开发任务'}">开发任务</option>
                                                     <option th:selected="${task.taskType eq '测试任务'}">测试任务</option>
-                                                    <option th:selected="${task.taskType eq 'BUG追踪'}">BUG追踪</option>
+                                                    <option th:selected="${task.taskType eq '需求审核'}">需求审核</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,14 +122,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <div  style="margin-left:450px">
                                             <div class="col-lg-offset-2 col-lg-10">
-                                                <button type="submit" class="btn-sm btn-default"
+                                                <button shiro:hasPermission="demand:edit" type="submit" class="btn-sm btn-default"
                                                         style="background-color:#66CDAA;color: white">更新</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </form>
                             </div>
                         </div>

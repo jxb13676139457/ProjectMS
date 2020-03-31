@@ -6,7 +6,9 @@
  */
 package com.zhbit.xiaojiang.controller;
 
+import com.zhbit.xiaojiang.entity.Project;
 import com.zhbit.xiaojiang.entity.Task;
+import com.zhbit.xiaojiang.service.ProjectService;
 import com.zhbit.xiaojiang.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,8 @@ public class TaskController {
 	private Logger logger = LoggerFactory.getLogger(TaskController.class);
 	@Autowired
 	private TaskService taskService;
+	@Autowired
+	private ProjectService projectService;
 
 	/**
 	*@Author 小江  [com.zhbit]
@@ -46,7 +50,9 @@ public class TaskController {
 	*Description  跳转到添加任务界面
 	*/
 	@GetMapping("/user-sys/task")
-	public String toAddTask(){
+	public String toAddTask(Model model){
+		List<Project> projectList = projectService.findAllProject();
+		model.addAttribute("projectList",projectList);
 		return "user/addTask";
 	}
 	
@@ -57,7 +63,7 @@ public class TaskController {
 	*/
 	@PostMapping("/user-sys/task")
 	public String addTask(Task task, HttpSession session){
-		boolean result = taskService.addTask(task);
+		boolean result = taskService.addTask(task,session);
 		if(result==true){
 			logger.info("添加成功");
 		}else{

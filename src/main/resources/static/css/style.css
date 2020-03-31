@@ -177,6 +177,7 @@ a:focus { outline: none; }
 
 #menu1 ul li a span.over {
     color: #FFF;
+    background: #444444;
 }
 
 #menu1 ul li span.bg {
@@ -232,7 +233,7 @@ a:focus { outline: none; }
 /*任务块展示样式*/
 .task{
     width: 300px;
-    height: 100px;
+    height: 150px;
     box-shadow: 0px 4px 8px;
     text-align: center;
     line-height: 100px;
@@ -244,24 +245,23 @@ a:focus { outline: none; }
 
 /*优先级为紧急的提示线*/
 .tip{
-    width: 2px;
-    border: #b92c28 2px solid;
+    width: 5px;
+    background: #b92c28;
+    float: left;
+    height: 150px;
 }
 
 /*按钮组样式*/
 .btnGroup{
-    width: 150px;
-    height: 95px;
-    line-height: 95px;
-    float: left;
+    height: 50px;
+    line-height: 50px;
 }
 
 .task_content{
-    width: 145px;
+    width: 300px;
     height: 95px;
     line-height: 30px;
-    font-size: 14px;
-    float: left;
+    text-align: left;
 }
 
 /*制作半透明圆角添加任务按钮框*/
