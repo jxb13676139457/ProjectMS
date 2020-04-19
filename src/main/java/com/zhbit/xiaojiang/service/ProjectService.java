@@ -7,6 +7,7 @@
 package com.zhbit.xiaojiang.service;
 
 import com.zhbit.xiaojiang.entity.Auditing;
+import com.zhbit.xiaojiang.entity.Members;
 import com.zhbit.xiaojiang.entity.Project;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface ProjectService {
 	Project findByProjectId(String projectId);
 
 	//修改Project对象
-	Project editProject(Project project);
+	int editProject(Project project);
 
 	//删除Projec对象
 	int deleteProject(String projectId);
@@ -43,7 +44,17 @@ public interface ProjectService {
 	//按关键字搜索项目
 	List<Project> searchKeyword(String keyword);
 
+	//查找当前项目的所有项目成员
+	List<Members> findAllMember(String projectId);
 
+	//添加项目成员
+	int saveMember(String userId,String projectId);
+
+	//删除指定项目成员
+	int deleteMember(int memberId);
+
+	//立项
+	int saveAuditing(Auditing auditing);
 
 
 }

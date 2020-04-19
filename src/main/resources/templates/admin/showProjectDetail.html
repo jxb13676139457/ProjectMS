@@ -59,11 +59,8 @@
                                      <div class="panel-body">
                                          <div class="form">
                                              <form th:action="@{/admin-sys/project}" class="form-validate form-horizontal" method="post">
-
                                                  <!--修改页面必须加这个隐藏输入框，设定请求方式-->
                                                  <input type="hidden" name="_method" value="put"/>
-                                                 <!--获取projectId的值,以便删除模态框获取-->
-                                                 <input type="hidden" name="projectId" th:value="${project.projectId}">
 
                                                  <div class="form-group ">
                                                      <div  style="margin-left:250px">

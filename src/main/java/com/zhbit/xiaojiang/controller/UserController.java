@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/admin-sys/users")
     public String userList(Model model,
                            @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-                           @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+                           @RequestParam(defaultValue="10",value="pageSize")Integer pageSize){
 	    /**
 	    *@Author 小江  [com.zhbit]
 	    *@Date 2020/1/4 21:27
@@ -90,7 +90,7 @@ public class UserController {
     *Description   添加User对象
     */
 	@PostMapping("/admin-sys/user")
-	public String addRole(User user){
+	public String addUser(User user){
 		boolean result = userService.saveUser(user);
 		if(result==true){
 			logger.info("添加成功");
@@ -149,7 +149,7 @@ public class UserController {
 	@GetMapping("/admin-sys/user/role")
 	public String userRoleList(Model model,
 								 @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-								 @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+								 @RequestParam(defaultValue="10",value="pageSize")Integer pageSize){
 		//分页查询所有用户对象
 		if(pageNum==null || pageNum<=0){
 			//设置默认当前页
@@ -192,7 +192,7 @@ public class UserController {
 	public String searchUserRole(Model model,
 	                           @PathVariable("keyword") String keyword,
 	                           @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-	                           @RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+	                           @RequestParam(defaultValue="10",value="pageSize")Integer pageSize){
 		List<User> userList = null;
 		//分页查询所有用户对象
 		if(pageNum==null || pageNum<=0){
@@ -299,7 +299,7 @@ public class UserController {
 	public String searchUser(@PathVariable("keyword") String keyword,
 	                         Model model,
 							@RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-							@RequestParam(defaultValue="5",value="pageSize")Integer pageSize){
+							@RequestParam(defaultValue="10",value="pageSize")Integer pageSize){
 		List<User> userList = null;
 		//以下是分页显示
 		if(pageNum==null || pageNum<=0){

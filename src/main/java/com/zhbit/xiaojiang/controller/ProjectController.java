@@ -9,9 +9,12 @@ package com.zhbit.xiaojiang.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhbit.xiaojiang.entity.Auditing;
+import com.zhbit.xiaojiang.entity.Members;
 import com.zhbit.xiaojiang.entity.Project;
+import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.ExcelService;
 import com.zhbit.xiaojiang.service.ProjectService;
+import com.zhbit.xiaojiang.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,6 +36,8 @@ public class ProjectController {
 	private ProjectService projectService;
 	@Autowired
 	private ExcelService excelService;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/admin-sys/projects")
 	public String projectList(Model model,
@@ -166,7 +172,7 @@ public class ProjectController {
 	@ResponseBody
 	public int deleteAllAuditing() {
 		int result = projectService.deleteAllAuditing();
-		if (result>1) {
+		if (result>=1) {
 			logger.info("一键清空未审核项目成功");
 		} else {
 			logger.info("一键清空未审核项目失败");
@@ -184,6 +190,22 @@ public class ProjectController {
 		List<Project> projects = projectService.findByUserId(userId);
 		model.addAttribute("projects", projects);
 		return "user/projectList";
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/13 21:14
+	*Description  前台系统进入项目详情页面
+	*/
+	@GetMapping("user-sys/project/{projectId}")
+	public String showProjectDetail(@PathVariable("projectId") String projectId,Model model){
+		Project project = projectService.findByProjectId(projectId);
+		List<Members> memberList = projectService.findAllMember(projectId);
+		List<User> userList = userService.findAllUser();
+		model.addAttribute("project",project);
+		model.addAttribute("memberList",memberList);
+		model.addAttribute("userList",userList);
+		return "user/showProjectDetail";
 	}
 
 	/**
@@ -225,6 +247,76 @@ public class ProjectController {
 			PageHelper.clearPage();
 		}
 		return "admin/projectList";
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/13 23:44
+	*Description  添加项目成员
+	*/
+	@PostMapping("/user-sys/member")
+	@ResponseBody
+	public int addMember(@RequestParam("userId") String userId,@RequestParam("projectId") String projectId){
+		int result = projectService.saveMember(userId,projectId);
+		if(result>0){
+			logger.info("添加成功");
+		}else{
+			logger.info("添加失败");
+		}
+		return result;
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/14 0:56
+	*Description  删除项目成员
+	*/
+	@DeleteMapping("/user-sys/member")
+	@ResponseBody
+	public int deleteMember(@RequestParam("memberId") int memberId){
+		if(projectService.deleteMember(memberId)>0){
+			logger.info("删除成员成功");
+			return 1;
+		}else{
+			logger.info("删除成员失败");
+			return 0;
+		}
+	}
+
+	/**
+	 *@Author 小江  [com.zhbit]
+	 *@Date 2020/4/14 1:19
+	 *Description  项目负责人修改Project对象
+	 */
+	@PutMapping("/user-sys/project")
+	public String editProject(Project project, HttpSession session){
+		logger.info(":"+project.getProjectId());
+		int result = projectService.editProject(project);
+		logger.info("测试："+result);
+		return "redirect:/user-sys/projects/"+session.getAttribute("userId");
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/14 22:43
+	*Description  项目负责人跳转到立项界面
+	*/
+	@GetMapping("/user-sys/project")
+	public String toAddProject(){
+		return "user/addProject";
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/14 23:04
+	*Description  项目负责人立项
+	*/
+	@PostMapping("/user-sys/auditing")
+	public String addAuditing(Auditing auditing,HttpSession session){
+		String leader = session.getAttribute("userName").toString();
+		auditing.setLeader_tmp(leader);
+		projectService.saveAuditing(auditing);
+		return "redirect:/user-sys/projects/"+session.getAttribute("userId");
 	}
 
 }

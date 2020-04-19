@@ -27,5 +27,7 @@ public interface DocumentService {
 	//按关键字搜索文档
 	List<Document> searchKeyword(String keyword);
 
+	//根据登录对象查询其所在项目的Document文档资料
+	List<Document> findDocumentByUserId(String userId);
 
 }

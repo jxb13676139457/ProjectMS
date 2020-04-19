@@ -7,6 +7,7 @@
 package com.zhbit.xiaojiang.service.impl;
 
 import com.zhbit.xiaojiang.entity.Auditing;
+import com.zhbit.xiaojiang.entity.Members;
 import com.zhbit.xiaojiang.entity.Project;
 import com.zhbit.xiaojiang.mapper.ProjectMapper;
 import com.zhbit.xiaojiang.service.ProjectService;
@@ -40,9 +41,14 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public Project editProject(Project project) {
-		projectMapper.editProject(project);
-		return project;
+	public int editProject(Project project) {
+		int result =projectMapper.editProject(project);
+		if(result>0){
+			logger.info("修改成功");
+		}else{
+			logger.info("修改失败");
+		}
+		return result;
 	}
 
 	@Override
@@ -76,6 +82,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public Auditing editAuditing(Auditing auditing) {
 		String auditingId = auditing.getAuditingId();
 		int auditinigStatus = auditing.getAuditingStatus();
+		String leader = auditing.getLeader_tmp();
+		//根据项目负责人名字找到用户ID
+		String userId = projectMapper.findByUserName(leader).getUserId();
 		int result = projectMapper.editAuditing(auditing);
 		if(auditinigStatus==0){
 			logger.info("管理员选择拒绝通过审核");
@@ -87,6 +96,8 @@ public class ProjectServiceImpl implements ProjectService {
 				if(isExistProject==null){
 					projectMapper.saveProject(auditing);
 					logger.info("同步到真正项目表成功");
+					//同时把项目挂到负责人ID名下
+					projectMapper.saveMember(userId,auditingId);
 					//审核通过同步后直接在未审核项目表删除记录并插入真正项目表
 					projectMapper.deleteAuditing(auditingId);
 				} else{
@@ -114,6 +125,32 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> searchKeyword(String keyword) {
 		return projectMapper.findByKeyword(keyword);
+	}
+
+	@Override
+	public List<Members> findAllMember(String projectId) {
+		return projectMapper.findAllMember(projectId);
+	}
+
+	@Override
+	public int saveMember(String userId, String projectId) {
+		return projectMapper.saveMember(userId,projectId);
+	}
+
+	@Override
+	public int deleteMember(int memberId) {
+		return projectMapper.deleteMember(memberId);
+	}
+
+	@Override
+	public int saveAuditing(Auditing auditing) {
+		int result = projectMapper.saveAuditing(auditing);
+		if(result>0){
+			logger.info("立项成功");
+		}else{
+			logger.info("立项失败");
+		}
+		return result;
 	}
 
 }

@@ -59,5 +59,15 @@
         or p.projectName like concat('%',#{keyword},'%')
     </select>
 
+    <select id="findDocumentByUserId" parameterType="String" resultMap="DocumentResultMap">
+        select d.*,d.projectId,p.projectName
+        from projects p right join documents d
+        on p.projectId = d.projectId
+        where d.projectId in (
+          select projectId from members
+          where userId = #{value}
+        )
+    </select>
+
 
 </mapper>

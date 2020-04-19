@@ -8,6 +8,7 @@ package com.zhbit.xiaojiang.controller;
 
 import com.zhbit.xiaojiang.entity.Project;
 import com.zhbit.xiaojiang.entity.Task;
+import com.zhbit.xiaojiang.entity.User;
 import com.zhbit.xiaojiang.service.ProjectService;
 import com.zhbit.xiaojiang.service.TaskService;
 import org.slf4j.Logger;
@@ -15,9 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -38,8 +37,10 @@ public class TaskController {
 	*Description  查看当前登录用户的所有参与任务
 	*/
 	@GetMapping("/user-sys/tasks/{userId}")
-	public String showTask(@PathVariable("userId") String userId,Model model){
-		List<Task> tasks = taskService.findAllTask(userId);
+	public String showTask(@PathVariable("userId") String userId,
+	                       Model model,
+	                       HttpSession session){
+		List<Task> tasks = taskService.findAllTask(userId,session);
 		model.addAttribute("tasks", tasks);
 		return "user/taskList";
 	}
@@ -73,7 +74,6 @@ public class TaskController {
 
 	}
 
-
 	/**
 	*@Author 小江  [com.zhbit]
 	*@Date 2020/2/19 11:39
@@ -84,6 +84,56 @@ public class TaskController {
 		Task task = taskService.findByTaskId(taskId);
 		model.addAttribute("task",task);
 		return "user/showTaskDetail";
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/4 23:09
+	*Description  删除任务
+	*/
+	@DeleteMapping("/user-sys/task/{taskId}")
+	@ResponseBody
+	public int deleteTask(@PathVariable("taskId") String taskId) {
+		int result = taskService.deleteTask(taskId);
+		if (result == 1) {
+			logger.info("Controller层删除任务成功");
+		} else {
+			logger.info("Controller层删除任务失败");
+		}
+		return result;
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/7 23:57
+	*Description  查找当前任务可指派的项目成员
+	*/
+	@GetMapping("/user-sys/task-apport/{taskId}")
+	@ResponseBody
+	public List<User> showApportMembers(@PathVariable("taskId") String taskId){
+		//查找任务可指派的项目成员
+		List<User> userList = taskService.findUserList(taskId);
+		logger.info("测试："+userList);
+		return userList;
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/4/9 18:55
+	*Description  指派当前任务给项目成员,涉及mybatis多参数修改
+	*/
+	@PutMapping("/user-sys/task-apport/{taskId}")
+	@ResponseBody
+	public int apportTask(@PathVariable("taskId") String taskId
+						,@RequestParam("userId") String userId) {
+		logger.info("打印："+userId);
+		int result = taskService.apportTask(taskId,userId);
+		if (result == 1) {
+			logger.info("Controller层指派任务成功");
+		} else {
+			logger.info("Controller层指派任务失败");
+		}
+		return result;
 	}
 
 }

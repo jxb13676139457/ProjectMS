@@ -1,0 +1,15 @@
+1、项目名为International
+2、开发环境及工具：jdk1.8，sqlserver2012，tomcat8.5，myeclipse2016
+3、包结构命令格式
+
+   src目录下：
+com.international.entity  （存放pojo实体类和hibernate映射文件）
+com.international.dao   （存放数据访问接口及其实现类）
+com.international.service    （存放业务逻辑接口及其实现类）
+com.international.interceptor    （存放自定义的拦截器类）
+com.international.utils   （存放工具类和常量类）
+
+   resources目录下：存放spring和hibernate的配置文件
+
+   WEBRoot目录下：存放静态资源文件
+

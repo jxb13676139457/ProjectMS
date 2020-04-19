@@ -7,8 +7,11 @@
 package com.zhbit.xiaojiang.mapper;
 
 import com.zhbit.xiaojiang.entity.Auditing;
+import com.zhbit.xiaojiang.entity.Members;
 import com.zhbit.xiaojiang.entity.Project;
+import com.zhbit.xiaojiang.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -56,5 +59,19 @@ public interface ProjectMapper {
 	//按关键字搜索项目
 	List<Project> findByKeyword(String keyword);
 
+	//查找项目所有参与成员
+	List<Members> findAllMember(String projectId);
+
+	//添加项目成员
+	int saveMember(@Param("userId") String userId,@Param("projectId") String projectId);
+
+	//删除指定项目成员
+	int deleteMember(int memberId);
+
+	//立项
+	int saveAuditing(Auditing auditing);
+
+	//根据userName 查找userId
+	User findByUserName(String userName);
 
 }

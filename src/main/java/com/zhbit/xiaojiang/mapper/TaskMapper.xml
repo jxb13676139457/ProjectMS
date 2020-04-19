@@ -3,7 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhbit.xiaojiang.mapper.TaskMapper">
-    
+
+    <select id="findAllDemand" parameterType="String" resultType="Task">
+        select * from tasks
+        where projectId in (
+          select projectId from members
+          where userId = #{value}
+        )
+        and taskType = '需求任务'
+        and taskStatus != '已完成'
+    </select>
+
     <select id="findAllTask" parameterType="String" resultType="Task">
         select * from tasks
         where taskId in (
@@ -39,5 +49,37 @@
                 #{taskId,jdbcType=VARCHAR}
             )
     </insert>
+    
+    <delete id="deleteTask" parameterType="String">
+        delete from tasks
+        where taskId = #{value}
+    </delete>
+    
+    <delete id="deleteExecute" parameterType="String">
+        delete from execute
+        where taskId = #{value}
+    </delete>
+
+    <select id="findUserList" parameterType="String" resultType="User">
+        select distinct userId from members
+        where projectId in (
+          select projectId from tasks
+          where taskId = #{value}
+        )
+    </select>
+    
+    <update id="apportTask" parameterType="String">
+        update execute set
+        userId=#{userId,jdbcType=VARCHAR}
+        where taskId=#{taskId}
+    </update>
+
+    <update id="editDemandTask" parameterType="String">
+        update tasks set
+        taskStatus='正在执行',
+        taskType='开发任务'
+        where taskId=#{taskId}
+    </update>
+
 
 </mapper>

@@ -15,15 +15,13 @@
             <li><a href="#">首　　页</a></li>
             <li><a th:href="@{/user-sys/projects/{userId}(userId=${session.userId})}">项目面板</a></li>
             <li><a th:href="@{/user-sys/tasks/{userId}(userId=${session.userId})}">任务面板</a></li>
-            <li><a href="#">文档中心</a></li>
+            <li><a th:href="@{/user-sys/documents/{userId}(userId=${session.userId})}">文档中心</a></li>
             <li style="margin-left: 500px">
                 <a th:href="@{/user-sys/user/{userId}(userId=${session.userId})}">
                     <span style="color: #5bc0de;" th:text="${session.userName}"></span>
                 </a>
             </li>
             <li style="margin-left: 10px"><a style="color: #ef4040;" th:href="@{/auth/logout}">退出登录</a></li>
-
-
         </ul>
         <div class="cls"></div>
     </div>

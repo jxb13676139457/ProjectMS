@@ -99,7 +99,7 @@
             #{inputMoney_tmp,jdbcType=FLOAT},
             #{outputMoney_tmp,jdbcType=FLOAT},
             #{cost_tmp,jdbcType=FLOAT},
-            #{costDetail_tmp,jdbcType=VARCHAR}
+            #{costDetail_tmp,jdbcType=VARCHAR},
             0.00
         )
     </insert>
@@ -126,4 +126,48 @@
         or leader like concat('%',#{keyword},'%')
         or phone like concat('%',#{keyword},'%')
     </select>
+    
+    <select id="findAllMember" parameterType="String" resultType="Members">
+        select * from members
+        where projectId = #{value}
+    </select>
+
+    <insert id="saveMember" parameterType="String">
+        insert into members(userId,projectId)
+        values(
+          #{userId,jdbcType=VARCHAR},
+          #{projectId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteMember" parameterType="Int">
+        delete from members
+        where memberId = #{value}
+    </delete>
+
+    <insert id="saveAuditing" parameterType="Auditing" keyProperty="auditingId" useGeneratedKeys="true">
+        insert into auditing(auditingId,projectName_tmp,projectContent_tmp,
+        time_start_tmp,time_end_tmp,leader_tmp,phone_tmp,
+        inputMoney_tmp,outputMoney_tmp,cost_tmp,costDetail_tmp,auditingStatus)
+        values(
+        #{auditingId,jdbcType=VARCHAR},
+        #{projectName_tmp,jdbcType=VARCHAR},
+        #{projectContent_tmp,jdbcType=VARCHAR},
+        #{time_start_tmp,jdbcType=DATE},
+        #{time_end_tmp,jdbcType=DATE},
+        #{leader_tmp,jdbcType=VARCHAR},
+        #{phone_tmp,jdbcType=VARCHAR},
+        #{inputMoney_tmp,jdbcType=FLOAT},
+        #{outputMoney_tmp,jdbcType=FLOAT},
+        #{cost_tmp,jdbcType=FLOAT},
+        #{costDetail_tmp,jdbcType=VARCHAR},
+        0
+        )
+    </insert>
+
+    <select id="findByUserName" parameterType="String" resultType="User">
+        select userId from users
+        where userName = #{value}
+    </select>
+
 </mapper>

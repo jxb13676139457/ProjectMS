@@ -25,7 +25,7 @@
             <!-- Form validations -->
             <div class="row">
                 <div class="col-lg-12">
-                    <section class="panel">
+                    <section class="panel" style="margin-bottom: 0px;height: 800px">
                         <header class="panel-heading">
                             <h3>添加任务</h3>
                         </header>
@@ -45,7 +45,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务名</label>
                                             <div class="col-lg-10">
-                                                <input class="form-control" placeholder="字数不超过10个" name="taskName" type="text" style="width:400px" required/>
+                                                <input class="form-control" placeholder="项目名不宜超过15个字数左右" name="taskName" type="text" style="width:400px" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                         <div  style="margin-left:250px">
                                             <label class="control-label col-lg-2">任务内容</label>
                                             <div class="col-lg-10">
-                                                <textarea class="form-control" name="taskContent" style="width:400px" required></textarea>
+                                                <textarea class="form-control" name="taskContent" style="width:400px;height: 200px;" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -93,9 +93,6 @@
                                                 <select name="taskType" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
                                                     <option value="">请选择</option>
                                                     <option>需求任务</option>
-                                                    <option>开发任务</option>
-                                                    <option>测试任务</option>
-                                                    <option>需求审核</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -127,8 +124,8 @@
                                     <div class="form-group">
                                         <div  style="margin-left:450px">
                                             <div class="col-lg-offset-2 col-lg-10">
-                                                <button type="submit" class="btn-sm btn-default"
-                                                        style="background-color:#66CDAA;color: white">添加</button>
+                                                <button type="submit" class="btn-sm btn-info"
+                                                        style="color: white">添加</button>
                                             </div>
                                         </div>
                                     </div>

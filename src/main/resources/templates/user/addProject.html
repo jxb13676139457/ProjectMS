@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>项目前台系统立项页面</title>
+
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+
+</head>
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <section id="main-content">
+        <section class="wrapper">
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel" style="margin-bottom: 0px;height: 1200px">
+                        <header class="panel-heading">
+                            <h3>立项</h3>
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form th:action="@{/user-sys/auditing}" class="form-validate form-horizontal" method="post">
+                                    <!--获取当前任务详细信息-->
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目ID</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="auditingId" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="projectName_tmp" type="text" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目简介</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" name="projectContent_tmp" style="width:400px;height: 150px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">开始时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="time_start_tmp" placeholder="格式：2020-01-01" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">截止时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="time_end_tmp" placeholder="格式：2020-01-01" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目负责人</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="leader_tmp" type="text" th:value="${session.userName}" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">联系电话</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="phone_tmp" type="text" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目投入资金</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="inputMoney_tmp" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目预计创收资金</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="outputMoney_tmp" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目成本</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="cost_tmp" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目资金消费明细</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" name="costDetail_tmp" style="width:400px;height: 200px" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div  style="margin-left:450px">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <button type="submit" class="btn-sm btn-info"
+                                                        style="color: white">添加</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+
+
+</div>
+</body>
+
+</html>

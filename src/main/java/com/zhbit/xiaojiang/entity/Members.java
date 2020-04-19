@@ -9,9 +9,8 @@ package com.zhbit.xiaojiang.entity;
 public class Members {
 
 	private int memberId;
-
-	private User user;
-	private Project project;
+	private String userId;
+	private String projectId;
 
 	public int getMemberId() {
 		return memberId;
@@ -21,19 +20,19 @@ public class Members {
 		this.memberId = memberId;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public Project getProject() {
-		return project;
+	public String getProjectId() {
+		return projectId;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 }

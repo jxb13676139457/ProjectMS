@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>项目管理系统查看项目详情</title>
+
+    <!--自定义 CSS-->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- jQuery Js -->
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!--自定义 JS-->
+    <script th:src="@{/js/myJs.js}"></script>
+
+</head>
+<body class="front_index_body">
+<div class="xgsm">
+    <!--引入抽取出来的顶部导航栏-->
+    <div th:replace="~{/commons/navbar::frond_topbar}"></div>
+    <section id="main-content">
+        <section class="wrapper">
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel" style="margin-bottom: 0px;height: 1700px;">
+                        <header class="panel-heading">
+                            <h3>当前项目详细信息</h3>
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form th:action="@{/user-sys/project}" class="form-validate form-horizontal" method="post">
+                                    <!--修改页面必须加这个隐藏输入框，设定请求方式-->
+                                    <input type="hidden" name="_method" value="put"/>
+                                    <!--获取当前任务详细信息-->
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目ID</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" id="projectId" name="projectId" th:value="${project.projectId}" type="text" style="width:400px"disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="projectName" th:value="${project.projectName}" type="text" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目简介</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" name="projectContent" th:text="${project.projectContent}" style="width:400px;height: 150px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">开始时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="time_start" th:value="${project.time_start}" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">截止时间</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="time_end" th:value="${project.time_end}" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目负责人</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="leader" th:value="${project.leader}" type="text" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">联系电话</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="phone" th:value="${project.phone}" type="text" style="width:400px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目进度</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="process" th:value="${project.process}" type="text" style="width:400px" disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目投入资金</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="inputMoney" th:value="${project.inputMoney}" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目预计创收资金</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="outputMoney" th:value="${project.outputMoney}" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目成本</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="cost" th:value="${project.cost}" type="text" style="width:400px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div  style="margin-left:250px">
+                                            <label class="control-label col-lg-2">项目资金消费明细</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" name="costDetail" th:text="${project.costDetail}" style="width:400px;height: 200px" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" shiro:hasPermission="demand:edit">
+                                        <div style="margin-left:650px">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <button class="btn-sm btn-info" type="submit"
+                                                        style="color: white;width: 50px">更新</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!--项目成员模块-->
+                                <div class="form-group ">
+                                    <div  style="margin-left:250px">
+                                        <label class="control-label col-lg-2">项目成员</label>
+                                        <div class="col-lg-10">
+                                            <!--删除模态框-->
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delModal">
+                                                <input type="hidden" name="_method" value="delete" />
+                                                <div class="modal-dialog" role="member">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <span class="modal-title" style="font-size: 20px">删除
+                                                                    <img th:src="@{/images/danger.png}" />
+                                                                </span>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- 隐藏需要删除的id -->
+                                                            <input type="hidden" id="deleteHaulId" />
+                                                            <b style="color: orangered;font-size: 16px">是否删除该数据？</b>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                                                            <button type="button" class="btn-sm btn-primary" onclick="delObject()">确认</button>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+
+                                            <div class="table-responsive">
+                                                <table  style="width: auto;margin-bottom: 0px;font-size: 14px" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>成员ID</th>
+                                                        <th style="width: 70px">用户ID</th>
+                                                        <th style="width: 100px">操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <!--添加项目成员选框-->
+                                                    <select th:id="DropDownListID"
+                                                            shiro:hasPermission="demand:edit"
+                                                            style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                                                        <option selected value="">请选择</option>
+                                                        <option th:each="user:${userList}" th:text="${user.userId}"></option>
+                                                    </select>
+                                                    <!--添加项目成员-->
+                                                    <button shiro:hasPermission="demand:edit"
+                                                            class="btn-sm btn-info" onclick="toConfirm(this)">
+                                                        <i class="fa fa-plus">确定加入成员</i>
+                                                    </button>
+                                                    <!--项目成员列表-->
+                                                    <tbody th:each="member:${memberList}">
+                                                    <tr class="odd gradeX">
+                                                        <td th:text="${member.memberId}"></td>
+                                                        <td th:text="${member.userId}"></td>
+                                                        <td class="center" shiro:hasPermission="demand:edit">
+                                                            <button class="btn-sm btn-danger" onclick="toShowDelModal(this)">
+                                                                <i class="fa fa-trash-o">删除</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+</div>
+</body>
+    <script type="text/javascript">
+        //确认添加项目成员
+        function toConfirm(obj) {
+            var projectId = $("#projectId").val();
+            var userId = $("#DropDownListID option:selected").text();  //获取下拉选框选中的值
+            $.ajax({
+                url: "/TBMS/user-sys/member",
+                type: "post",
+                async:true,
+                dataType: 'json',
+                data: {
+                    userId:userId,
+                    projectId:projectId
+                },
+                success: function (data) {
+                    if(data>0){
+                        alert("添加项目成员成功");
+                    }else{
+                        alert("添加项目成员失败")
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+
+        //删除第一步
+        function toShowDelModal(obj) {
+            var tds = $(obj).parent().parent().children();// 获取到所有列
+            var delete_id = $(tds[0]).text();// 获取隐藏的文档ID
+            console.log("获取到的成员id："+delete_id);
+            $("#deleteHaulId").val(delete_id);// 将模态框中隐藏删除ID框设为需要删除的ID
+            $('#delModal').modal('show');//打开模态框
+        }
+        //删除第二步
+        function delObject() {
+            var memberId = $("#deleteHaulId").val();
+            console.log("要删除的成员id："+memberId);
+            $.ajax({
+                url: "/TBMS/user-sys/member",
+                type: "post",
+                data: {
+                    _method:"delete",
+                    memberId:memberId
+                },
+                async:false,
+                dataType: 'json',
+                success: function (data) {
+                    $('#delModal').modal('hide'); //关闭模态框
+                    if(data=1){
+                        alert("删除成员成功");
+                    }else{
+                        alert("删除成员失败");
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</html>

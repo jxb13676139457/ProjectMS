@@ -31,4 +31,7 @@ public interface DocumentMapper {
 	//按关键字搜索文档
 	List<Document> findByKeyword(String keyword);
 
+	//根据userId查找对应project的文档资料
+	List<Document> findDocumentByUserId(String userId);
+
 }

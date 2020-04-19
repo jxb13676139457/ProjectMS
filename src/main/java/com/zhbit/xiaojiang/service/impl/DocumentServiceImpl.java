@@ -62,4 +62,10 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentMapper.findByKeyword(keyword);
 	}
 
+	@Override
+	public List<Document> findDocumentByUserId(String userId) {
+		List<Document> documents = documentMapper.findDocumentByUserId(userId);
+		return documents;
+	}
+
 }

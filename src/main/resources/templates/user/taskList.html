@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
     <!-- jQuery Js -->
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
     <!--自定义 JS-->
     <script th:src="@{/js/myJs.js}"></script>
 
@@ -21,12 +23,69 @@
 <div class="xgsm">
     <!--引入抽取出来的顶部导航栏-->
     <div th:replace="~{/commons/navbar::frond_topbar}"></div>
-    <div class="tasks">
+    <!--删除模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delModal">
+        <input type="hidden" name="_method" value="delete" />
+        <div class="modal-dialog" role="task">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" style="font-size: 20px">删除
+                        <img th:src="@{/images/danger.png}" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <!-- 隐藏需要删除的id -->
+                    <input type="hidden" id="deleteHaulId" />
+                    <b style="color: orangered;font-size: 16px">是否删除该数据？</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="delObject()">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--指派模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="apportModal">
+        <input type="hidden" name="_method" value="put" />
+        <div class="modal-dialog" role="task">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" style="font-size: 20px">指派
+                        <img th:src="@{/images/hand.png}" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <!-- 隐藏需要修改的任务id -->
+                    <input type="hidden" id="apportHaulId" />
+                    <b style="color: orangered;font-size: 16px">请在以下选框中选择项目成员</b>
+                    <div>
+                        <select name="userId" id="apportSel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                            <option selected value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="apportObject()">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="tasks" id="demandPanel">
         需求任务
         <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='需求任务'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
+                    <div style="margin-left: 20px">
+                        <span style="font-size: 14px">任务ID：</span>
+                        <span id="taskId" style="font-size: 14px" th:text="${task.taskId}"></span>
+                    </div>
                     <div style="margin-left: 20px;font-size: 16px" th:text="${task.taskName}"></div>
                     <div style="margin-left: 50px">
                         <span style="color: red;font-size: 14px">截止日期：</span>
@@ -45,10 +104,12 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button class="btn-sm btn-danger">
+                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-danger"
+                            onclick="toShowDelModal(this)">
                         <i class="fa fa-trash-o">删除</i>
                     </button>
-                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-success">
+                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-success"
+                            onclick="toShowApportModal(this)">
                         <i class="fa fa-hand-o-right" aria-hidden="true">指派</i>
                     </button>
                 </div>
@@ -62,12 +123,16 @@
             </button>
         </div>
     </div>
-    <div class="tasks">
+    <div class="tasks" id="devPanel">
         开发任务
         <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='开发任务'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
+                    <div style="margin-left: 20px">
+                        <span style="font-size: 14px">任务ID：</span>
+                        <span style="font-size: 14px" th:text="${task.taskId}"></span>
+                    </div>
                     <div style="margin-left: 20px;font-size: 16px" th:text="${task.taskName}"></div>
                     <div style="margin-left: 50px">
                         <span style="color: red;font-size: 14px">截止日期：</span>
@@ -86,22 +151,26 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button class="btn-sm btn-danger">
-                        <i class="fa fa-trash-o">删除</i>
+                    <button class="btn-sm btn-success">
+                        <i class="fa fa-hand-o-right" aria-hidden="true">转交</i>
                     </button>
-                    <button shiro:hasPermission="dev:edit" class="btn-sm btn-success">
-                        <i class="fa fa-hand-o-right" aria-hidden="true">指派</i>
+                    <button class="btn-sm btn-success">
+                        <i class="fa fa-arrow-right" aria-hidden="true">下一步</i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="tasks">
+    <div class="tasks" id="testPanel">
         测试任务
         <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='测试任务'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
+                    <div style="margin-left: 20px">
+                        <span style="font-size: 14px">任务ID：</span>
+                        <span style="font-size: 14px" th:text="${task.taskId}"></span>
+                    </div>
                     <div style="margin-left: 20px;font-size: 16px" th:text="${task.taskName}"></div>
                     <div style="margin-left: 50px">
                         <span style="color: red;font-size: 14px">截止日期：</span>
@@ -120,23 +189,27 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button class="btn-sm btn-danger">
-                        <i class="fa fa-trash-o">删除</i>
-                    </button>
                     <button shiro:hasPermission="test:edit" class="btn-sm btn-success">
-                        <i class="fa fa-hand-o-right" aria-hidden="true">指派</i>
+                        <i class="fa fa-hand-o-right" aria-hidden="true">转交</i>
+                    </button>
+                    <button class="btn-sm btn-success">
+                        <i class="fa fa-arrow-right" aria-hidden="true">下一步</i>
                     </button>
                 </div>
             </div>
         </div>
 
     </div>
-    <div class="tasks">
+    <div class="tasks" id="finishPanel">
         需求审核
         <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='需求审核'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
+                    <div style="margin-left: 20px">
+                        <span style="font-size: 14px">任务ID：</span>
+                        <span style="font-size: 14px" th:text="${task.taskId}"></span>
+                    </div>
                     <div style="margin-left: 20px;font-size: 16px" th:text="${task.taskName}"></div>
                     <div style="margin-left: 50px">
                         <span style="color: red;font-size: 14px">截止日期：</span>
@@ -155,18 +228,112 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button class="btn-sm btn-danger">
-                        <i class="fa fa-trash-o">删除</i>
-                    </button>
                     <button shiro:hasPermission="demand:edit" class="btn-sm btn-success">
                         <i class="fa fa-hand-o-right" aria-hidden="true">指派</i>
+                    </button>
+                    <button class="btn-sm btn-success">
+                        <i class="fa fa-check" aria-hidden="true">完成</i>
                     </button>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-</body>
+<script type="text/javascript">
+    //删除第一步
+    function toShowDelModal(obj) {
+        //定位到所有任务块的任务ID栏
+        var tasks = $(obj).parent().parent().parent().children().children().children();
+        //获取到的内容奇奇怪怪的，前面有长串空格，中间也有
+        //做以下处理：去两端空格，再截取需要内容
+        var taskId = $(tasks[0]).text().trim();
+        //console.log("长度："+taskId.length);
+        var delete_id = taskId.substring(30,taskId.length);// 获取要删除的任务ID
+        console.log("获取到的任务id："+delete_id);
+        $("#deleteHaulId").val(delete_id);// 将模态框中隐藏删除ID框设为需要删除的ID
+        $('#delModal').modal('show');//打开模态框
+    }
+    //删除第二步
+    function delObject() {
+        var taskId = $("#deleteHaulId").val();
+        console.log("要删除的任务id："+taskId);
+        $.ajax({
+            url: "/TBMS/user-sys/task/"+taskId,
+            type: "post",
+            data: {
+                _method:"delete",
+                taskId:taskId
+            },
+            async:false,
+            dataType: 'json',
+            success: function (data) {
+                $('#delModal').modal('hide'); //关闭模态框
+                if(data==1){
+                    alert("删除任务成功");
+                }else{
+                    alert("删除任务失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
 
+    //指派任务第一步
+    function toShowApportModal(obj) {
+        $('#apportModal').modal('show');//打开模态框
+        //定位到所有任务块的任务ID栏
+        var tasks = $(obj).parent().parent().parent().children().children().children();
+        //获取到的内容奇奇怪怪的，前面有长串空格，中间也有
+        //做以下处理：去两端空格，再截取需要内容
+        var taskId = $(tasks[0]).text().trim();
+        var apport_id = taskId.substring(30,taskId.length);// 获取要指派的任务ID
+        console.log("获取到的任务id："+apport_id);
+        $("#apportHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        $.ajax({
+            url: "/TBMS/user-sys/task-apport/"+apport_id,
+            type: "get",
+            async:true,
+            success: function (data) {
+                //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
+                $("#apportSel option").remove();
+                for(var i=0;i<data.length;i++){
+                    $("#apportSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                }
+            },
+            error: function (data) {
+                console.log("测试："+data);
+            }
+        });
+    }
+
+    //指派任务第二步
+    function apportObject() {
+        var taskId = $("#apportHaulId").val();
+        var userId = $("#apportSel").val();
+        console.log("选择的userId："+userId);
+        console.log("要指派的任务id："+taskId);
+        $.ajax({
+            url: "/TBMS/user-sys/task-apport/"+taskId,
+            type: "post",
+            data: {
+                _method:"put",
+                taskId:taskId,
+                userId:userId
+            },
+            async:true,
+            dataType: 'json',
+            success: function (data) {
+                $('#apportModal').modal('hide'); //关闭模态框
+                if(data==1){
+                    alert("指派任务成功");
+                }else{
+                    alert("指派任务失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+</script>
+</body>
 </html>
