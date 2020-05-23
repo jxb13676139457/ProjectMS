@@ -195,7 +195,7 @@
             console.log("userId:"+userId);
             console.log("测试关键字："+keyword);
             if(keyword==""){
-                window.location.href = "/TBMS/user-sys/documents/"+userId;
+                alert("无关键词搜索结果");
             }else {
                 //使用JavaScript自身的跳转功能
                 window.location.href = "/TBMS/user-sys/document-search/"+keyword;

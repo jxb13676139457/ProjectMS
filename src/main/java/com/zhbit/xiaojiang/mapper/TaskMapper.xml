@@ -11,7 +11,6 @@
           where userId = #{value}
         )
         and taskType = '需求任务'
-        and taskStatus != '已完成'
     </select>
 
     <select id="findAllTask" parameterType="String" resultType="Task">
@@ -74,12 +73,56 @@
         where taskId=#{taskId}
     </update>
 
-    <update id="editDemandTask" parameterType="String">
+    <update id="editTask" parameterType="String">
         update tasks set
         taskStatus='正在执行',
-        taskType='开发任务'
+        taskType=#{taskType}
         where taskId=#{taskId}
     </update>
 
+    <update id="finishTask" parameterType="String">
+        update tasks set
+        taskStatus=#{taskStatus}
+        where taskId=#{taskId}
+    </update>
+    
+    <select id="yesCount" parameterType="String" resultType="Integer">
+        select count(1) as yesCount
+        from tasks
+        where taskStatus = '已完成'
+        and taskId in (
+          select taskId from execute
+          where userId = #{value}
+        )
+    </select>
+
+    <select id="allCount" parameterType="String" resultType="Integer">
+        select count(1) as allCount
+        from tasks
+        where taskId in (
+          select taskId from execute
+          where userId = #{value}
+        )
+    </select>
+
+    <select id="calculateProcess" parameterType="String" resultType="Float">
+        select yesCount/allCount as process
+        from
+            (
+            select projectId,count(1) as yesCount
+            from tasks
+            where taskStatus = '已完成'
+            and projectId = #{value}
+            group by projectId
+            ) a
+        join
+            (
+            select projectId,count(1) as allCount
+            from tasks
+            where projectId = #{value}
+            group by projectId
+            ) b
+        on a.projectId = b.projectId
+    </select>
 
 </mapper>

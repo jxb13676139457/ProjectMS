@@ -30,6 +30,16 @@ public interface TaskService {
 	List<User> findUserList(String taskId);
 
 	//指派任务给项目成员
-	int apportTask(String taskId,String userId);
+	int apportTask(String taskId,String userId,String taskType);
+
+	//完成验收任务
+	int finishTask(String taskId,String taskStatus);
+
+	//计算项目进度
+	float calculateProcess(String projectId);
+
+	//显示当前用户的任务数
+	List<Integer> taskCount(String userId);
+
 
 }

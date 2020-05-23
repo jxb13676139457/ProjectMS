@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -87,10 +88,10 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public int apportTask(String taskId,String userId) {
+	public int apportTask(String taskId,String userId,String taskType) {
 		if(taskMapper.apportTask(taskId,userId)==1){
-			//同时修改需求任务为正在执行且状态变为开发任务
-			taskMapper.editDemandTask(taskId);
+			//同时修改任务为正在执行
+			taskMapper.editTask(taskId,taskType);
 			logger.info("ServiceImpl层级指派任务成功");
 			return 1;
 		}else{
@@ -98,4 +99,31 @@ public class TaskServiceImpl implements TaskService {
 			return 0;
 		}
 	}
+
+	@Override
+	public int finishTask(String taskId, String taskStatus) {
+		int result = taskMapper.finishTask(taskId,taskStatus);
+		return result;
+	}
+
+	@Override
+	public float calculateProcess(String projectId) {
+
+
+		float process = taskMapper.calculateProcess(projectId);
+		logger.info("进度："+process);
+		return process;
+	}
+
+	@Override
+	public List<Integer> taskCount(String userId) {
+		int yesCount = taskMapper.yesCount(userId);
+		int allCount = taskMapper.allCount(userId);
+		logger.info("任务数情况："+yesCount+","+allCount);
+		List<Integer> list = new ArrayList<>();
+		list.add(yesCount);
+		list.add(allCount);
+		return list;
+	}
+
 }

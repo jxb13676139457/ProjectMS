@@ -3,25 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <title>项目管理系统前台</title>
-
+    <!-- Bootstrap Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}">
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}">
+    <!-- Morris Chart Styles-->
+    <link th:href="@{/assets/js/morris/morris-0.4.3.min.css}" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link th:href="@{/assets/css/custom-styles.css}" rel="stylesheet" />
     <!--自定义 CSS-->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <!-- jQuery Js -->
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--自定义 JS-->
     <script th:src="@{/js/myJs.js}"></script>
-
+    <!-- Bootstrap Js -->
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <!-- Metis Menu Js -->
+    <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+    <!-- Morris Chart Js -->
+    <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
+    <script th:src="@{/assets/js/morris/morris.js}"></script>
+    <!-- Custom Js -->
+    <script th:src="@{/assets/js/custom-scripts.js}"></script>
+    <!-- 引入 ECharts 文件 -->
+    <script th:src="@{/js/echarts.min.js}"></script>
 </head>
 <body class="front_index_body">
 <div class="xgsm">
     <!--引入抽取出来的顶部导航栏-->
     <div th:replace="~{/commons/navbar::frond_topbar}"></div>
-    <a th:href="@{/user/add}">add</a>
-    <br/>
-    <a th:href="@{/user/update}">update</a>
-    <h1 th:text="${session.userId}"></h1>
+    <div class="row">
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div class="col-md-6 col-sm-12 col-xs-12" id="ybp" style="width: 600px;height:400px;"></div>
+    </div>
 
 </div>
-</body>
+    <script th:inline="javascript">
 
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('ybp'));
+        var yesCount = [[${taskCount.get(0)}]];
+        var allCount = [[${taskCount.get(1)}]];
+
+        //环形图
+        // 指定图表的配置项和数据
+        var optionYBP = {
+            title: {//标题组件
+                text: '个人任务情况统计展示',
+                left:'50px',//标题的位置 默认是left，其余还有center、right属性
+                textStyle: {
+                    color: "#436EEE",
+                    fontSize: 17,
+                }
+            },
+            tooltip : { //提示框组件
+                trigger: 'item', //触发类型(饼状图片就是用这个)
+                formatter: "{a} <br/>{b} : {c} ({d}%)" //提示框浮层内容格式器
+            },
+            color:['#fed71a','#66a9c9'],  //手动设置每个图例的颜色
+            legend: {  //图例组件
+                //right:100,  //图例组件离右边的距离
+                orient : 'horizontal',  //布局  纵向布局 图例标记居文字的左边 vertical则反之
+                width:40,      //图行例组件的宽度,默认自适应
+                x : 'right',   //图例显示在右边
+                y: 'center',   //图例在垂直方向上面显示居中
+                itemWidth:10,  //图例标记的图形宽度
+                itemHeight:10, //图例标记的图形高度
+                data:['已完成任务数','个人全部任务数'],
+                textStyle:{    //图例文字的样式
+                    color:'#ffffff',  //文字颜色
+                    fontSize:12    //文字大小
+                }
+            },
+            series : [ //系列列表
+                {
+                    name:'任务占比',  //系列名称
+                    type:'pie',   //类型 pie表示饼图
+                    center:['40%','50%'], //设置饼的原心坐标 不设置就会默认在中心的位置
+                    radius : ['50%', '70%'],  //饼图的半径,第一项是内半径,第二项是外半径,内半径为0就是真的饼,不是环形
+                    itemStyle : {  //图形样式
+                        normal : { //normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                            label : {  //饼图图形上的文本标签
+                                show : false  //平常不显示
+                            },
+                            labelLine : {     //标签的视觉引导线样式
+                                show : false  //平常不显示
+                            }
+                        },
+                        emphasis : {   //normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                            label : {  //饼图图形上的文本标签
+                                show : true,
+                                position : 'center',
+                                textStyle : {
+                                    fontSize : '10',
+                                    fontWeight : 'bold'
+                                }
+                            }
+                        }
+                    },
+                    data:[
+                        {name:'已完成任务数',value:yesCount},
+                        {name:'个人全部任务数',value:allCount}
+                    ]
+                }
+            ]
+        };
+        myChart.setOption(optionYBP);
+
+    </script>
+</body>
 </html>

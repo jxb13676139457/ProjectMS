@@ -81,9 +81,9 @@ public class LoginController {
 
 			//判断到达前台主页还是后台主页
 			if(roleType.equals("admin")){
-				return "admin/index";
+				return "redirect:/admin-sys/projects";
 			}else{
-				return "user/index";
+				return "redirect:/user-sys/projects/"+session.getAttribute("userId");
 			}
 		}catch (UnknownAccountException uae){
 			model.addAttribute("msg","用户名不存在");
@@ -149,6 +149,11 @@ public class LoginController {
 	@RequestMapping("/user/update")
 	public String uodate(){
 		return "user/ui-elements";
+	}
+
+	@RequestMapping("/user/chart")
+	public String toChart(){
+		return "user/chart";
 	}
 
 }

@@ -29,7 +29,7 @@
     <div class="block" th:each="project:${projects}">
         <a th:href="@{/user-sys/project/}+${project.projectId}">
             <p style="margin-top: 100px" th:text="${project.projectName}"></p>
-            项目进度：<span style="font-size: 24px;color: red" th:text="${project.process}"></span>
+            项目进度：<span style="font-size: 24px;color: red" th:text="${project.process}+'%'"></span>
         </a>
     </div>
 

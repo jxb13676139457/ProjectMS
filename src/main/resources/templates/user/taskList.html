@@ -61,7 +61,7 @@
                 <div class="modal-body">
                     <!-- 隐藏需要修改的任务id -->
                     <input type="hidden" id="apportHaulId" />
-                    <b style="color: orangered;font-size: 16px">请在以下选框中选择项目成员</b>
+                    <b style="color: orangered;font-size: 16px">请在以下选框中选择要指派的项目成员</b>
                     <div>
                         <select name="userId" id="apportSel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
                             <option selected value="">请选择</option>
@@ -76,9 +76,96 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--转交模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="moveModal">
+        <input type="hidden" name="_method" value="put" />
+        <div class="modal-dialog" role="task">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" style="font-size: 20px">转交
+                        <img th:src="@{/images/hand.png}" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <!-- 隐藏需要修改的任务id -->
+                    <input type="hidden" id="moveHaulId" />
+                    <b style="color: orangered;font-size: 16px">请在以下选框中选择要转交的项目成员</b>
+                    <div>
+                        <select name="userId" id="moveSel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                            <option selected value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="moveObject()">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--下一步模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="nextModal">
+        <input type="hidden" name="_method" value="put" />
+        <div class="modal-dialog" role="task">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" style="font-size: 20px">下一步
+                        <img th:src="@{/images/hand.png}" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <!-- 隐藏需要修改的任务id -->
+                    <input type="hidden" id="nextHaulId" />
+                    <b style="color: orangered;font-size: 16px">请在以下选框中选择下一阶段处理的项目成员</b>
+                    <div>
+                        <select name="userId" id="nextSel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                            <option selected value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="nextObject()">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--驳回模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="rejectModal">
+        <input type="hidden" name="_method" value="put" />
+        <div class="modal-dialog" role="task">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" style="font-size: 20px">驳回
+                        <img th:src="@{/images/hand.png}" />
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <!-- 隐藏需要修改的任务id -->
+                    <input type="hidden" id="rejectHaulId" />
+                    <b style="color: orangered;font-size: 16px">请在以下选框中选择驳回进行处理的项目成员</b>
+                    <div>
+                        <select name="userId" id="rejectSel" style="width:250px;height:35px;border-radius:5px;-webkit-border-radius:3px;-moz-border-radius:3px;">
+                            <option selected value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-primary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="rejectObject()">确认</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="tasks" id="demandPanel">
         需求任务
-        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='需求任务'}">
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType eq '需求任务' && task.taskStatus eq '待执行'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
@@ -125,7 +212,7 @@
     </div>
     <div class="tasks" id="devPanel">
         开发任务
-        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='开发任务'}">
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType}=='开发任务'">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
@@ -151,10 +238,11 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button class="btn-sm btn-success">
+                    <button class="btn-sm btn-success" shiro:hasPermission="dev:edit"
+                            onclick="toShowApportModal(this)">
                         <i class="fa fa-hand-o-right" aria-hidden="true">转交</i>
                     </button>
-                    <button class="btn-sm btn-success">
+                    <button class="btn-sm btn-success" onclick="toShowApportModal(this)">
                         <i class="fa fa-arrow-right" aria-hidden="true">下一步</i>
                     </button>
                 </div>
@@ -163,7 +251,7 @@
     </div>
     <div class="tasks" id="testPanel">
         测试任务
-        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='测试任务'}">
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType}=='测试任务'">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
@@ -189,10 +277,11 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button shiro:hasPermission="test:edit" class="btn-sm btn-success">
+                    <button shiro:hasPermission="test:edit" class="btn-sm btn-success"
+                            onclick="toShowApportModal(this)">
                         <i class="fa fa-hand-o-right" aria-hidden="true">转交</i>
                     </button>
-                    <button class="btn-sm btn-success">
+                    <button class="btn-sm btn-success" onclick="toShowApportModal(this)">
                         <i class="fa fa-arrow-right" aria-hidden="true">下一步</i>
                     </button>
                 </div>
@@ -202,7 +291,7 @@
     </div>
     <div class="tasks" id="finishPanel">
         需求审核
-        <div class="task" th:each="task:${tasks}" th:if="${task.taskType=='需求审核'}">
+        <div class="task" th:each="task:${tasks}" th:if="${task.taskType eq '需求任务' && task.taskStatus ne '待执行'}">
             <div>
                 <div class="tip" th:if="${task.taskLevel=='高'}"></div>
                 <div class="task_content">
@@ -228,10 +317,12 @@
                             <i class="fa fa-pencil-square-o">查看详情</i>
                         </a>
                     </button>
-                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-success">
-                        <i class="fa fa-hand-o-right" aria-hidden="true">指派</i>
+                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-success"
+                            onclick="toShowApportModal(this)">
+                        <i class="fa fa-hand-o-right" aria-hidden="true">驳回</i>
                     </button>
-                    <button class="btn-sm btn-success">
+                    <button shiro:hasPermission="demand:edit" class="btn-sm btn-success"
+                            onclick="checkObject(this)">
                         <i class="fa fa-check" aria-hidden="true">完成</i>
                     </button>
                 </div>
@@ -239,7 +330,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<script th:inline="javascript">
     //删除第一步
     function toShowDelModal(obj) {
         //定位到所有任务块的任务ID栏
@@ -278,9 +369,8 @@
         });
     }
 
-    //指派任务第一步
+    //弹出下拉选择框
     function toShowApportModal(obj) {
-        $('#apportModal').modal('show');//打开模态框
         //定位到所有任务块的任务ID栏
         var tasks = $(obj).parent().parent().parent().children().children().children();
         //获取到的内容奇奇怪怪的，前面有长串空格，中间也有
@@ -288,16 +378,55 @@
         var taskId = $(tasks[0]).text().trim();
         var apport_id = taskId.substring(30,taskId.length);// 获取要指派的任务ID
         console.log("获取到的任务id："+apport_id);
-        $("#apportHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        var operate = $(obj).text().trim();
+        console.log(operate);
+        if(operate=='指派'){
+            $('#apportModal').modal('show');//打开指派模态框
+            $("#apportHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        }else if(operate=='转交'){
+            $('#moveModal').modal('show');//打开模态框
+            $("#moveHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        }else if(operate=='下一步'){
+            $('#nextModal').modal('show');//打开模态框
+            $("#nextHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        }else if(operate=='驳回'){
+            $('#rejectModal').modal('show');//打开模态框
+            $("#rejectHaulId").val(apport_id);// 将模态框中隐藏指派任务ID框设为需要修改的任务ID
+        }
         $.ajax({
             url: "/TBMS/user-sys/task-apport/"+apport_id,
             type: "get",
+            data:{
+                apport_id:apport_id
+            },
+            //解决ajax提交参数时中文乱码
+            contentType:"application/x-www-form-urlencoded:charset=UTF-8",
             async:true,
             success: function (data) {
-                //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
-                $("#apportSel option").remove();
-                for(var i=0;i<data.length;i++){
-                    $("#apportSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                if(operate=='指派'){
+                    //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
+                    $("#apportSel option").remove();
+                    for(var i=0;i<data.length;i++){
+                        $("#apportSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                    }
+                }else if(operate=='转交'){
+                    //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
+                    $("#moveSel option").remove();
+                    for(var i=0;i<data.length;i++){
+                        $("#moveSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                    }
+                }else if(operate=='下一步'){
+                    //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
+                    $("#nextSel option").remove();
+                    for(var i=0;i<data.length;i++){
+                        $("#nextSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                    }
+                }else if(operate=='驳回'){
+                    //动态添加option前先清空option，避免上次点击动态添加下拉选项造成的遗留
+                    $("#rejectSel option").remove();
+                    for(var i=0;i<data.length;i++){
+                        $("#rejectSel").append("<option value='"+data[i].userId+"'>"+data[i].userId+"</option>");
+                    }
                 }
             },
             error: function (data) {
@@ -306,7 +435,7 @@
         });
     }
 
-    //指派任务第二步
+    //指派任务
     function apportObject() {
         var taskId = $("#apportHaulId").val();
         var userId = $("#apportSel").val();
@@ -318,16 +447,151 @@
             data: {
                 _method:"put",
                 taskId:taskId,
-                userId:userId
+                userId:userId,
+                taskType:'开发任务'
             },
             async:true,
             dataType: 'json',
             success: function (data) {
                 $('#apportModal').modal('hide'); //关闭模态框
                 if(data==1){
-                    alert("指派任务成功");
+                    alert("指派任务给成员："+userId+"处理");
                 }else{
                     alert("指派任务失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+    //移交任务
+    function moveObject() {
+        var taskId = $("#moveHaulId").val();
+        var userId = $("#moveSel").val();
+        var roleType = [[${session.roleType}]];
+        console.log("角色类型:"+roleType);
+        var taskType = "";
+        if(roleType=="开发"){
+            taskType = "开发任务";
+        }else if(roleType=="测试"){
+            taskType = "测试任务";
+        }
+        console.log("选择的userId："+userId);
+        console.log("要移交的任务id："+taskId);
+        $.ajax({
+            url: "/TBMS/user-sys/task-apport/"+taskId,
+            type: "post",
+            data: {
+                _method:"put",
+                taskId:taskId,
+                userId:userId,
+                taskType:taskType
+            },
+            async:true,
+            dataType: 'json',
+            success: function (data) {
+                $('#moveModal').modal('hide'); //关闭模态框
+                if(data==1){
+                    alert("移交任务给成员："+userId+"处理");
+                }else{
+                    alert("移交任务失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+    //下一步任务
+    function nextObject() {
+        var taskId = $("#nextHaulId").val();
+        var userId = $("#nextSel").val();
+        /*通过thymeleaf的内联JavaScript代码语法实现*/
+        var roleType = [[${session.roleType}]];
+        console.log("角色类型:"+roleType);
+        var taskType = "";
+        if(roleType=="开发" || roleType=="管理"){
+            taskType = "测试任务";
+        }else if(roleType=="测试"){
+            taskType = "需求任务";
+        }
+        console.log("选择的userId："+userId);
+        console.log("进入下一步的任务id："+taskId);
+        $.ajax({
+            url: "/TBMS/user-sys/task-apport/"+taskId,
+            type: "post",
+            data: {
+                _method:"put",
+                taskId:taskId,
+                userId:userId,
+                taskType:taskType
+            },
+            async:true,
+            dataType: 'json',
+            success: function (data) {
+                $('#nextModal').modal('hide'); //关闭模态框
+                if(data==1){
+                    alert("任务成功进入下一步，交给成员："+userId+"处理");
+                }else{
+                    alert("任务进入下一步失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+    //驳回任务
+    function rejectObject() {
+        var taskId = $("#rejectHaulId").val();
+        var userId = $("#rejectSel").val();
+        console.log("选择的userId："+userId);
+        console.log("要驳回的任务id："+taskId);
+        $.ajax({
+            url: "/TBMS/user-sys/task-apport/"+taskId,
+            type: "post",
+            data: {
+                _method:"put",
+                taskId:taskId,
+                userId:userId,
+                taskType:'开发任务'
+            },
+            async:true,
+            dataType: 'json',
+            success: function (data) {
+                $('#rejectModal').modal('hide'); //关闭模态框
+                if(data==1){
+                    alert("驳回任务给成员："+userId+"处理");
+                }else{
+                    alert("驳回任务失败");
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+    //验收任务
+    function checkObject(obj) {
+        //定位到所有任务块的任务ID栏
+        var tasks = $(obj).parent().parent().parent().children().children().children();
+        //获取到的内容奇奇怪怪的，前面有长串空格，中间也有
+        //做以下处理：去两端空格，再截取需要内容
+        var taskId = $(tasks[0]).text().trim();
+        var apport_id = taskId.substring(30,taskId.length);// 获取要指派的任务ID
+        console.log("获取到的任务id："+apport_id);
+        $.ajax({
+            url: "/TBMS/user-sys/task-finish/"+apport_id,
+            type: "post",
+            data: {
+                _method:"put",
+                taskId:taskId,
+                taskStatus:'已完成'
+            },
+            async:true,
+            dataType: 'json',
+            success: function (data) {
+                if(data==1){
+                    alert("需求任务完美完成，通过！");
+                }else{
+                    alert("需求任务验收失败");
                 }
                 window.location.reload();
             }

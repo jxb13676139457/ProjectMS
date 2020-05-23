@@ -46,8 +46,20 @@ public interface TaskMapper {
 	//指派任务给项目成员
 	int apportTask(@Param("taskId") String taskId, @Param("userId") String userId);
 
-	//修改指定任务的状态和类型
-	int editDemandTask(String taskId);
+	//修改指定任务的类型
+	int editTask(@Param("taskId") String taskId,@Param("taskType") String taskType);
+
+	//修改指定任务的状态
+	int finishTask(@Param("taskId") String taskId,@Param("taskStatus") String taskStatus);
+
+	//查询已完成任务数
+	int yesCount(String userId);
+
+	//查询未完成任务数
+	int allCount(String userId);
+
+	//计算项目进度
+	float calculateProcess(String projectId);
 
 
 

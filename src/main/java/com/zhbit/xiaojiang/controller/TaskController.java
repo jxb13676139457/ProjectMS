@@ -110,7 +110,8 @@ public class TaskController {
 	*/
 	@GetMapping("/user-sys/task-apport/{taskId}")
 	@ResponseBody
-	public List<User> showApportMembers(@PathVariable("taskId") String taskId){
+	public List<User> showApportMembers(@PathVariable("taskId") String taskId
+										,HttpSession session){
 		//查找任务可指派的项目成员
 		List<User> userList = taskService.findUserList(taskId);
 		logger.info("测试："+userList);
@@ -125,15 +126,61 @@ public class TaskController {
 	@PutMapping("/user-sys/task-apport/{taskId}")
 	@ResponseBody
 	public int apportTask(@PathVariable("taskId") String taskId
-						,@RequestParam("userId") String userId) {
-		logger.info("打印："+userId);
-		int result = taskService.apportTask(taskId,userId);
+						,@RequestParam("userId") String userId
+						,@RequestParam("taskType") String taskType) {
+		logger.info("打印："+taskType);
+		int result = taskService.apportTask(taskId,userId,taskType);
 		if (result == 1) {
 			logger.info("Controller层指派任务成功");
 		} else {
 			logger.info("Controller层指派任务失败");
 		}
 		return result;
+	}
+	
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/5/6 1:51
+	*Description  验收完成任务并自动计算项目进度
+	*/
+	@PutMapping("/user-sys/task-finish/{taskId}")
+	@ResponseBody
+	public int finishTask(@PathVariable("taskId") String taskId
+			,@RequestParam("taskStatus") String taskStatus) {
+		logger.info("打印："+taskStatus);
+		int result = taskService.finishTask(taskId,taskStatus);
+		//根据任务ID找到对应任务的项目ID
+		Task task = taskService.findByTaskId(taskId);
+		String projectId = task.getProjectId();
+		//获取要更新进度的项目对象
+		Project project = projectService.findByProjectId(projectId);
+		if (result == 1) {
+			logger.info("Controller层验收任务成功同时更新进度");
+			float process = taskService.calculateProcess(projectId);
+			//转换成百分比
+			process = process*100;
+			logger.info("计算到的进度："+process);
+			project.setProcess(process);
+			projectService.editProject(project);
+			logger.info("修改后的进度："+project.getProcess());
+			logger.info("运行到此处");
+		} else {
+			logger.info("Controller层验收任务失败");
+		}
+		return result;
+	}
+
+	/**
+	*@Author 小江  [com.zhbit]
+	*@Date 2020/5/23 23:48
+	*Description  展示当前用户的处理任务数情况
+	*/
+	@GetMapping("/user-sys/index/{userId}")
+	public String user(@PathVariable("userId") String userId,Model model){
+		List<Integer> taskCount = taskService.taskCount(userId);
+		logger.info("打印任务情况："+taskCount);
+		model.addAttribute("taskCount",taskCount);
+		return "user/index";
 	}
 
 }
